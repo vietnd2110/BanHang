@@ -77,4 +77,9 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public Optional<UserEntity> findByUserName(String userName) {
+        return userRepository.findByUsername(userName);
+    }
+
 }
