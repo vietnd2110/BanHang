@@ -19,7 +19,7 @@ public class MailServiceImpl implements MailService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine springTemplateEngine;
 
-    @Value("ducndph16372@fpt.edu.vn")
+    @Value("vietndph17667@fpt.edu.vn")
     private String render;
 
     public MailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine springTemplateEngine){

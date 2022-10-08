@@ -27,14 +27,14 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     public ResponseEntity<?> registerAccount(@RequestBody UserRegister userRegister) throws MessagingException {
         SampleResponse response = SampleResponse.builder().status(true).message("Đăng ký thành công").data(userService.registerAccount(userRegister, new StringBuffer("http://localhost:8080/api/v1/auth/register/verifi?code="))).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/regiter/verifi")
-    public ResponseEntity<?> verifiCode(@RequestParam("code") String code) {
+    @GetMapping("/register/verify")
+    public ResponseEntity<?> verifiCode(@RequestParam("code") String code){
         return ResponseEntity.ok(userService.verifiCode(code));
     }
 
