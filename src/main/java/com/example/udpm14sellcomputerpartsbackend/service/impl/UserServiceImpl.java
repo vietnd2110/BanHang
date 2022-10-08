@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserService {
         if (findByEmail.isPresent()) return null;
 
         UserEntity userEntity = modelMapper.map(userRegister, UserEntity.class);
-//        userEntity.setUsername(userRegister.getUsername());
-//        userEntity.setFullname(userRegister.getFullname());
-//        userEntity.setEmail(userRegister.getEmail());
+        userEntity.setUsername(userRegister.getUsername());
+        userEntity.setFullname(userRegister.getFullname());
+        userEntity.setEmail(userRegister.getEmail());
 //        userEntity.setPassword(passwordEncoder.encode(userRegister.getPassword()));
 
         userEntity.setPassword(userRegister.getPassword());
