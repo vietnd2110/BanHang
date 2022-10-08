@@ -39,24 +39,8 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
-    public @ResponseBody BaseResponse changePassword(@RequestBody ChangePassword changePassword) {
-        Optional<UserEntity> user = userRepository.findByUsername(changePassword.getUserName());
-        UserEntity userEntity = user.get();
-        if (HashUtil.verify(changePassword.getPassOld(), userEntity.getPassword()) == false) {
-            return BaseResponse.error("Mật khẩu cũ không chính xác");
-        } else if (!changePassword.getPassConfirm().equals(changePassword.getPassNew())) {
-            return BaseResponse.error("Mật khẩu xác nhận không khớp");
-        } else if (HashUtil.verify(changePassword.getPassNew(), userEntity.getPassword())) {
-            return BaseResponse.error("Mật khẩu mới trùng với mật khẩu cũ");
-        } else {
-            if (changePassword.getPassNew().length() <= 6) {
-                return BaseResponse.error("Mật khẩu phải lớn hơn 6 kí tự");
-            } else {
-                userEntity.setPassword(HashUtil.hash(changePassword.getPassNew()));
-                UserEntity userResponse = userRepository.save(userEntity);
-                return BaseResponse.success("Đổi mật khẩu thành công").withData(userResponse);
-            }
-        }
+    public ResponseEntity<?> changePassword(@RequestBody ChangePassword changePassword) {
+       return ResponseEntity.ok(userService.changePassword(changePassword));
     }
 
 
