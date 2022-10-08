@@ -21,7 +21,7 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     public ResponseEntity<?> registerAccount(@RequestBody UserRegister userRegister) throws MessagingException {
         SampleResponse response = SampleResponse.builder()
                 .status(true)
@@ -31,7 +31,7 @@ public class AuthController {
         return  ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/regiter/verifi")
+    @GetMapping("/register/verify")
     public ResponseEntity<?> verifiCode(@RequestParam("code") String code){
         return ResponseEntity.ok(userService.verifiCode(code));
     }
