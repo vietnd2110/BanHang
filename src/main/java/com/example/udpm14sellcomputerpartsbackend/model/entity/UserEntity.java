@@ -46,5 +46,7 @@ public class UserEntity {
 
     private RoleEnum role;
 
+    private String verificationCode;
+
 
 }
