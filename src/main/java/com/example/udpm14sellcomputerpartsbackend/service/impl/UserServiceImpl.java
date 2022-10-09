@@ -4,6 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.UserStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ChangePassword;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.UserRegister;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.BaseResponse;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -99,6 +101,35 @@ public class UserServiceImpl implements UserService {
                 return BaseResponse.success("Đổi mật khẩu thành công").withData(userResponse);
             }
         }
+    }
+
+    @Override
+    public BaseResponse forgotPassword(ForgotPassword forgotPassword) {
+        try {
+            Optional<UserEntity> user = userRepository.findByEmail(forgotPassword.getEmail());
+            UserEntity userEntity = user.get();
+            String so = RequiredString(6);
+            userEntity.setPassword(HashUtil.hash(so));
+            userRepository.save(userEntity);
+            mailService.forgotEmail(userEntity.getEmail(), "Hay nhớ mật khẩu nhé bạn", userEntity.getUsername(), so);
+            return BaseResponse.success("Vui lòng kiểm tra email của bạn");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return BaseResponse.error("Email không tồn tại");
+    }
+
+    public static String RequiredString(int n) {
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder s = new StringBuilder(n);
+        int y;
+        for (y = 0; y < n; y++) {
+            int index = (int) (AlphaNumericString.length() * Math.random());
+            s.append(AlphaNumericString.charAt(index));
+        }
+        return s.toString();
     }
 
 }

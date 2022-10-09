@@ -22,7 +22,7 @@ public class MailServiceImpl implements MailService {
     @Value("vietndph17667@fpt.edu.vn")
     private String render;
 
-    public MailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine springTemplateEngine){
+    public MailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine springTemplateEngine) {
         this.javaMailSender = javaMailSender;
         this.springTemplateEngine = springTemplateEngine;
     }
@@ -32,20 +32,33 @@ public class MailServiceImpl implements MailService {
         Context context = new Context();
         context.setVariables(props);
 
-        String html = springTemplateEngine.process(template,context);
+        String html = springTemplateEngine.process(template, context);
 
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
 
         helper.setFrom(render);
         helper.setTo(email);
         helper.setSubject(subject);
-        helper.setText(html,true);
+        helper.setText(html, true);
 
         javaMailSender.send(message);
 
     }
 
+    @Override
+    public void forgotEmail(String to, String subject, String userName, String password) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom("duchvph17480@fpt.edu.vn");
+        helper.setTo(to);
+        helper.setSubject(subject);
+        String htmlMsg = "<p><b>Hoang Viet Duc </b><br><b>Email:</b>" + to + "<br><b>Username:" +
+                "</b>" + userName + "<br><b>Password:" +
+                "</b>" + password + "<br>";
+        message.setContent(htmlMsg, "text/html");
+        javaMailSender.send(message);
+    }
 
 
 }
