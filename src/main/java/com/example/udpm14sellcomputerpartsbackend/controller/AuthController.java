@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ChangePassword;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.UserRegister;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.BaseResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
@@ -42,6 +43,8 @@ public class AuthController {
     public ResponseEntity<?> changePassword(@RequestBody ChangePassword changePassword) {
        return ResponseEntity.ok(userService.changePassword(changePassword));
     }
-
-
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassword forgotPassword) {
+        return ResponseEntity.ok(userService.forgotPassword(forgotPassword));
+    }
 }
