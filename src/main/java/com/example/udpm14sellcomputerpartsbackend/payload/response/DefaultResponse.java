@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.payload.response;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.ResponseStatusContants;
+import com.example.udpm14sellcomputerpartsbackend.exception.ProjectException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,13 @@ public class DefaultResponse <T>{
         response.setMessage(ResponseStatusContants.SUCCESS.getMessage());
         response.setData(body);
 
+        return response;
+    }
+
+    public static <T> DefaultResponse <T> error(ProjectException e){
+        DefaultResponse<T> response = new DefaultResponse<>();
+        response.setStatus(e.getCode());
+        response.setMessage(e.getMessage());
         return response;
     }
 
