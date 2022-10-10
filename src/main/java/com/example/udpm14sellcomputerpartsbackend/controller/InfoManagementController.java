@@ -22,7 +22,7 @@ public class InfoManagementController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAccount(@PathVariable("id") Long id, @RequestBody UserEntity userEntity) throws MessagingException {
         SampleResponse response = SampleResponse.builder()
-                .status(true)
+                .success(true)
                 .message("Thêm thông tin thành công")
                 .data(infoMangementService.updateInfo(id, userEntity))
                 .build();
@@ -32,7 +32,7 @@ public class InfoManagementController {
     @GetMapping("/accounts")
     public ResponseEntity<?> getAllInfo() throws MessagingException {
         SampleResponse response = SampleResponse.builder()
-                .status(true)
+                .success(true)
                 .message("Lấy thông tin của tài khoản")
                 .data(infoMangementService.getInfoUser())
                 .build();
