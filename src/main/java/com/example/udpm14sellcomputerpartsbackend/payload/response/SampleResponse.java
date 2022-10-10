@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class SampleResponse {
-    private Boolean status;
+    private Boolean success;
     private String message;
     private Object data;
 
