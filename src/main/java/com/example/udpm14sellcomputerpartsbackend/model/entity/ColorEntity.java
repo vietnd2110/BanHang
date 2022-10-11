@@ -12,6 +12,6 @@ public class ColorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "color_name")
+    private String colorName;
 }
