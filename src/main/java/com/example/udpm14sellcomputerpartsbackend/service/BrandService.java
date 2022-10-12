@@ -9,5 +9,5 @@ public interface BrandService {
     List<BrandEntity> getAll();
     BrandDto create(BrandDto brandDto);
     BrandDto update(Long id, BrandDto brandDto);
-    BrandEntity delete(Long id);
+    void delete(Long id);
 }

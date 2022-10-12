@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/brand")
@@ -18,8 +19,9 @@ public class BrandController {
     public BrandController(BrandService brandService) {
         this.brandService = brandService;
     }
+
     @GetMapping
-    public ResponseEntity getAllBrand(){
+    public ResponseEntity getAllBrand() {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Lấy thông tin Brand ")
@@ -27,22 +29,36 @@ public class BrandController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBrand(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Xóa component thành công")
-                .data(brandService.delete(id))
+                .data(null)
                 .build();
-        return  ResponseEntity.status(HttpStatus.OK).body(response);
+        brandService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
     @PostMapping()
-    public ResponseEntity<?> createBrand(@RequestBody BrandDto brandDto) {
+    public ResponseEntity<?> createBrand(@Valid @RequestBody BrandDto brandDto) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Thêm brand thành công")
                 .data(brandService.create(brandDto))
                 .build();
-        return  ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateBrand(@RequestBody @Valid BrandDto brandDto,@PathVariable Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Cập nhập brand thành công")
+                .data(brandService.update(id,brandDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }

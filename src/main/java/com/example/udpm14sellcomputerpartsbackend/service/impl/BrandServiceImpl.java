@@ -28,19 +28,25 @@ public class BrandServiceImpl implements BrandService {
     public BrandDto create(BrandDto brandDto) {
         BrandEntity brandEntity = new BrandEntity();
         brandEntity.setBrandName(brandDto.getBrandName());
+        brandEntity.setDescription(brandDto.getDescription());
         brandRepository.save(brandEntity);
         return brandDto;
     }
 
     @Override
     public BrandDto update(Long id, BrandDto brandDto) {
-        return null;
+        BrandEntity brandEntity = brandRepository.findById(id).orElseThrow(()
+                -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Không tồn tại brand id:" + id));
+        brandEntity.setBrandName(brandDto.getBrandName());
+        brandEntity.setDescription(brandDto.getDescription());
+        brandRepository.save(brandEntity);
+        return brandDto;
     }
 
     @Override
-    public BrandEntity delete(Long id) {
-        BrandEntity brandEntity = brandRepository.findById(id).orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Không tồn tại brand id:" + id));
+    public void delete(Long id) {
+        BrandEntity brandEntity = brandRepository.findById(id).orElseThrow(()
+                -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Không tồn tại brand id:" + id));
         brandRepository.deleteById(brandEntity.getId());
-        return brandEntity;
     }
 }
