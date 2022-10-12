@@ -1,16 +1,16 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ColorEntity;
-import com.example.udpm14sellcomputerpartsbackend.payload.request.ColorRequest;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ColorDto;
 
 import java.util.List;
 
 public interface ColorService {
     List<ColorEntity> getAll();
 
-    ColorRequest create(ColorRequest colorRequest);
+    ColorDto create(ColorDto colorDto);
 
-    ColorRequest update(ColorRequest colorRequest, Long id);
+    ColorDto update(Long id,ColorDto colorDto);
 
     void delete(Long id);
 }
