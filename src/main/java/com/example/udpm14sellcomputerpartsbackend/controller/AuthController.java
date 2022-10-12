@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ChangePassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.LoginRequest;
@@ -27,8 +28,10 @@ import javax.mail.MessagingException;
         name = "Các api về đăng nhập, đăng xuất"
 )
 public class AuthController {
+
     @Autowired
     AuthenticationManager authenticationManager;
+
     private final UserService userService;
     private final UserRepository userRepository;
 
@@ -56,11 +59,22 @@ public class AuthController {
     }
 
     @Operation(summary = "Quên mật khẩu", description = "Quên mật khẩu")
+    public ResponseEntity<?> verifiCode(@RequestParam("code") String code){
+        return ResponseEntity.ok(userService.verifiCode(code));
+    }
+
+    @Operation(summary = "Đổi mật khẩu",description = "Đổi mật khẩu")
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePassword changePassword) {
+       return ResponseEntity.ok(userService.changePassword(changePassword));
+    }
+
+    @Operation(summary = "Quên mật khẩu",description = "Quên mật khẩu")
+
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassword forgotPassword) {
         return ResponseEntity.ok(userService.forgotPassword(forgotPassword));
     }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager

@@ -13,8 +13,10 @@ import com.example.udpm14sellcomputerpartsbackend.service.UserService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.HashUtil;
 import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+
+
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -28,11 +30,19 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+
         private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
 
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper
                            ,PasswordEncoder passwordEncoder
+
+    //    private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
+
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper
+//                           PasswordEncoder passwordEncoder
+
             , MailService mailService
     ) {
         this.userRepository = userRepository;
@@ -53,7 +63,6 @@ public class UserServiceImpl implements UserService {
         userEntity.setUsername(userRegister.getUsername());
         userEntity.setFullname(userRegister.getFullname());
         userEntity.setEmail(userRegister.getEmail());
-
         userEntity.setPassword(passwordEncoder.encode(userRegister.getPassword()));
         userEntity.setRole(RoleEnum.CUSTOMER);
         userEntity.setVerificationCode(RandomString.make(16));
