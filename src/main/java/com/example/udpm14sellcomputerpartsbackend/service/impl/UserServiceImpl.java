@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,8 +29,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-
-        private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
 
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper

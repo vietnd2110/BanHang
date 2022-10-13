@@ -1,16 +1,16 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
 import com.example.udpm14sellcomputerpartsbackend.model.entity.GroupComponentEntity;
-import com.example.udpm14sellcomputerpartsbackend.payload.request.GroupComponent;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.GroupComponentDto;
 
 import java.util.List;
 
 public interface GroupComponentService {
     List<GroupComponentEntity> getAll();
 
-    GroupComponent createComponent(GroupComponent groupComponent);
+    GroupComponentDto createComponent(GroupComponentDto groupComponent);
 
-    GroupComponent updateComponent(Long id, GroupComponent groupComponent);
+    GroupComponentDto updateComponent(Long id, GroupComponentDto groupComponent);
 
-    GroupComponent deleteComponent(Long id);
+    GroupComponentDto deleteComponent(Long id);
 }
