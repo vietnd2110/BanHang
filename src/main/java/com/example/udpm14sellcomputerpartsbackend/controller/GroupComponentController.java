@@ -1,11 +1,8 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
-import com.example.udpm14sellcomputerpartsbackend.model.entity.GroupComponentEntity;
-import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
-import com.example.udpm14sellcomputerpartsbackend.payload.request.GroupComponent;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.GroupComponentDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.GroupComponentService;
-import com.example.udpm14sellcomputerpartsbackend.service.InfoMangementService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +18,7 @@ public class GroupComponentController {
     private final GroupComponentService groupComponentService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> CreateComponent(@RequestBody GroupComponent groupComponent) throws MessagingException {
+    public ResponseEntity<?> CreateComponent(@RequestBody GroupComponentDto groupComponent) throws MessagingException {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Thêm component thành công")
@@ -31,7 +28,7 @@ public class GroupComponentController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateComponent(@PathVariable("id") Long id, @RequestBody GroupComponent groupComponent) throws MessagingException {
+    public ResponseEntity<?> updateComponent(@PathVariable("id") Long id, @RequestBody GroupComponentDto groupComponent) throws MessagingException {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Sửa component thành công")
@@ -47,7 +44,7 @@ public class GroupComponentController {
                 .message("Xóa component thành công")
                 .data(groupComponentService.deleteComponent(id))
                 .build();
-        return  ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return  ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/info")

@@ -58,17 +58,6 @@ public class AuthController {
         return ResponseEntity.ok(userService.changePassword(changePassword));
     }
 
-    @Operation(summary = "Quên mật khẩu", description = "Quên mật khẩu")
-    public ResponseEntity<?> verifiCode(@RequestParam("code") String code){
-        return ResponseEntity.ok(userService.verifiCode(code));
-    }
-
-    @Operation(summary = "Đổi mật khẩu",description = "Đổi mật khẩu")
-    @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePassword changePassword) {
-       return ResponseEntity.ok(userService.changePassword(changePassword));
-    }
-
     @Operation(summary = "Quên mật khẩu",description = "Quên mật khẩu")
 
     @PostMapping("/forgot-password")
