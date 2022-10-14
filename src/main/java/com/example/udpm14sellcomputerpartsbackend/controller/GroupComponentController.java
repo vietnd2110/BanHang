@@ -23,7 +23,7 @@ public class GroupComponentController {
     @PostMapping("/create")
     public ResponseEntity<?> CreateComponent(@RequestBody GroupComponent groupComponent) throws MessagingException {
         SampleResponse response = SampleResponse.builder()
-                .status(true)
+                .success(true)
                 .message("Thêm component thành công")
                 .data(groupComponentService.createComponent(groupComponent))
                 .build();
@@ -33,7 +33,7 @@ public class GroupComponentController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateComponent(@PathVariable("id") Long id, @RequestBody GroupComponent groupComponent) throws MessagingException {
         SampleResponse response = SampleResponse.builder()
-                .status(true)
+                .success(true)
                 .message("Sửa component thành công")
                 .data(groupComponentService.updateComponent(id, groupComponent))
                 .build();
@@ -43,7 +43,7 @@ public class GroupComponentController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteComponent(@PathVariable("id") Long id) throws MessagingException {
         SampleResponse response = SampleResponse.builder()
-                .status(true)
+                .success(true)
                 .message("Xóa component thành công")
                 .data(groupComponentService.deleteComponent(id))
                 .build();
@@ -53,7 +53,7 @@ public class GroupComponentController {
     @GetMapping("/info")
     public ResponseEntity<?> getAllComponent() throws MessagingException {
         SampleResponse response = SampleResponse.builder()
-                .status(true)
+                .success(true)
                 .message("Lấy thông tin component")
                 .data(groupComponentService.getAll())
                 .build();

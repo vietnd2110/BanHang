@@ -1,6 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
-import com.example.udpm14sellcomputerpartsbackend.contants.ProductStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -43,7 +43,7 @@ public class ProductEntity {
     @Column(name = "description")
     private String description;
 
-    private ProductStatusEnum status;
+    private StatusEnum status;
 
     @JsonProperty("category_id")
     private Long categoryId;

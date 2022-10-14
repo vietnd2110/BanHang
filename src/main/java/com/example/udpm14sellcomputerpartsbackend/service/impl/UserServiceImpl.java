@@ -1,7 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
-import com.example.udpm14sellcomputerpartsbackend.contants.UserStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ChangePassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(userRegister.getPassword());
         userEntity.setRole(RoleEnum.CUSTOMER);
         userEntity.setVerificationCode(RandomString.make(16));
-        userEntity.setStatus(UserStatusEnum.ACTIVE);
+        userEntity.setStatus(StatusEnum.ACTIVE);
 
         userRepository.save(userEntity);
 

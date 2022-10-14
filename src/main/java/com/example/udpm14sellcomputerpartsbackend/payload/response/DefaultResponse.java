@@ -9,22 +9,32 @@ import lombok.Setter;
 @Setter
 public class DefaultResponse <T>{
 
-    private Integer status;
+    private Integer success;
     private String message;
     private T data;
 
     public static <T> DefaultResponse <T> success(T body){
         DefaultResponse<T> response  = new DefaultResponse<>();
-        response.setStatus(ResponseStatusContants.SUCCESS.getCode());
+        response.setSuccess(ResponseStatusContants.SUCCESS.getCode());
         response.setMessage(ResponseStatusContants.SUCCESS.getMessage());
         response.setData(body);
 
         return response;
     }
 
+    public static <T> DefaultResponse <T> success(String message){
+        DefaultResponse<T> response  = new DefaultResponse<>();
+        response.setSuccess(ResponseStatusContants.SUCCESS.getCode());
+        response.setMessage(message);
+
+        return response;
+    }
+
+
+
     public static <T> DefaultResponse <T> error(ProjectException e){
         DefaultResponse<T> response = new DefaultResponse<>();
-        response.setStatus(e.getCode());
+        response.setSuccess(e.getCode());
         response.setMessage(e.getMessage());
         return response;
     }

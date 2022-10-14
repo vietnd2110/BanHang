@@ -1,7 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
-import com.example.udpm14sellcomputerpartsbackend.contants.UserStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -39,7 +39,8 @@ public class UserEntity {
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    private UserStatusEnum status;
+    @Column(name = "status")
+    private StatusEnum status;
 
     @Column(name = "address")
     private String address;

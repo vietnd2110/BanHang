@@ -1,7 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
-import com.example.udpm14sellcomputerpartsbackend.contants.UserStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.InfoMangementService;
@@ -27,7 +27,7 @@ public class InfoMangementServiceImpl implements InfoMangementService {
         }
         userEntity.setId(id);
         userEntity.setRole(RoleEnum.CUSTOMER);
-        userEntity.setStatus(UserStatusEnum.ACTIVE);
+        userEntity.setStatus(StatusEnum.ACTIVE);
         userEntity.setPassword("abccccc");
         return userRepository.save(userEntity);
     }
