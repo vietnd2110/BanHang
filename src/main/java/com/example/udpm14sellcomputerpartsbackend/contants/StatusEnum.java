@@ -5,11 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ProductStatusEnum {
-    ACTIVE(1),
+public enum StatusEnum {
     INACTIVE(0),
+    ACTIVE(1),
     DELETED(2);
 
     private final int value;
-
 }

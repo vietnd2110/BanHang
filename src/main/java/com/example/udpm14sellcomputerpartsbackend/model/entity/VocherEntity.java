@@ -1,8 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
-import com.example.udpm14sellcomputerpartsbackend.contants.VocherStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ public class VocherEntity {
     @Column(name = "value")
     private String detail;
 
-    private VocherStatusEnum status;
+    private StatusEnum status;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;
