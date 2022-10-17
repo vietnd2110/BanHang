@@ -1,23 +1,24 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-@Table(name = "colors")
-public class ColorEntity {
+@Table(name = "vga")
+public class VgaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "color_name")
-    private String colorName;
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "size")
+    private String size;
 
     @JsonProperty("product_id")
     private Long productId;
-
 
 }

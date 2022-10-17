@@ -20,6 +20,9 @@ public class ReviewEntity {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "rating")
+    private String rating;
+
     @Column(name = "content")
     private String content;
 
