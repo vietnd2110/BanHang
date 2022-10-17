@@ -32,14 +32,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper
-                           ,PasswordEncoder passwordEncoder
-
-    //    private final PasswordEncoder passwordEncoder;
-    private final MailService mailService;
-
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper
-//                           PasswordEncoder passwordEncoder
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper,
+                           PasswordEncoder passwordEncoder
 
             , MailService mailService
     ) {
