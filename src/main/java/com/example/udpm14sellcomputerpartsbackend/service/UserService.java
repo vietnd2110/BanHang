@@ -15,6 +15,9 @@ public interface UserService {
     UserRegister registerAccount(UserRegister userRegister, StringBuffer siteUrl) throws MessagingException;
 
     boolean verifiCode(String code);
+
+    Optional<UserEntity> findByUserId(Long id);
+
     BaseResponse changePassword(ChangePassword userEntity);
     BaseResponse forgotPassword(ForgotPassword forgotPassword);
 

@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ChangePassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword;
@@ -15,6 +16,7 @@ import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
 
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.stereotype.Service;
@@ -81,6 +83,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
 
         return true;
+    }
+
+    @Override
+    public Optional<UserEntity> findByUserId(Long id){
+        Optional<UserEntity> user = Optional.ofNullable(userRepository.findById(id).
+                orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "User id not found: " + id)));
+        return user;
     }
 
     @Override
