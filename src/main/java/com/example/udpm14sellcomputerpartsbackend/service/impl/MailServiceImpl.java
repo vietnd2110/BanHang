@@ -53,7 +53,7 @@ public class MailServiceImpl implements MailService {
         helper.setFrom("duchvph17480@fpt.edu.vn");
         helper.setTo(to);
         helper.setSubject(subject);
-        String htmlMsg = "<p><b>Hoang Viet Duc </b><br><b>Email:</b>" + to + "<br><b>Username:" +
+        String htmlMsg = "<p><b>Dear you</b><br><b>Email:</b>" + to + "<br><b>Username:" +
                 "</b>" + userName + "<br><b>Password:" +
                 "</b>" + password + "<br>";
         message.setContent(htmlMsg, "text/html");
