@@ -29,24 +29,30 @@ import javax.mail.MessagingException;
 )
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
+    private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final UserRepository userRepository;
 
-    public AuthController(UserService userService, UserRepository userRepository) {
+    public AuthController(
+            UserService userService, UserRepository userRepository,
+            AuthenticationManager authenticationManager
+            ) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
     }
 
     @Operation(summary = "Đăng ký tài khoản", description = "Đăng ký tài khoản")
     @PostMapping("/signup")
     public ResponseEntity<?> registerAccount(@RequestBody UserRegister userRegister) throws MessagingException {
-        SampleResponse response = SampleResponse.builder().success(true).message("Đăng ký thành công").data(userService.registerAccount(userRegister, new StringBuffer("http://localhost:8080/api/v1/auth/register/verifi?code="))).build();
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Đăng ký thành công")
+                .data(userService.registerAccount(userRegister, new StringBuffer("http://localhost:8080/api/v1/auth/register/verifi?code="))).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @Operation(summary = "Xác nhận email", description = "́Xác nhận email")
     @GetMapping("/register/verify")
     public ResponseEntity<?> verifiCode(@RequestParam("code") String code) {
         return ResponseEntity.ok(userService.verifiCode(code));
@@ -59,16 +65,21 @@ public class AuthController {
     }
 
     @Operation(summary = "Quên mật khẩu",description = "Quên mật khẩu")
-
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassword forgotPassword) {
         return ResponseEntity.ok(userService.forgotPassword(forgotPassword));
     }
+
+    @Operation(summary = "Đăng Nhập Tài Khoản",description = "Đăng nhập tài khoản")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok("Dang nhap thanh cong");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Đăng nhập thành công");
     }
 }

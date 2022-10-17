@@ -1,7 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.BrandDto;
-import com.example.udpm14sellcomputerpartsbackend.payload.request.GroupComponent;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.BrandService;
 import org.springframework.http.HttpStatus;
