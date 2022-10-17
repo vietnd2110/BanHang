@@ -1,10 +1,14 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
+import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.BrandEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.GroupComponentEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.GroupComponentDto;
+import com.example.udpm14sellcomputerpartsbackend.repository.BrandRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.GroupComponentRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.GroupComponentService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +19,8 @@ import java.util.List;
 public class GroupComponentServiceImpl implements GroupComponentService {
 
     private final GroupComponentRepository groupComponentRepository;
+
+    private final BrandRepository brandRepository;
 
     @Override
     public List<GroupComponentEntity> getAll() {
@@ -32,18 +38,19 @@ public class GroupComponentServiceImpl implements GroupComponentService {
 
     @Override
     public GroupComponentDto updateComponent(Long id, GroupComponentDto groupComponent) {
-        GroupComponentEntity groupComponentEntity = groupComponentRepository.findById(id).get();
-        if (groupComponentEntity == null){
-            return null;
-        }
+        GroupComponentEntity groupComponentEntity = groupComponentRepository.findById(id).
+                orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Component id not found: " + id));
+        BrandEntity brandEntity = brandRepository.findById(groupComponent.getBrandId()).
+                orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Brand id not found: " + groupComponent.getBrandId()));
         groupComponentEntity.setName(groupComponent.getName());
         groupComponentRepository.save(groupComponentEntity);
         return groupComponent;
     }
 
     @Override
-    public GroupComponentDto deleteComponent(Long id) {
-        groupComponentRepository.deleteById(id);
-        return new GroupComponentDto();
+    public void deleteComponent(Long id) {
+        GroupComponentEntity findById = groupComponentRepository.findById(id).
+                orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Component id not found: " + id));
+        groupComponentRepository.deleteById(findById.getId());
     }
 }

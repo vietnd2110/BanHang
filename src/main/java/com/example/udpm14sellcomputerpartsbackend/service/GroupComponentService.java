@@ -12,5 +12,5 @@ public interface GroupComponentService {
 
     GroupComponentDto updateComponent(Long id, GroupComponentDto groupComponent);
 
-    GroupComponentDto deleteComponent(Long id);
+    void deleteComponent(Long id);
 }
