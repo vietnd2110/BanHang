@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,6 +33,8 @@ public class OderEntity {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
+    private OrderStatusEnum status;
+
     @Column(name = "grand_total")
     private BigDecimal grandTotal;
 
@@ -43,6 +46,9 @@ public class OderEntity {
 
     @JsonProperty("account_id")
     private Long accountId;
+
+    @JsonProperty("staff_id")
+    private Long staffId;
 
 
 }

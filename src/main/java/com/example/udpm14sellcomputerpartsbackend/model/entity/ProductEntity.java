@@ -34,12 +34,6 @@ public class ProductEntity {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    @Column(name = "image")
-    private String image;
-
-    @Column(name = "discount")
-    private Float discount;
-
     @Column(name = "description")
     private String description;
 
@@ -48,7 +42,7 @@ public class ProductEntity {
     @JsonProperty("category_id")
     private Long categoryId;
 
-    @JsonProperty("vocher_id")
-    private Long vocherId;
+    @JsonProperty("voucher_id")
+    private Long voucherId;
 
 }

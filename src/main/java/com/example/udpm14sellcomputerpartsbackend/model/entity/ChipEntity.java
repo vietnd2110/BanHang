@@ -1,33 +1,24 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name = "order_details")
+@Table(name = "chips")
 @Data
-public class OrderDetailEntity {
+public class ChipEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "price")
-    private BigDecimal price;
-
-    @Column(name = "quantity")
-    private Integer quantity;
+    @Column(name = "socket")
+    private String socket;
 
     @JsonProperty("product_id")
     private Long productId;
-
-    @JsonProperty("order_id")
-    private Long orderId;
-
-    @JsonProperty("user_id")
-    private Long userId;
 
 }

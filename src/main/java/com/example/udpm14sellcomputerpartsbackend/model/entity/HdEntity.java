@@ -4,30 +4,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name = "order_details")
+@Table(name = "hd")
 @Data
-public class OrderDetailEntity {
+public class HdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "price")
-    private BigDecimal price;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+    private String type;
+
+    private String pcle;
 
     @JsonProperty("product_id")
     private Long productId;
-
-    @JsonProperty("order_id")
-    private Long orderId;
-
-    @JsonProperty("user_id")
-    private Long userId;
 
 }

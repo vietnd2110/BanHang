@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "group_component")
+@Table(name = "group_components")
 @Data
 public class GroupComponentEntity {
 
