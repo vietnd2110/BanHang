@@ -7,7 +7,7 @@ import lombok.Getter;
 public enum ResponseStatusContants {
 
     ERROR(0,"Thất bại"),
-    SUCCESS(1,"Thành công")
+    SUCCESS(200,"Thành công")
     ;
 
     private final Integer code;

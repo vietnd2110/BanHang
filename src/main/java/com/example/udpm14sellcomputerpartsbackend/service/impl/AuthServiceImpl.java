@@ -10,7 +10,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.request.UserRegister;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.BaseResponse;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.MailService;
-import com.example.udpm14sellcomputerpartsbackend.service.UserService;
+import com.example.udpm14sellcomputerpartsbackend.service.AuthService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.HashUtil;
 import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
@@ -27,14 +27,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper,
+    public AuthServiceImpl(UserRepository userRepository, ModelMapper modelMapper,
                            PasswordEncoder passwordEncoder
 
             , MailService mailService
