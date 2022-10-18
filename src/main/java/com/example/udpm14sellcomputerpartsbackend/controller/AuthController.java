@@ -5,6 +5,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.request.ChangePassword
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.LoginRequest;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.UserRegister;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.AuthService;
@@ -45,11 +46,8 @@ public class AuthController {
     @Operation(summary = "Đăng ký tài khoản", description = "Đăng ký tài khoản")
     @PostMapping("/signup")
     public ResponseEntity<?> registerAccount(@RequestBody UserRegister userRegister) throws MessagingException {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("Đăng ký thành công")
-                .data(authService.registerAccount(userRegister, new StringBuffer("http://localhost:8080/api/v1/auth/register/verifi?code="))).build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok(
+                DefaultResponse.success(authService.registerAccount(userRegister, new StringBuffer("http://localhost:8080/api/v1/auth/register/verifi?code="))));
     }
 
     @Operation(summary = "Xác nhận email", description = "́Xác nhận email")

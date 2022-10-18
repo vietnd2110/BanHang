@@ -11,7 +11,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("api/v1/brand")
+@RequestMapping("/api/v1/brand")
 public class BrandController {
     private final BrandService brandService;
 

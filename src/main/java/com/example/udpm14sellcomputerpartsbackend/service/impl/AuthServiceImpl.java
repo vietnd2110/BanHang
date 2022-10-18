@@ -62,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
         userEntity.setVerificationCode(RandomString.make(16));
         userEntity.setStatus(StatusEnum.ACTIVE);
 
-        userRepository.save(userEntity);
+        userRegister = modelMapper.map(userRepository.save(userEntity),UserRegister.class);
 
         Map<String, Object> props = new HashMap<>();
         props.put("name", userEntity.getUsername());

@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("api/v1/color")
+@RequestMapping("/api/v1/color")
 public class ColorController {
     private final ColorService colorService;
 
