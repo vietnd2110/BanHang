@@ -8,6 +8,8 @@ public enum ResponseStatusContants {
 
     ERROR(0,"Thất bại"),
     SUCCESS(200,"Thành công"),
+
+    FORMAT_DATE(400,"Ngày kết thúc phải lớn hơn ngày hiện tại"),
     NOT_FOUND_REVIEW(100,"Review không tồn tại")
     ;
 
