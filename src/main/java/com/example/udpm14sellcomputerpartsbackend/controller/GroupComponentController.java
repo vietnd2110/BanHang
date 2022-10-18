@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.GroupComponentDto;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.GroupComponentService;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/component")
@@ -18,7 +19,7 @@ public class GroupComponentController {
     private final GroupComponentService groupComponentService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> CreateComponent(@RequestBody GroupComponentDto groupComponent) throws MessagingException {
+    public ResponseEntity<?> CreateComponent(@RequestBody GroupComponentDto groupComponent) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Thêm component thành công")
@@ -28,7 +29,7 @@ public class GroupComponentController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateComponent(@PathVariable("id") Long id, @RequestBody GroupComponentDto groupComponent) throws MessagingException {
+    public ResponseEntity<?> updateComponent(@PathVariable("id") Long id, @RequestBody GroupComponentDto groupComponent) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Sửa component thành công")
@@ -38,17 +39,13 @@ public class GroupComponentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteComponent(@PathVariable("id") Long id) throws MessagingException {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("Xóa component thành công")
-                .data(groupComponentService.deleteComponent(id))
-                .build();
-        return  ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<?> deleteComponent(@PathVariable("id") Long id) {
+        groupComponentService.deleteComponent(id);
+        return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> getAllComponent() throws MessagingException {
+    public ResponseEntity<?> getAllComponent() {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Lấy thông tin component")

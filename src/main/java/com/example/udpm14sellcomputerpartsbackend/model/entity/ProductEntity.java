@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
+@Data
 public class ProductEntity {
 
     @Id
