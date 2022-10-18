@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/v1/color")
+@RequestMapping("/api/v1/color")
 public class ColorController {
     private final ColorService colorService;
 

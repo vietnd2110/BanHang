@@ -11,7 +11,7 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/v1/brand")
+@RequestMapping("/api/v1/brand")
 public class BrandController {
     private final BrandService brandService;
 
