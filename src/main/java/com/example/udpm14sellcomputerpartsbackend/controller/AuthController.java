@@ -6,8 +6,10 @@ import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword
 import com.example.udpm14sellcomputerpartsbackend.payload.request.LoginRequest;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.UserRegister;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
-import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.LoginResponse;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
+import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
+import com.example.udpm14sellcomputerpartsbackend.security.jwt.JwtProvider;
 import com.example.udpm14sellcomputerpartsbackend.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,14 +35,16 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final AuthService authService;
     private final UserRepository userRepository;
+    private final JwtProvider jwtProvider;
 
     public AuthController(
             AuthService authService, UserRepository userRepository,
-            AuthenticationManager authenticationManager
-            ) {
+            AuthenticationManager authenticationManager,
+            JwtProvider jwtProvider) {
         this.authService = authService;
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
     }
 
     @Operation(summary = "Đăng ký tài khoản", description = "Đăng ký tài khoản")
@@ -79,5 +83,22 @@ public class AuthController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return ResponseEntity.status(HttpStatus.CREATED).body("Đăng nhập thành công");
+    }
+    @PostMapping("login-jwt")
+    public LoginResponse loginJwt (@RequestBody LoginRequest loginRequest){
+        // Xác thực thông tin người dùng Request lên
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
+        // Nếu k xảy ra exception tức là thong tin hợp lệ
+        // Set thong tin authentication vào Security Context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        // Trả về jwt cho người dùng.
+        String token = jwtProvider.createToken(authentication);
+        CustomerDetailService customerDetailService = (CustomerDetailService) authentication.getPrincipal();
+        return ResponseEntity.ok(new LoginResponse(token,customerDetailService.getFullname(),customerDetailService.getAuthorities())).getBody();
     }
 }

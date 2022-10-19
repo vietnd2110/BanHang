@@ -6,6 +6,7 @@ import com.example.udpm14sellcomputerpartsbackend.ultil.Constants;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,8 @@ public class JwtProvider {
     //class nay co tac dung tao chuoi token
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-    private String jwtSecret = "sell-computer";
+    @Value("${app.jwt.secret}")
+    private String jwtSecret;
 
     private int jwtExpiration = 86400;
 
