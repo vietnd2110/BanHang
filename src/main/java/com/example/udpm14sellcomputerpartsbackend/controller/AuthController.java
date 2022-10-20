@@ -84,7 +84,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return ResponseEntity.status(HttpStatus.CREATED).body("Đăng nhập thành công");
     }
-    @PostMapping("login-jwt")
+    @PostMapping("/login-jwt")
     public LoginResponse loginJwt (@RequestBody LoginRequest loginRequest){
         // Xác thực thông tin người dùng Request lên
         Authentication authentication = authenticationManager.authenticate(
