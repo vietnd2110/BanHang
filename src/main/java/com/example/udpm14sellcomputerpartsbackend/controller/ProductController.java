@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -44,7 +45,7 @@ public class ProductController {
             @RequestParam(value = "page") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
-        Page<ProductImageDto> search = productService.search(name,pageSize,pageNumber);
+        Page<ProductImageDto> search = productService.search(name, pageSize, pageNumber);
         SampleResponse response = SampleResponse
                 .builder()
                 .success(true)
@@ -60,7 +61,20 @@ public class ProductController {
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
         Page<ProductImageDto> page = productService.getAllAndPage(pageSize, pageNumber);
+
         return ResponseEntity.ok(DefaultPagingResponse.success(page));
+    }
+
+    @GetMapping("/category")
+    public ResponseEntity<?> getAllByCategory(
+            @RequestParam(value = "cid") Optional<Long> cid,
+            @RequestParam(value = "page") Integer pageSize,
+            @RequestParam(value = "page-number") Integer pageNumber
+    ) {
+        Page<ProductImageDto> page = productService.findByCategory(cid, pageSize, pageNumber);
+
+        return ResponseEntity.ok(DefaultPagingResponse.success(page));
+
     }
 
     @PutMapping("update/{id}")

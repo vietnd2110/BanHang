@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class ChangePassword {
     @NotBlank
-    private String userName;
+    private String username;
     @NotBlank
     private String passOld;
     @NotBlank

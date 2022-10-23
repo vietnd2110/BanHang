@@ -9,9 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
+public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(product.id,product.name,product.price,product.quantity,product.createDate,product.updateDate,product.description,product.status,image.link,image.name) " +
             "FROM ImageEntity image " +
@@ -22,10 +23,26 @@ public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id ")
     public Page<ProductImageDto> listProductAndPage(Pageable pageable);
+
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(product.id,product.name,product.price,product.quantity,product.createDate,product.updateDate,product.description,product.status,image.link,image.name) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id where product.name like %:name%")
     public Page<ProductImageDto> searchByName(String name, Pageable pageable);
+
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
+            "product.id," +
+            "product.name," +
+            "product.price," +
+            "product.quantity," +
+            "product.createDate," +
+            "product.updateDate," +
+            "product.description," +
+            "product.status," +
+            "image.link," +
+            "image.name) " +
+            "FROM ImageEntity image " +
+            "INNER JOIN ProductEntity product ON image.product_id = product.id where product.categoryId=:id")
+    public Page<ProductImageDto> findByCategory(Optional<Long> id, Pageable pageable);
 
 
 }
