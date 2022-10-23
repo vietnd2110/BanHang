@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -42,6 +43,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber) {
         return productRepository.searchByName(name, PageRequest.of(pageSize, pageNumber));
+    }
+
+    @Override
+    public Page<ProductImageDto> findByCategory(Optional<Long> id, Integer pageSize, Integer pageNumber) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found"));
+        return productRepository.findByCategory(id, PageRequest.of(pageSize, pageNumber));
     }
 
 

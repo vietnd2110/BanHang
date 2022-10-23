@@ -94,19 +94,19 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public BaseResponse changePassword(ChangePassword changePassword) {
-        Optional<UserEntity> user = userRepository.findByUsername(changePassword.getUserName());
+        Optional<UserEntity> user = userRepository.findByUsername(changePassword.getUsername());
         UserEntity userEntity = user.get();
-        if (HashUtil.verify(changePassword.getPassOld(), userEntity.getPassword()) == false) {
+        if (!passwordEncoder.matches(changePassword.getPassOld(), userEntity.getPassword())) {
             return BaseResponse.error("Mật khẩu cũ không chính xác");
         } else if (!changePassword.getPassConfirm().equals(changePassword.getPassNew())) {
             return BaseResponse.error("Mật khẩu xác nhận không khớp");
-        } else if (HashUtil.verify(changePassword.getPassNew(), userEntity.getPassword())) {
+        } else if (passwordEncoder.matches(changePassword.getPassNew(), userEntity.getPassword())) {
             return BaseResponse.error("Mật khẩu mới trùng với mật khẩu cũ");
         } else {
-            if (changePassword.getPassNew().length() <= 6) {
+            if (changePassword.getPassNew().length() < 6) {
                 return BaseResponse.error("Mật khẩu phải lớn hơn 6 kí tự");
             } else {
-                userEntity.setPassword(HashUtil.hash(changePassword.getPassNew()));
+                userEntity.setPassword(passwordEncoder.encode(changePassword.getPassNew()));
                 UserEntity userResponse = userRepository.save(userEntity);
                 return BaseResponse.success("Đổi mật khẩu thành công").withData(userResponse);
             }
