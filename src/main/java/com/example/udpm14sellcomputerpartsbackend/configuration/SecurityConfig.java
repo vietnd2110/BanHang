@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+<<<<<<< HEAD
                 .antMatchers("/api/v1/auth/login-jwt").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -62,6 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
+=======
+                .antMatchers("/api/v1/auth/**").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
+                .antMatchers("/api/v1/staff/**").permitAll()
+                .antMatchers("/api/v1/**").authenticated(); // Tất cả các request khác đều cần phải xác thực mới được truy cập
+>>>>>>> 454344f (crud staff)
     }
 
 }
