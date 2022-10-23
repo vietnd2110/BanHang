@@ -1,7 +1,5 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
-import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
-import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.InfoManagementDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
@@ -15,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +48,12 @@ public class InfoMangementServiceImpl implements InfoMangementService {
     @Override
     public List<UserEntity> getInfoUser() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<UserEntity> findByUserId(Long id) {
+        Optional<UserEntity> user = Optional.ofNullable(userRepository.findById(id).
+                orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "User id not found: " + id)));
+        return user;
     }
 }

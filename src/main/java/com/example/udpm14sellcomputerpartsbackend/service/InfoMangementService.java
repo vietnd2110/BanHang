@@ -5,10 +5,13 @@ import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
 
 import javax.mail.MessagingException;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface InfoMangementService {
     InfoManagementDto updateInfo(Long id, InfoManagementDto userEntity) ;
 
     List<UserEntity> getInfoUser() throws MessagingException;
+
+    Optional<UserEntity> findByUserId(Long id);
 }
