@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.InfoManagementDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.InfoMangementService;
 import org.springframework.http.HttpStatus;
@@ -41,5 +42,10 @@ public class InfoManagementController {
                 .data(infoMangementService.getInfoUser())
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findByUserId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(DefaultResponse.success(infoMangementService.findByUserId(id)));
     }
 }
