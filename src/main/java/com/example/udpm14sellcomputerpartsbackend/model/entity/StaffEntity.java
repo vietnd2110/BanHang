@@ -3,6 +3,7 @@ package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
