@@ -1,9 +1,22 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ProductService {
     List<ProductImageDto> findAll();
+
+    Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber);
+
+    Page<ProductImageDto> getAllAndPage(Integer pageSize, Integer pageNumber);
+
+    ProductDto create(ProductDto productDto);
+
+    ProductDto update(Long id, ProductDto productDto);
+
+    void delete(Long id);
 }
