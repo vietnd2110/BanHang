@@ -7,6 +7,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.request.LoginRequest;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.UserRegister;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.LoginResponse;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.security.jwt.JwtProvider;
@@ -85,7 +86,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Đăng nhập thành công");
     }
     @PostMapping("/login-jwt")
-    public LoginResponse loginJwt (@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> loginJwt (@RequestBody LoginRequest loginRequest){
         // Xác thực thông tin người dùng Request lên
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -99,6 +100,16 @@ public class AuthController {
         // Trả về jwt cho người dùng.
         String token = jwtProvider.createToken(authentication);
         CustomerDetailService customerDetailService = (CustomerDetailService) authentication.getPrincipal();
-        return ResponseEntity.ok(new LoginResponse(token,customerDetailService.getFullname(),customerDetailService.getAuthorities())).getBody();
+
+        return ResponseEntity.ok(
+                SampleResponse
+                        .builder()
+                        .success(true)
+                        .message("Login success")
+                        .data(new LoginResponse(token,customerDetailService.getFullname(),customerDetailService.getAuthorities(), customerDetailService.getUsername()))
+                        .build());
+
+//        return ResponseEntity.ok(
+//                new LoginResponse(token,customerDetailService.getFullname(),customerDetailService.getAuthorities(), customerDetailService.getUsername())).getBody();
     }
 }
