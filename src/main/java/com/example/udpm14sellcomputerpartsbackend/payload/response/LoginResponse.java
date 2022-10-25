@@ -13,12 +13,14 @@ import java.util.Collection;
 public class LoginResponse {
     private String token;
     private String tokenType = "Bearer";
+    private String username;
     private String name = "Bearer";
     private Collection<? extends GrantedAuthority> role;
 
-    public LoginResponse(String token, String fullName, Collection<? extends GrantedAuthority> authorities) {
+    public LoginResponse(String token, String fullName, Collection<? extends GrantedAuthority> authorities,String username) {
         this.token = token;
         this.name  = fullName;
         this.role  = authorities;
+        this.username = username;
     }
 }
