@@ -48,7 +48,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "image.name) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id where product.categoryId=:id")
-    public Page<ProductImageDto> findByCategory(Optional<Long> id, Pageable pageable);
+    public Page<ProductImageDto> findByCategory(Long id, Pageable pageable);
 
 
     List<ProductEntity> findAllById(Long id);

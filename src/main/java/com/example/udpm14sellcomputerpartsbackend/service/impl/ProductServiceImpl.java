@@ -54,9 +54,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductImageDto> findByCategory(Optional<Long> id, Integer pageSize, Integer pageNumber) {
+    public Page<ProductImageDto> findByCategory(Long id, Integer pageSize, Integer pageNumber) {
         CategoryEntity categoryEntity = categoryRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found"));
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found:"+id));
         return productRepository.findByCategory(id, PageRequest.of(pageSize, pageNumber));
     }
 

@@ -79,9 +79,9 @@ public class ProductController {
         return ResponseEntity.ok(DefaultPagingResponse.success(page));
     }
 
-    @GetMapping("/category")
+    @GetMapping("/category/{id}")
     public ResponseEntity<?> getAllByCategory(
-            @RequestParam(value = "cid") Optional<Long> cid,
+            @PathVariable("id") Long cid,
             @RequestParam(value = "page") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
