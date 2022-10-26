@@ -6,6 +6,10 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface CategoryService {
+    CategoryDto getById(Long id);
+
+    List<CategoryDto> getAllCategoryGroupId(Long groupId);
+
     List<CategoryDto> getAll();
 
     Page<CategoryDto> getAllAndPage(Integer pageSize, Integer pageNumber);

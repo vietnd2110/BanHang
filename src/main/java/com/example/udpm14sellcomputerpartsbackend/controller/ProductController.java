@@ -39,6 +39,20 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findAllByIdProduct(
+            @PathVariable("id") Long id
+    ){
+        List<ProductImageDto> productImageDtos = productService.findAllByIDProduct(id);
+        SampleResponse response = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get by id product success")
+                .data(productImageDtos)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/search")
     public ResponseEntity<?> search(
             @RequestParam(value = "name") String name,

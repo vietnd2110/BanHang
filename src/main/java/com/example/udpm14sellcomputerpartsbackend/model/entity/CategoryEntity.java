@@ -26,6 +26,8 @@ public class CategoryEntity {
     @CreationTimestamp
     private LocalDate createDate;
 
+    private String images;
+
     @Column(name = "update_date")
     @UpdateTimestamp
     private LocalDate updateDate;
