@@ -11,7 +11,7 @@ public interface ProductService {
     List<ProductImageDto> findAll();
 
     Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber);
-    Page<ProductImageDto> findByCategory(Optional<Long> id, Integer pageSize, Integer pageNumber);
+    Page<ProductImageDto> findByCategory(Long id, Integer pageSize, Integer pageNumber);
 
     Page<ProductImageDto> getAllAndPage(Integer pageSize, Integer pageNumber);
 
