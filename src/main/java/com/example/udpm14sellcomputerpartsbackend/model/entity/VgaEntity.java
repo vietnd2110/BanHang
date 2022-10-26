@@ -1,11 +1,13 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "vga")
+@Data
 public class VgaEntity {
 
     @Id
