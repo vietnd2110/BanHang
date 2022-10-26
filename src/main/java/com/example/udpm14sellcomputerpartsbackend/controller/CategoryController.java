@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.CategoryEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,13 +30,43 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAllById(
+            @PathVariable("id") Long id
+    ) {
+        CategoryDto categoryEntityList = categoryService.getById(id);
+        SampleResponse response = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get by id category")
+                .data(categoryEntityList)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("/list-group/{groupId}")
+    public ResponseEntity<?> listCategoryWith(
+            @PathVariable("groupId") Long groupId
+    ){
+        List<CategoryDto> categoryDtoList = categoryService.getAllCategoryGroupId(groupId);
+        SampleResponse response = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get all category with group id")
+                .data(categoryDtoList)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @Operation(summary = "Lấy tất cả danh sách và phân trang về thể loại", description = "Lấy tất cả danh sách và phân trang về thể loại")
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
-        Page<CategoryDto> page = categoryService.getAllAndPage(pageSize,pageNumber);
+        Page<CategoryDto> page = categoryService.getAllAndPage(pageSize, pageNumber);
         return ResponseEntity.ok(DefaultPagingResponse.success(page
         ));
     }

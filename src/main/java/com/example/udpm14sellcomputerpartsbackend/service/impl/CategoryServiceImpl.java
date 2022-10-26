@@ -34,6 +34,25 @@ public class CategoryServiceImpl implements CategoryService {
         this.modelMapper = modelMapper;
     }
 
+
+    @Override
+    public CategoryDto getById(Long id){
+        CategoryEntity findById = categoryRepository.findById(id)
+                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found: "+id));
+
+        CategoryEntity categoryEntity = categoryRepository.findAllById(id);
+        return modelMapper.map(categoryEntity,CategoryDto.class);
+    }
+
+    @Override
+    public List<CategoryDto> getAllCategoryGroupId(Long groupId){
+        GroupComponentEntity componentEntity = groupComponentRepository.findById(groupId)
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Group component id not found: " + groupId));
+        List<CategoryEntity> categoryEntityList = categoryRepository.findAllByGroupId(groupId);
+        return categoryEntityList.stream().map(categoryEntity ->
+                modelMapper.map(categoryEntity,CategoryDto.class)).collect(Collectors.toList());
+    }
+
     @Override
     public List<CategoryDto> getAll(){
         List<CategoryEntity> categoryEntityList = categoryRepository.findAllByStatusEquals(StatusEnum.ACTIVE);

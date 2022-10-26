@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface ProductService {
     List<ProductImageDto> findAll();
 
+    List<ProductImageDto> findAllByIDProduct(Long productId);
+
     Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber);
     Page<ProductImageDto> findByCategory(Optional<Long> id, Integer pageSize, Integer pageNumber);
 

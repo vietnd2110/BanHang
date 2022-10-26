@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -38,6 +39,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductImageDto> findAll() {
         return productRepository.listProduct();
+    }
+
+    @Override
+    public List<ProductImageDto> findAllByIDProduct(Long productId){
+        ProductEntity findById = productRepository.findById(productId)
+                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
+        return productRepository.listProductId(productId);
     }
 
     @Override

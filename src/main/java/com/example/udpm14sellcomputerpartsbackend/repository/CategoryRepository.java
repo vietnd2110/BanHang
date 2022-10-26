@@ -18,6 +18,11 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity,Long> {
 
     Page<CategoryEntity> findByStatusEquals(StatusEnum status, Pageable pageable);
 
-
     Optional<CategoryEntity> findById(Optional<Long> id);
+
+    CategoryEntity findAllById(Long id);
+
+    List<CategoryEntity> findAllByGroupId(Long groupId);
+
+
 }
