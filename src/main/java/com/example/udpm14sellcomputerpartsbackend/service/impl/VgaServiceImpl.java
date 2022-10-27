@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class VgaServiceImpl implements VgaService {
 
@@ -31,6 +32,20 @@ public class VgaServiceImpl implements VgaService {
         List<VgaEntity> vgaEntity = vgaRepository.findAll();
         return vgaEntity.stream().map(vgaEntity1 -> modelMapper
                 .map(vgaEntity1, VgaDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VgaDto> getAllVgaByProduct(Long id) {
+        List<VgaEntity> vgaEntity = vgaRepository.findByProductId(id);
+        return vgaEntity.stream().map(vgaEntity1 -> modelMapper
+                .map(vgaEntity1, VgaDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public VgaDto getById(Long id) {
+        VgaEntity vgaEntity = vgaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Vga id not found: " + id));
+        return modelMapper.map(vgaRepository.findById(vgaEntity.getId()), VgaDto.class);
     }
 
     @Override

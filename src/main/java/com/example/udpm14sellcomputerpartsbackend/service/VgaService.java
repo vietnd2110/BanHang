@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface VgaService {
     List<VgaDto> getAll();
+    List<VgaDto> getAllVgaByProduct(Long id);
+    VgaDto getById(Long id);
     VgaDto create(VgaDto vgaDto);
     VgaDto update(Long id, VgaDto vgaDto);
     void delete(Long id);

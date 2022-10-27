@@ -34,6 +34,21 @@ public class ChipServiceImpl implements ChipService {
     }
 
     @Override
+    public List<ChipDto> findAllByProduct(Long id) {
+        List<ChipEntity> chipEntityList = chipRepository.findByProductId(id);
+
+        return chipEntityList.stream().map(chipEntity -> modelMapper
+                .map(chipEntity, ChipDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ChipDto findById(Long id) {
+        ChipEntity chip = chipRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Chip id not found: " + id));
+        return modelMapper.map(chipRepository.findById(chip.getId()),ChipDto.class);
+    }
+
+    @Override
     public ChipDto create(ChipDto chipDto) {
         ProductEntity productEntity = productRepository.findById(chipDto.getProductId())
                 .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: "+chipDto.getProductId()));

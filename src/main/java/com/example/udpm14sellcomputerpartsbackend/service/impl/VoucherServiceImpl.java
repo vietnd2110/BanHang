@@ -37,6 +37,13 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
+    public VoucherDto getById(Long id) {
+        VoucherEntity findById = voucherRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Voucher id not found:" + id));
+        return modelMapper.map(voucherRepository.findById(findById.getId()),VoucherDto.class);
+    }
+
+    @Override
     public VoucherDto create(VoucherDto voucherDto) {
         LocalDateTime start = voucherDto.getStartDate();
         LocalDateTime end = voucherDto.getEndDate();

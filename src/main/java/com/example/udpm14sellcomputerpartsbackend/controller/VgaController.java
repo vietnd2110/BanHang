@@ -27,11 +27,29 @@ public class VgaController {
 
 
     @GetMapping
-    public ResponseEntity getAllChip() {
+    public ResponseEntity getAllVga() {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Get All Vga")
                 .data(vgaService.getAll())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity getVgaById(@PathVariable Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get Vga By id")
+                .data(vgaService.getById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("product/{id}")
+    public ResponseEntity getAllVgaByProduct(@PathVariable Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get All Vga By Product ")
+                .data(vgaService.getAllVgaByProduct(id))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

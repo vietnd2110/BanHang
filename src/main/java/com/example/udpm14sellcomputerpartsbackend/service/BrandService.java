@@ -6,6 +6,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.entity.BrandEntity;
 import java.util.List;
 
 public interface BrandService {
+    BrandDto getById(Long id);
     List<BrandEntity> getAll();
     BrandDto create(BrandDto brandDto);
     BrandDto update(Long id, BrandDto brandDto);
