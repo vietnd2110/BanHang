@@ -12,5 +12,7 @@ public interface ImagesService {
 
     List<ImageProductDto> listImage();
 
+    List<ImageProductDto> listImagesId(Long id);
+
     void deleteImage(Long id);
 }
