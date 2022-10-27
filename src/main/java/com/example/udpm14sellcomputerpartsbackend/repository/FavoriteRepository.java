@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,5 +14,11 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity,Long> {
     Optional<FavoriteEntity> findByAccountId(Long accountId);
 
     Optional<FavoriteEntity> findByProductId(Long productId);
+
+    List<FavoriteEntity> findAllByProductId(Long productId);
+
+    List<FavoriteEntity> findAllByAccountId(Long accountId);
+
+//    FavoriteEntity findById(Long id);
 
 }

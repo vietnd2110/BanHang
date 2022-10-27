@@ -1,12 +1,16 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ReviewDto;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.ReviewEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -24,6 +28,48 @@ public class ReviewController {
     ){
         this.reviewService = reviewService;
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<?> listReview(){
+        List<ReviewEntity> reviewEntityList = reviewService.reviewEntities();
+        SampleResponse sampleResponse = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get all success")
+                .data(reviewEntityList)
+                .build();
+        return ResponseEntity.ok(sampleResponse);
+    }
+
+
+    @GetMapping("/list-product-id/{id}")
+    public ResponseEntity<?> listReviewProductId(
+            @PathVariable("id") Long productId
+    ){
+        List<ReviewEntity> reviewEntityList = reviewService.reviewEntitiesProductId(productId);
+        SampleResponse sampleResponse = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get all success")
+                .data(reviewEntityList)
+                .build();
+        return ResponseEntity.ok(sampleResponse);
+    }
+
+    @GetMapping("/list-user-id/{id}")
+    public ResponseEntity<?> listReviewUserId(
+            @PathVariable("id") Long userId
+    ){
+        List<ReviewEntity> reviewEntities = reviewService.reviewEntityListAccountId(userId);
+        SampleResponse sampleResponse = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get all success")
+                .data(reviewEntities)
+                .build();
+        return ResponseEntity.ok(sampleResponse);
+    }
+
 
     @Operation(summary = "Thêm đánh giá sản phẩm", description = "Thêm đánh giá sản phẩm")
     @PostMapping("/create/{id}")

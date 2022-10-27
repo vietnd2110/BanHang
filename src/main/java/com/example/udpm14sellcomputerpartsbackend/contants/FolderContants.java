@@ -8,4 +8,6 @@ public class FolderContants {
 
     public static final String AVATARS_IMAGES_FOLDER = IMAGES_FOLDER + "/avatars";
 
+    public static final String CATEGORIES_IMAGES_FOLDER = IMAGES_FOLDER + "/categories";
+
 }

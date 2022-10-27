@@ -15,7 +15,7 @@ import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
@@ -37,16 +37,38 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     }
 
+    @Override
+    public List<FavoriteEntity> favoriteEntityList() {
+        return favoriteRepository.findAll();
+    }
+
+    @Override
+    public FavoriteEntity findById(Long id){
+        FavoriteEntity findById = favoriteRepository.findById(id).
+                orElseThrow(() -> new NotFoundException(HttpStatus.NO_CONTENT.value(), "Favorite id not found: " + id));
+        return findById;
+    }
+
+    @Override
+    public List<FavoriteEntity> listFavoriteProductId(Long productId){
+        return favoriteRepository.findAllByProductId(productId);
+    }
+
+    @Override
+    public List<FavoriteEntity> listFavoriteAccountId(Long accountId){
+        return favoriteRepository.findAllByAccountId(accountId);
+    }
+
 
     @Override
     public FavoriteEntity favoriteProduct(Long productId) {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
 
         UserEntity findById = userRepository.findById(uDetailService.getId()).
-                orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Username not found: " + uDetailService.getId()));
+                orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Username not found: " + uDetailService.getId()));
 
         ProductEntity findByProductId = productRepository.findById(productId).
-                orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
+                orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
 
         FavoriteEntity favoriteEntity = new FavoriteEntity();
         favoriteEntity.setProductId(productId);
@@ -57,16 +79,16 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 
     @Override
-    public void deleteFavorite(Long id){
+    public void deleteFavorite(Long id) {
 
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
-        if(uDetailService == null){
+        if (uDetailService == null) {
             throw new BadRequestException("Bạn chưa đăng nhâp");
         }
 
 
         FavoriteEntity findById = favoriteRepository.findById(id).
-                orElseThrow(()-> new NotFoundException(HttpStatus.NO_CONTENT.value(), "Favorite id not found: " + id));
+                orElseThrow(() -> new NotFoundException(HttpStatus.NO_CONTENT.value(), "Favorite id not found: " + id));
         favoriteRepository.deleteById(findById.getId());
     }
 

@@ -27,9 +27,16 @@ public class ImagesController {
     }
 
     @Operation(summary = "Danh sách images", description = "Danh sách image")
-    @GetMapping()
+    @GetMapping("/list")
     public ResponseEntity<?> findAll(){
         return ResponseEntity.ok(DefaultResponse.success(imagesService.listImage()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findAllById(
+            @PathVariable("id") Long id
+    ){
+        return ResponseEntity.ok(DefaultResponse.success(imagesService.listImagesId(id)));
     }
 
     @Operation(summary = "Thêm mới images theo id của product", description = "Thêm mới images theo id của product")

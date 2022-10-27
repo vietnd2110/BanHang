@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -47,7 +48,7 @@ public class CategoryController {
 
 
     @GetMapping("/list-group/{groupId}")
-    public ResponseEntity<?> listCategoryWith(
+    public ResponseEntity<?> listCategoryWithGroupId(
             @PathVariable("groupId") Long groupId
     ){
         List<CategoryDto> categoryDtoList = categoryService.getAllCategoryGroupId(groupId);
@@ -82,10 +83,10 @@ public class CategoryController {
     }
 
     @Operation(summary = "Thêm mới thể loại", description = "Thêm mới thể loại")
-    @PostMapping("/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<?> create(
             @Valid @RequestBody CategoryDto categoryDto
-    ) {
+            ) {
         return ResponseEntity.ok(
                 DefaultResponse.success(categoryService.create(categoryDto)
                 ));
@@ -99,6 +100,16 @@ public class CategoryController {
     ) {
         return ResponseEntity.ok(DefaultResponse.success(categoryService.update(id, categoryDto)));
     }
+
+
+    @PostMapping(value = "/update-image/{id}",consumes = "multipart/form-data")
+    public ResponseEntity<?> updateImageCategory(
+            @PathVariable("id") Long id,
+            @RequestBody MultipartFile file
+    ){
+        return ResponseEntity.ok(DefaultResponse.success("Upload image success",categoryService.uploadImage(id,file)));
+    }
+
 
     @Operation(summary = "Xóa thể loại", description = "Xóa thể loại")
     @DeleteMapping("/delete/{id}")

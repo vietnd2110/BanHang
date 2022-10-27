@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +33,22 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewRepository = reviewRepository;
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
+    }
+
+
+    @Override
+    public List<ReviewEntity> reviewEntities(){
+        return reviewRepository.findAll();
+    }
+
+    @Override
+    public List<ReviewEntity> reviewEntitiesProductId(Long productId){
+        return reviewRepository.findAllByProductId(productId);
+    }
+
+    @Override
+    public List<ReviewEntity> reviewEntityListAccountId(Long userId){
+        return reviewRepository.findAllByUserId(userId);
     }
 
 

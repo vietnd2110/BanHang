@@ -60,6 +60,15 @@ public class ImagesServiceImpl implements ImagesService {
     }
 
     @Override
+    public List<ImageProductDto> listImagesId(Long id){
+        ImageEntity imageEntity = imagesRepository.findById(id).
+                orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(),"Image id not found: " + id));
+        return imagesRepository.listImagesId(id);
+    }
+
+
+
+    @Override
     public void deleteImage(Long id){
         ImageEntity imageEntity = imagesRepository.findById(id).
                 orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(),"Image id not found: " + id));
