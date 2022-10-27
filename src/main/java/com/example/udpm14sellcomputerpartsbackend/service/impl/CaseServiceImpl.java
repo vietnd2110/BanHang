@@ -27,6 +27,21 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
+    public List<CaseDto> getByProductId(Long id) {
+        List<CaseEntity> caseEntities = caseRepository.findByProductId(id);
+
+        return caseEntities.stream().map(caseEntity -> modelMapper
+                .map(caseEntity, CaseDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public CaseDto getById(Long id) {
+        CaseEntity caseEntity = caseRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Case id not found: "+id));
+        return modelMapper.map(caseRepository.findById(caseEntity.getId()),CaseDto.class);
+    }
+
+    @Override
     public List<CaseDto> getAll() {
         List<CaseEntity> caseEntities = caseRepository.findAll();
 

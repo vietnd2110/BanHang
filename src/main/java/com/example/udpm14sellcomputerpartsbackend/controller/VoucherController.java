@@ -24,6 +24,14 @@ public class VoucherController {
                 .data(voucherService.getAll())
                 .build());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id")Long id) {
+        return ResponseEntity.ok(SampleResponse.builder()
+                .success(true)
+                .message("Get Voucher By Id")
+                .data(voucherService.getById(id))
+                .build());
+    }
 
     @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody VoucherDto voucherDto) {

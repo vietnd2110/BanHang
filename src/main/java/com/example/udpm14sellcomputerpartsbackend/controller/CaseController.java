@@ -28,11 +28,29 @@ public class CaseController {
 
 
     @GetMapping
-    public ResponseEntity getAllChip() {
+    public ResponseEntity<?> getAllCase() {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Get All Case")
                 .data(caseService.getAll())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("product/{id}")
+    public ResponseEntity<?> getAllCaseByProduct(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get All Case By Product id")
+                .data(caseService.getByProductId(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCaseById(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get Case by id")
+                .data(caseService.getById(id))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

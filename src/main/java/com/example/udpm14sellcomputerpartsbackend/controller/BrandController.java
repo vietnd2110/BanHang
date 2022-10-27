@@ -35,13 +35,22 @@ public class BrandController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable("id")Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Lấy thông tin Brand theo id")
+                .data(brandService.getById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @Operation(summary = "xóa hãng sản xuất", description = "xóa hãng sản xuất")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBrand(@PathVariable Long id) {
+    public ResponseEntity<?> deleteBrand(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
-                .message("Xóa component thành công")
+                .message("Xóa brand thành công")
                 .data(null)
                 .build();
         brandService.delete(id);

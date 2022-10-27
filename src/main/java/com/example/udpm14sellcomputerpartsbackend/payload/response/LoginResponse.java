@@ -23,6 +23,6 @@ public class LoginResponse {
         this.name  = fullName;
         this.role  = authorities;
         this.username = username;
-        this.id = id
+        this.id = id;
     }
 }

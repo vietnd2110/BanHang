@@ -34,6 +34,24 @@ public class ChipController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity getChipById(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get Chip By Id")
+                .data(chipService.findById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("/product/{id}")
+    public ResponseEntity getAllChipByProduct(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get All Chip By Product")
+                .data(chipService.findAllByProduct(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> create(
