@@ -4,6 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.contants.FolderContants;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageProductDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ImageEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.ImagesRepository;
@@ -76,6 +77,13 @@ public class ImagesServiceImpl implements ImagesService {
         imagesRepository.deleteById(imageEntity.getId());
     }
 
+
+    @Override
+    public List<ProductImageDto> findAllByProductAndImages(Long productId){
+        ProductEntity findById = productRepository.findById(productId)
+                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
+        return imagesRepository.listProductAndImages(productId);
+    }
 
 
 

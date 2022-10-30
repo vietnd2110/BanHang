@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductFavoriteDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.FavoriteEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
@@ -26,6 +27,18 @@ public class FavoriteController {
 
     public FavoriteController(FavoriteService favoriteService){
         this.favoriteService = favoriteService;
+    }
+
+
+    @GetMapping("/product-favorite")
+    public ResponseEntity<?> listProductFavorite(){
+        SampleResponse sampleResponse = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get all success")
+                .data(favoriteService.listProductFavoritte())
+                .build();
+        return ResponseEntity.ok(sampleResponse);
     }
 
 
