@@ -10,10 +10,10 @@ public class RamDto {
     private Long id;
 
     @NotBlank(message = "DDR is not null")
-    private String ddr;
+    private Integer ddr;
 
     @NotBlank(message = "Bus is not null")
-    private String bus;
+    private Integer bus;
 
     @NotNull(message = "productID is not null")
     private Long productId;
