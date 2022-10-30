@@ -31,6 +31,15 @@ public class ColorController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get Color by id")
+                .data(colorService.getById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @PostMapping()
     public ResponseEntity<?> createBrand(@Valid @RequestBody ColorDto colorDto) {
