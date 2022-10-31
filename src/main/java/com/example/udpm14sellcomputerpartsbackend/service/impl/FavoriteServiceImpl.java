@@ -46,6 +46,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     public List<FavoriteDto> favoriteProducts(){
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+        if (uDetailService == null) {
+            throw new BadRequestException("Bạn chưa đăng nhâp");
+        }
 
         UserEntity userEntity = userRepository.findById(uDetailService.getId())
                 .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(),"Id account not found"));

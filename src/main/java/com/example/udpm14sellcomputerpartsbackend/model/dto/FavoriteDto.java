@@ -18,6 +18,7 @@ public class FavoriteDto {
     private StatusEnum status;
     private Long slyt;
     private String link;
+    private Long productId;
 
 }
 
