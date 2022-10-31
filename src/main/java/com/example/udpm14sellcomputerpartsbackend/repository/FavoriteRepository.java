@@ -1,7 +1,9 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.FavoriteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,11 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity,Long> {
 
     List<FavoriteEntity> findAllByAccountId(Long accountId);
 
-//    FavoriteEntity findById(Long id);
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto(" +
+            "favor.id,prod.name,prod.price,prod.quantity,prod.description,prod.status,count(favor)) FROM FavoriteEntity favor " +
+            "INNER JOIN ProductEntity prod ON favor.productId = prod.id group by favor.productId")
+    List<FavoriteDto> listProductFavorite();
+
+
 
 }
