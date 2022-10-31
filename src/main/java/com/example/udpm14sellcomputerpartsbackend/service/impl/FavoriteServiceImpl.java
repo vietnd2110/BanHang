@@ -4,8 +4,8 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 import com.example.udpm14sellcomputerpartsbackend.daos.ProductFavoriteDao;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
-import com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.FavoriteEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
@@ -43,19 +42,29 @@ public class FavoriteServiceImpl implements FavoriteService {
         this.productFavoriteDao = productFavoriteDao;
     }
 
-    @Override
-    public List<FavoriteEntity> favoriteEntityList() {
-        return favoriteRepository.findAll();
-    }
 
     @Override
     public List<FavoriteDto> favoriteProducts(){
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+
+        UserEntity userEntity = userRepository.findById(uDetailService.getId())
+                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(),"Id account not found"));
+
+        System.out.println(uDetailService.getId() + "ahah");
+
+
+        return favoriteRepository.listProductFavorite(userEntity.getId());
+    }
+
+
+    @Override
+    public List<?> listProductFavoritte(){
+        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
         if (uDetailService == null) {
             throw new BadRequestException("Bạn chưa đăng nhâp");
         }
-
-        return favoriteRepository.listProductFavorite();
+        return productFavoriteDao.productFavorites();
+    }
 
     @Override
     public FavoriteEntity findById(Long id){

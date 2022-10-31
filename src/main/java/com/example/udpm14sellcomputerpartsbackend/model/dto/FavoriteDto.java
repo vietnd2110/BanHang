@@ -11,18 +11,13 @@ import java.math.BigDecimal;
 public class FavoriteDto {
 
     private Long id;
-
     private String name;
-
     private BigDecimal price;
-
     private Integer quantity;
-
     private String description;
-
     private StatusEnum status;
-
     private Long slyt;
-
+    private String link;
 
 }
+
