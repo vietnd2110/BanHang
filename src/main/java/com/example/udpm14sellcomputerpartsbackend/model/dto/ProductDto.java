@@ -26,6 +26,7 @@ public class ProductDto {
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
+    private Float discount;
     private String description;
     private StatusEnum status;
     private Long categoryId;

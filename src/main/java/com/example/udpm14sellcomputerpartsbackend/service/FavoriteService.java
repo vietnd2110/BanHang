@@ -1,11 +1,14 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductFavoriteDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.FavoriteEntity;
 
 import java.util.List;
 
 public interface FavoriteService {
     List<FavoriteEntity> favoriteEntityList();
+
+    List<?> listProductFavoritte();
 
     FavoriteEntity findById(Long id);
 

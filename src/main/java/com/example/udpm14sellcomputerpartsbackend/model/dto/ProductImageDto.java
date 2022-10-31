@@ -30,6 +30,4 @@ public class ProductImageDto {
     private String imageLink;
     private String imageName;
 
-
-
 }
