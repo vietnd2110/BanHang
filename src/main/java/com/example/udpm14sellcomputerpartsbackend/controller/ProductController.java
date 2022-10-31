@@ -7,6 +7,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPaging
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @Operation(summary = "Lấy tất cả danh sách san phẩm", description = "Lấy tất cả danh sách san phẩm")
     @GetMapping("/list")
     public ResponseEntity<?> findAll() {
         List<ProductImageDto> productImageDtos = productService.findAll();
@@ -39,6 +41,7 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllByIdProduct(
             @PathVariable("id") Long id
@@ -52,6 +55,8 @@ public class ProductController {
                 .build();
         return ResponseEntity.ok(response);
     }
+
+
 
     @GetMapping("/search")
     public ResponseEntity<?> search(

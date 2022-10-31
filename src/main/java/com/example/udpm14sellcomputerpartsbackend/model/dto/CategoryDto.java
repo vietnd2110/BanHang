@@ -22,6 +22,8 @@ public class CategoryDto {
 
     private LocalDate createDate;
 
+    private String images;
+
     private LocalDate updateDate;
 
     private StatusEnum status;
