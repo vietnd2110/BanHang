@@ -4,7 +4,8 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 import com.example.udpm14sellcomputerpartsbackend.daos.ProductFavoriteDao;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
-import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductFavoriteDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto;
+
 import com.example.udpm14sellcomputerpartsbackend.model.entity.FavoriteEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
@@ -47,9 +49,13 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public List<?> listProductFavoritte(){
-        return productFavoriteDao.productFavorites();
-    }
+    public List<FavoriteDto> favoriteProducts(){
+        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+        if (uDetailService == null) {
+            throw new BadRequestException("Bạn chưa đăng nhâp");
+        }
+
+        return favoriteRepository.listProductFavorite();
 
     @Override
     public FavoriteEntity findById(Long id){
