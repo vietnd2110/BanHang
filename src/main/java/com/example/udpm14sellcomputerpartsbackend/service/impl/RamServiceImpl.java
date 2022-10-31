@@ -41,7 +41,7 @@ public class RamServiceImpl implements RamService {
 
     @Override
     public RamDto findById(Long id) {
-        RamEntity ram = RamEntity.findById(id)
+        RamEntity ram = ramRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Ram id not found: " + id));
         return modelMapper.map(ramRepository.findById(ram.getId()),RamDto.class);
     }
@@ -62,7 +62,7 @@ public class RamServiceImpl implements RamService {
         RamEntity findRam = ramRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Ram id not found: " + id));
         RamEntity ram = modelMapper.map(ramDto, RamEntity.class);
-        ramEntity.setId(findRam.getId());
+        ram.setId(findRam.getId());
 
         return modelMapper.map(ramRepository.save(ram),RamDto.class);
     }
