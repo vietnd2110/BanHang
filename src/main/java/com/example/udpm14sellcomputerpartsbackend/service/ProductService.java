@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    List<ProductImageDto> findAll();
+    Page<ProductImageDto> findAll(Integer page, Integer pageNumber);
 
-    List<ProductImageDto> findAllByIDProduct(Long productId);
+    Page<ProductImageDto> findAllByIDProduct(Long productId,Integer page, Integer pageNumber);
 
     Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber);
     Page<ProductImageDto> findByCategory(Long id, Integer pageSize, Integer pageNumber);
