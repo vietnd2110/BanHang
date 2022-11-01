@@ -29,31 +29,27 @@ public class ProductController {
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm", description = "Lấy tất cả danh sách san phẩm")
     @GetMapping("/list")
-    public ResponseEntity<?> findAll() {
-        List<ProductImageDto> productImageDtos = productService.findAll();
-        SampleResponse response = SampleResponse
-                .builder()
-                .success(true)
-                .message("Get All")
-                .data(productImageDtos)
-                .build();
-        System.out.println(productImageDtos + "ada");
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> findAll(
+            @RequestParam("page") Integer page,
+            @RequestParam("page-number") Integer pageNumber
+    ) {
+       DefaultPagingResponse defaultPagingResponse =
+               DefaultPagingResponse.success(productService.findAll(page,pageNumber));
+        return ResponseEntity.ok(defaultPagingResponse);
     }
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllByIdProduct(
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            @RequestParam("page") Integer page,
+            @RequestParam("page-number") Integer pageNumber
     ){
-        List<ProductImageDto> productImageDtos = productService.findAllByIDProduct(id);
-        SampleResponse response = SampleResponse
-                .builder()
-                .success(true)
-                .message("Get by id product success")
-                .data(productImageDtos)
-                .build();
-        return ResponseEntity.ok(response);
+      //  Page<ProductImageDto> productImageDtos = productService.findAllByIDProduct(id,page,pageSize);
+
+        DefaultPagingResponse pagingResponse =
+                DefaultPagingResponse.success(productService.findAllByIDProduct(id,page,pageNumber));
+        return ResponseEntity.ok(pagingResponse);
     }
 
 
