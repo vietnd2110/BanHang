@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.HDDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.GroupComponentEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.GroupComponentDto;
 
@@ -13,4 +14,6 @@ public interface GroupComponentService {
     GroupComponentDto updateComponent(Long id, GroupComponentDto groupComponent);
 
     void deleteComponent(Long id);
+
+    GroupComponentDto findById(Long id);
 }
