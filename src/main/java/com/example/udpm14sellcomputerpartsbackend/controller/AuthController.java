@@ -74,17 +74,6 @@ public class AuthController {
     }
 
     @Operation(summary = "Đăng Nhập Tài Khoản",description = "Đăng nhập tài khoản")
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Đăng nhập thành công");
-    }
     @PostMapping("/login-jwt")
     public ResponseEntity<?> loginJwt (@RequestBody LoginRequest loginRequest){
         // Xác thực thông tin người dùng Request lên
