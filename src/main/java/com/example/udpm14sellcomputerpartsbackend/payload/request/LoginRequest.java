@@ -5,7 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class GroupComponent {
+public class LoginRequest {
     @NotBlank
-    private String name;
+    private String username;
+    @NotBlank
+    private String password;
 }

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum OderStatusEnum {
+public enum OrderStatusEnum {
     CHOXACNHAN(0),
     DANGXULI(1),
     DANGVANCHUYEN(2),

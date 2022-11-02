@@ -27,4 +27,7 @@ public class OrderDetailEntity {
     @JsonProperty("order_id")
     private Long orderId;
 
+    @JsonProperty("user_id")
+    private Long userId;
+
 }

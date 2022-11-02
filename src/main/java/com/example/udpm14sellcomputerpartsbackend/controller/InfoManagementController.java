@@ -1,6 +1,8 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.InfoManagementDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.InfoMangementService;
 import org.springframework.http.HttpStatus;
@@ -8,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/management")
 public class InfoManagementController {
@@ -20,10 +24,11 @@ public class InfoManagementController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateAccount(@PathVariable("id") Long id, @RequestBody UserEntity userEntity) throws MessagingException {
+    public ResponseEntity<?> updateAccount(@PathVariable("id") Long id,
+                                           @Valid @RequestBody InfoManagementDto userEntity) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
-                .message("Thêm thông tin thành công")
+                .message("Sửa thông tin thành công")
                 .data(infoMangementService.updateInfo(id, userEntity))
                 .build();
         return  ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -37,5 +42,10 @@ public class InfoManagementController {
                 .data(infoMangementService.getInfoUser())
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findByUserId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(DefaultResponse.success(infoMangementService.findByUserId(id)));
     }
 }

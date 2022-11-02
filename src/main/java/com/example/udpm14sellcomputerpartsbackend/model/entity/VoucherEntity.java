@@ -7,9 +7,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "vochers")
+@Table(name = "vouchers")
 @Data
-public class VocherEntity {
+public class VoucherEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,9 @@ public class VocherEntity {
     private String code;
 
     @Column(name = "value")
+    private String value;
+
+    @Column(name = "detail")
     private String detail;
 
     private StatusEnum status;

@@ -1,7 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,7 +10,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reviews")
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReviewEntity {
 
     @Id
@@ -19,6 +22,9 @@ public class ReviewEntity {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "rating")
+    private Integer rating;
 
     @Column(name = "content")
     private String content;

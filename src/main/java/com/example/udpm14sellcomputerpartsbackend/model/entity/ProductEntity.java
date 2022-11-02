@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
+@Data
 public class ProductEntity {
 
     @Id
@@ -34,10 +36,6 @@ public class ProductEntity {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    @Column(name = "image")
-    private String image;
-
-    @Column(name = "discount")
     private Float discount;
 
     @Column(name = "description")
@@ -48,7 +46,7 @@ public class ProductEntity {
     @JsonProperty("category_id")
     private Long categoryId;
 
-    @JsonProperty("vocher_id")
-    private Long vocherId;
+    @JsonProperty("voucher_id")
+    private Long voucherId;
 
 }
