@@ -15,11 +15,11 @@ public interface CategoryService {
 
     Page<CategoryDto> getAllAndPage(Integer pageSize, Integer pageNumber);
 
-    CategoryDto create(CategoryDto categoryDto);
-
     String uploadImage(Long id, MultipartFile file);
 
-    CategoryDto update(Long id, CategoryDto categoryDto);
-
     void delete(Long id);
+
+    CategoryDto updateCategory(Long id, CategoryDto categoryDto, MultipartFile file);
+
+    CategoryDto createCategory(CategoryDto categoryDto, MultipartFile file);
 }

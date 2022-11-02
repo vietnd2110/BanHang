@@ -28,7 +28,4 @@ public class GroupComponentEntity {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    @JsonProperty("brand_id")
-    private Long brandId;
-
 }

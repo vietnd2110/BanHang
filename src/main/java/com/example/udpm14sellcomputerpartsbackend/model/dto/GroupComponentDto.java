@@ -8,6 +8,4 @@ import javax.validation.constraints.NotBlank;
 public class GroupComponentDto {
     @NotBlank
     private String name;
-
-    private Long brandId;
 }

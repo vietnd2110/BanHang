@@ -31,4 +31,5 @@ public class ProductDto {
     private StatusEnum status;
     private Long categoryId;
     private Long voucherId;
+    private Long brandId;
 }
