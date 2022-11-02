@@ -53,4 +53,15 @@ public class GroupComponentController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity getComponentById(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get Component By Id")
+                .data(groupComponentService.findById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

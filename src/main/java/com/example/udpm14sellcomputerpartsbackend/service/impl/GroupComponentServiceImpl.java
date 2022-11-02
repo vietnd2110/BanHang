@@ -1,13 +1,16 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.HDDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.BrandEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.GroupComponentEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.GroupComponentDto;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.HdEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.BrandRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.GroupComponentRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.GroupComponentService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,8 @@ public class GroupComponentServiceImpl implements GroupComponentService {
     private final GroupComponentRepository groupComponentRepository;
 
     private final BrandRepository brandRepository;
+
+    private final ModelMapper modelMapper;
 
     @Override
     public List<GroupComponentEntity> getAll() {
@@ -49,5 +54,12 @@ public class GroupComponentServiceImpl implements GroupComponentService {
         GroupComponentEntity findById = groupComponentRepository.findById(id).
                 orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Component id not found: " + id));
         groupComponentRepository.deleteById(findById.getId());
+    }
+
+    @Override
+    public GroupComponentDto findById(Long id) {
+        GroupComponentEntity findById = groupComponentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "HD id not found: " + id));
+        return modelMapper.map(groupComponentRepository.findById(findById.getId()), GroupComponentDto.class);
     }
 }
