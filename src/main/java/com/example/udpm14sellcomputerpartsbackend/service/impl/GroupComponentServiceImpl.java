@@ -36,7 +36,6 @@ public class GroupComponentServiceImpl implements GroupComponentService {
     public GroupComponentDto createComponent(GroupComponentDto groupComponent) {
         GroupComponentEntity groupComponentEntity = new GroupComponentEntity();
         groupComponentEntity.setName(groupComponent.getName());
-        groupComponentEntity.setBrandId(groupComponent.getBrandId());
         groupComponentRepository.save(groupComponentEntity);
         return groupComponent;
     }
@@ -45,8 +44,6 @@ public class GroupComponentServiceImpl implements GroupComponentService {
     public GroupComponentDto updateComponent(Long id, GroupComponentDto groupComponent) {
         GroupComponentEntity groupComponentEntity = groupComponentRepository.findById(id).
                 orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Component id not found: " + id));
-        BrandEntity brandEntity = brandRepository.findById(groupComponent.getBrandId()).
-                orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Brand id not found: " + groupComponent.getBrandId()));
         groupComponentEntity.setName(groupComponent.getName());
         groupComponentRepository.save(groupComponentEntity);
         return groupComponent;
