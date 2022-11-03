@@ -4,7 +4,9 @@ import com.example.udpm14sellcomputerpartsbackend.contants.RoleEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.StaffDto;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.RamEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.StaffEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.StaffManagementRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.StaffManagementService;
@@ -77,6 +79,13 @@ public class StaffManagementImpl implements StaffManagementService {
         StaffEntity staffEntity = staffManagementRepository.findById(id).
                 orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Staff id not found: " + id));
         staffManagementRepository.deleteById(staffEntity.getId());
+    }
+
+    @Override
+    public StaffDto findById(Long id) {
+        StaffEntity staffEntity = staffManagementRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Staff id not found: " + id));
+        return modelMapper.map(staffManagementRepository.findById(staffEntity.getId()), StaffDto.class);
     }
 
 }
