@@ -88,7 +88,7 @@ public class CategoryController {
             @RequestParam(required = false) MultipartFile file
     ) {
         return ResponseEntity.ok(DefaultResponse.success(categoryService.createCategory(categoryDto,file)));
-
+    }
 
     @Operation(summary = "Cập nhật mới thể loại", description = "Cập nhật thể loại")
     @PutMapping("/update/{id}")
