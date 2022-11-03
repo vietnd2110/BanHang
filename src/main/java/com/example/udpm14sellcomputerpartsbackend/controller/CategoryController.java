@@ -1,7 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
-import com.example.udpm14sellcomputerpartsbackend.model.entity.CategoryEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
@@ -89,7 +88,7 @@ public class CategoryController {
             @RequestParam(required = false) MultipartFile file
     ) {
         return ResponseEntity.ok(DefaultResponse.success(categoryService.createCategory(categoryDto,file)));
-    }
+
 
     @Operation(summary = "Cập nhật mới thể loại", description = "Cập nhật thể loại")
     @PutMapping("/update/{id}")

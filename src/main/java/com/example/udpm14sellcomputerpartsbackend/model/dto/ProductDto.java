@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.model.dto;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.RegexContants;
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.stereotype.Service;
