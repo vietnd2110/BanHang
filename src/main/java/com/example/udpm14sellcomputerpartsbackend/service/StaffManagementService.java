@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.StaffDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.StaffEntity;
 import org.springframework.data.domain.Page;
@@ -14,4 +15,6 @@ public interface StaffManagementService {
     StaffDto update(Long id, StaffDto staffDto);
 
     void delete(Long id);
+
+    StaffDto findById(Long id);
 }
