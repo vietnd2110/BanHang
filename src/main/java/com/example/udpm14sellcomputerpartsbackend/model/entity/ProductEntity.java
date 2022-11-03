@@ -49,4 +49,7 @@ public class ProductEntity {
     @JsonProperty("voucher_id")
     private Long voucherId;
 
+    @JsonProperty("brand_id")
+    private Long brandId;
+
 }

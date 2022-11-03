@@ -85,10 +85,11 @@ public class CategoryController {
     @Operation(summary = "Thêm mới thể loại", description = "Thêm mới thể loại")
     @PostMapping(value = "/create")
     public ResponseEntity<?> create(
-            @Valid @RequestBody CategoryDto categoryDto
+            @ModelAttribute CategoryDto categoryDto,
+            @RequestBody(required = false) MultipartFile file
             ) {
         return ResponseEntity.ok(
-                DefaultResponse.success(categoryService.create(categoryDto)
+                DefaultResponse.success(categoryService.create(categoryDto,file)
                 ));
     }
 
@@ -96,9 +97,10 @@ public class CategoryController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
-            @Valid @RequestBody CategoryDto categoryDto
+            @ModelAttribute CategoryDto categoryDto,
+            @RequestBody(required = false) MultipartFile file
     ) {
-        return ResponseEntity.ok(DefaultResponse.success(categoryService.update(id, categoryDto)));
+        return ResponseEntity.ok(DefaultResponse.success(categoryService.update(id, categoryDto,file)));
     }
 
 

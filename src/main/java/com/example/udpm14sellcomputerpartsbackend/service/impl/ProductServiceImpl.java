@@ -14,11 +14,8 @@ import com.example.udpm14sellcomputerpartsbackend.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -38,6 +35,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductImageDto> findAll(Integer page, Integer pageNumber) {
         return productRepository.listProduct(PageRequest.of(page,pageNumber));
+    }
+
+    @Override
+    public ProductEntity getOne(Long productId){
+        ProductEntity findById = productRepository.findById(productId)
+                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
+        return productRepository.findById(findById.getId()).get();
     }
 
     @Override
