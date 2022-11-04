@@ -27,10 +27,4 @@ public class GroupComponentEntity {
     @Column(name = "update_date")
     @UpdateTimestamp
     private LocalDateTime updateDate;
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> cc225aed2bd6b6b2e25e27d849873788b511e5b1
 }

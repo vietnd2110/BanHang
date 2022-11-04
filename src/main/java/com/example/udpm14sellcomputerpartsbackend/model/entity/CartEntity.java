@@ -17,11 +17,16 @@ public class CartEntity {
 
     private BigDecimal price;
 
+    private BigDecimal total;
+
     private Integer quantity;
 
     private String image;
 
     @JsonProperty("product_id")
     private Long productId;
+
+    @JsonProperty("user_id")
+    private Long userId;
 
 }
