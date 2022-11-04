@@ -62,7 +62,7 @@ public class ColorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateColor(@RequestBody ColorDto colorDto,@PathVariable Long id) {
+    public ResponseEntity<?> updateColor(@RequestBody @Valid ColorDto colorDto,@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Cập nhập color thành công")
