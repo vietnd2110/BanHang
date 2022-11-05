@@ -10,8 +10,8 @@ public class PsuDto {
 
     private Long id;
 
-    @NotBlank(message = "Wattage is not null")
-    private String wattage;
+    @NotNull(message = "Wattage is not null")
+    private Float wattage;
 
     @NotBlank(message = "size is not null")
     private String size;
