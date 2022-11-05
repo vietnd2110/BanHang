@@ -42,6 +42,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public ReviewEntity getById(Long id) {
+        return reviewRepository.findById(id).orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Review id not found:"+id));
+    }
+
+    @Override
     public List<ReviewEntity> reviewEntitiesProductId(Long productId){
         return reviewRepository.findAllByProductId(productId);
     }
