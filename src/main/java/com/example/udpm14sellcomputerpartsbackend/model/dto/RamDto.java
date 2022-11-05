@@ -9,10 +9,10 @@ public class RamDto {
 
     private Long id;
 
-     @NotNull(message = "DDR is not null")
+    @NotNull(message = "DDR is not null")
     private Integer ddr;
 
-   @NotNull(message = "Bus is not null")
+    @NotNull(message = "Bus is not null")
     private Integer bus;
 
     @NotNull(message = "productID is not null")
