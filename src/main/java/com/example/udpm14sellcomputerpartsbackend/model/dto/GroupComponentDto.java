@@ -11,7 +11,4 @@ public class GroupComponentDto {
 
     @NotBlank(message = "Name is not null")
     private String name;
-
-    @NotNull(message = "brandId is not null")
-    private Long brandId;
 }
