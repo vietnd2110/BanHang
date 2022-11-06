@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -63,7 +62,7 @@ public class CategoryController {
     @Operation(summary = "Lấy tất cả danh sách và phân trang về thể loại", description = "Lấy tất cả danh sách và phân trang về thể loại")
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
-            @RequestParam(value = "page") Integer pageSize,
+            @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
         Page<CategoryDto> page = categoryService.getAllAndPage(pageSize, pageNumber);
@@ -87,8 +86,8 @@ public class CategoryController {
             @ModelAttribute CategoryDto categoryDto,
             @RequestParam(required = false) MultipartFile file
     ) {
-        return ResponseEntity.ok(DefaultResponse.success(categoryService.createCategory(categoryDto,file)));
-
+        return ResponseEntity.ok(DefaultResponse.success(categoryService.createCategory(categoryDto, file)));
+    }
 
     @Operation(summary = "Cập nhật mới thể loại", description = "Cập nhật thể loại")
     @PutMapping("/update/{id}")
@@ -98,6 +97,7 @@ public class CategoryController {
             @RequestParam(required = false) MultipartFile file
     ) {
         return ResponseEntity.ok(DefaultResponse.success(categoryService.updateCategory(id, categoryDto,file)));
+
     }
 
 

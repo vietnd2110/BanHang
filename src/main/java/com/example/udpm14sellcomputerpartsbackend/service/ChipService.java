@@ -9,6 +9,8 @@ public interface ChipService {
 
     List<ChipDto> findAll();
 
+    Page<ChipDto> findAllAndPage(Integer page, Integer page_size);
+
     List<ChipDto> findAllByProduct(Long id);
 
     ChipDto findById(Long id);

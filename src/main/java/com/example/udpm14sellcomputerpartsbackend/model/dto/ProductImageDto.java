@@ -29,5 +29,7 @@ public class ProductImageDto {
     private StatusEnum status;
     private String imageLink;
     private String imageName;
+    private Long categoryId;
+
 
 }

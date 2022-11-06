@@ -30,7 +30,7 @@ public class ProductController {
     @Operation(summary = "Lấy tất cả danh sách san phẩm", description = "Lấy tất cả danh sách san phẩm")
     @GetMapping("/list")
     public ResponseEntity<?> findAll(
-            @RequestParam("page") Integer page,
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
             @RequestParam("page-number") Integer pageNumber
     ) {
        DefaultPagingResponse defaultPagingResponse =
@@ -50,7 +50,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllByIdProduct(
             @PathVariable("id") Long id,
-            @RequestParam("page") Integer page,
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
             @RequestParam("page-number") Integer pageNumber
     ){
       //  Page<ProductImageDto> productImageDtos = productService.findAllByIDProduct(id,page,pageSize);
@@ -64,23 +64,17 @@ public class ProductController {
 
     @GetMapping("/search")
     public ResponseEntity<?> search(
-            @RequestParam(value = "name") String name,
-            @RequestParam(value = "page") Integer pageSize,
+            @RequestParam(value = "name",required = false) String name,
+            @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
-        Page<ProductImageDto> search = productService.search(name, pageSize, pageNumber);
-        SampleResponse response = SampleResponse
-                .builder()
-                .success(true)
-                .message("Get All")
-                .data(search)
-                .build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(DefaultPagingResponse.success(
+                productService.search(name,pageSize,pageNumber)));
     }
 
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
-            @RequestParam(value = "page") Integer pageSize,
+            @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
         Page<ProductImageDto> page = productService.getAllAndPage(pageSize, pageNumber);
@@ -91,7 +85,7 @@ public class ProductController {
     @GetMapping("/category/{id}")
     public ResponseEntity<?> getAllByCategory(
             @PathVariable("id") Long cid,
-            @RequestParam(value = "page") Integer pageSize,
+            @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
         Page<ProductImageDto> page = productService.findByCategory(cid, pageSize, pageNumber);

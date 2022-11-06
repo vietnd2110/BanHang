@@ -8,6 +8,8 @@ import com.example.udpm14sellcomputerpartsbackend.repository.ChipRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.ChipService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,14 @@ public class ChipServiceImpl implements ChipService {
         return chipEntityList.stream().map(chipEntity -> modelMapper
                 .map(chipEntity, ChipDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public Page<ChipDto> findAllAndPage(Integer page, Integer page_size){
+        Page<ChipEntity> pages = chipRepository.findAll(PageRequest.of(page,page_size));
+        return pages.map(chipEntity -> modelMapper.map(chipEntity,ChipDto.class));
+    }
+
+
 
     @Override
     public List<ChipDto> findAllByProduct(Long id) {

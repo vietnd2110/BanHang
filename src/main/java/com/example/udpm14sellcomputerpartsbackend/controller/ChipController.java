@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.ChipService;
@@ -25,15 +26,24 @@ public class ChipController {
         this.chipService = chipService;
     }
 
-    @GetMapping
-    public ResponseEntity getAllChip() {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("Get All Chip")
-                .data(chipService.findAll())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllChipandPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam("page-number") Integer pageNumber
+    ){
+       return ResponseEntity.ok(DefaultPagingResponse.success(chipService.findAllAndPage(page,pageNumber)));
     }
+
+//    @GetMapping
+//    public ResponseEntity getAllChip() {
+//        SampleResponse response = SampleResponse.builder()
+//                .success(true)
+//                .message("Get All Chip")
+//                .data(chipService.findAll())
+//                .build();
+//        return ResponseEntity.status(HttpStatus.OK).body(response);
+//    }
     @GetMapping("/{id}")
     public ResponseEntity getChipById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

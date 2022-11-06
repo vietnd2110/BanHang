@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -53,7 +54,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber) {
-        return productRepository.searchByName(name, PageRequest.of(pageSize, pageNumber));
+
+        Page<ProductImageDto> page = null;
+        if(!StringUtils.hasText(name)){
+            page = productRepository.listProductAndPage(PageRequest.of(pageSize,pageNumber));
+        }else{
+            page = productRepository.searchByName(name, PageRequest.of(pageSize, pageNumber));
+        }
+        return page;
     }
 
     @Override
