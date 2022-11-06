@@ -63,7 +63,7 @@ public class CaseServiceImpl implements CaseService {
         CaseEntity find = caseRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Case id not found: "+id));
         CaseEntity caseEntity = modelMapper.map(caseDto, CaseEntity.class);
-        caseEntity.setId(caseDto.getId());
+        caseEntity.setId(find.getId());
         return modelMapper.map(caseRepository.save(caseEntity),CaseDto.class);
     }
 

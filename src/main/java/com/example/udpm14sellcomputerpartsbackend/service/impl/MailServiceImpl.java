@@ -19,7 +19,7 @@ public class MailServiceImpl implements MailService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine springTemplateEngine;
 
-    @Value("ducndph16372@fpt.edu.vn")
+    @Value("vietndph17667@fpt.edu.vn")
     private String render;
 
     public MailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine springTemplateEngine) {
@@ -50,7 +50,7 @@ public class MailServiceImpl implements MailService {
     public void forgotEmail(String to, String subject, String userName, String password) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom("duchvph17480@fpt.edu.vn");
+        helper.setFrom("vietndph17667@fpt.edu.vn");
         helper.setTo(to);
         helper.setSubject(subject);
         String htmlMsg = "<p><b>Dear you</b><br><b>Email:</b>" + to + "<br><b>Username:" +

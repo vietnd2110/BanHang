@@ -29,4 +29,7 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
             "WHERE image.product_id = :id")
     public List<ProductImageDto> listProductAndImages(Long id);
 
+    @Query("SELECT p FROM ImageEntity p WHERE p.product_id =?1")
+    public List<ImageEntity> getImageByProduct(Long id);
+
 }

@@ -5,6 +5,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultRespon
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.StaffManagementService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,4 +51,13 @@ public class StaffManagementController {
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getStaffById(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get Staff By Id")
+                .data(staffManagementService.findById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
