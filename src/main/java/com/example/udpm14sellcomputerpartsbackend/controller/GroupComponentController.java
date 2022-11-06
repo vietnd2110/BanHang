@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -19,23 +21,18 @@ public class GroupComponentController {
     private final GroupComponentService groupComponentService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> CreateComponent(@RequestBody GroupComponentDto groupComponent) {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("Thêm component thành công")
-                .data(groupComponentService.createComponent(groupComponent))
-                .build();
-        return  ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<?> create(
+            @Valid @RequestBody GroupComponentDto groupComponentDto
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(groupComponentService.createComponent(groupComponentDto)));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateComponent(@PathVariable("id") Long id, @RequestBody GroupComponentDto groupComponent) {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("Sửa component thành công")
-                .data(groupComponentService.updateComponent(id, groupComponent))
-                .build();
-        return  ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<?> update(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody GroupComponentDto groupComponentDto
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(groupComponentService.updateComponent(id, groupComponentDto)));
     }
 
     @DeleteMapping("/delete/{id}")
