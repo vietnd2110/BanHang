@@ -38,6 +38,14 @@ public class ProductController {
         return ResponseEntity.ok(defaultPagingResponse);
     }
 
+    @GetMapping("/get-one/{id}")
+    public ResponseEntity<?> getOne(
+            @PathVariable("id") Long id
+    ){
+       return ResponseEntity.ok(DefaultResponse.success(productService.getOne(id)));
+    }
+
+
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllByIdProduct(

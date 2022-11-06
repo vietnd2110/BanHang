@@ -44,7 +44,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     public Page<ProductImageDto> listFilterProductPriceASC(Pageable page);
 
 
-
     // lấy tất cả danh sách product và ảnh
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.name,product.price,product.quantity,product.createDate," +
@@ -60,8 +59,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "WHERE product.id = :id")
-    public Page<ProductImageDto> listProductId(Long id,Pageable page);
-
+    public Page<ProductImageDto> listProductId(Long id, Pageable page);
 
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -72,10 +70,18 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     public Page<ProductImageDto> listProductAndPage(Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name) " +
+            "product.id," +
+            "product.name," +
+            "product.price," +
+            "product.quantity," +
+            "product.createDate," +
+            "product.updateDate," +
+            "product.description," +
+            "product.status," +
+            "image.link," +
+            "image.name) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id where product.name like %:name%")
+            "INNER JOIN ProductEntity product ON image.product_id = product.id where CONCAT(product.name, product.price) like %:name%")
     public Page<ProductImageDto> searchByName(String name, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -95,5 +101,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 
     List<ProductEntity> findAllById(Long id);
+
 
 }

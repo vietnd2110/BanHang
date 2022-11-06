@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ReviewService {
     List<ReviewEntity> reviewEntities();
+    ReviewEntity getById(Long id);
 
     List<ReviewEntity> reviewEntitiesProductId(Long productId);
 

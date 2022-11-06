@@ -31,6 +31,15 @@ public class ColorController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity getColorById(@PathVariable Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Lấy thông tin Color ")
+                .data(colorService.getById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @PostMapping()
     public ResponseEntity<?> createBrand(@Valid @RequestBody ColorDto colorDto) {
@@ -53,7 +62,7 @@ public class ColorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateColor(@RequestBody ColorDto colorDto,@PathVariable Long id) {
+    public ResponseEntity<?> updateColor(@RequestBody @Valid ColorDto colorDto,@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Cập nhập color thành công")
