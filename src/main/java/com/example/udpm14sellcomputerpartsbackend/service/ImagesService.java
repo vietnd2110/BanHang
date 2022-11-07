@@ -4,16 +4,19 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ImageEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface ImagesService {
-    ImageEntity uploadImage(Long productId, MultipartFile file, String name);
+    ImageDto uploadImage(Long productId, MultipartFile file, ImageDto imageDto);
 
-    List<ImageProductDto> listImage();
+    ImageDto createImage(ImageDto imageDto, MultipartFile file);
 
-    List<ImageProductDto> listImagesId(Long id);
+    Page<ImageProductDto> listImage(Integer page, Integer pageSize);
+
+    ImageProductDto listImagesId(Long id);
 
     void deleteImage(Long id);
 

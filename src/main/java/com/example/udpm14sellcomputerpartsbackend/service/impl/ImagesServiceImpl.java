@@ -3,6 +3,8 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 import com.example.udpm14sellcomputerpartsbackend.contants.FolderContants;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ImageEntity;
@@ -10,6 +12,9 @@ import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.ImagesRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.ImagesService;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,15 +27,18 @@ public class ImagesServiceImpl implements ImagesService {
     private final ProductRepository productRepository;
     private final ImagesRepository imagesRepository;
     private final CloudinaryServiceImpl cloudinaryService;
+    private final ModelMapper modelMapper;
 
     public ImagesServiceImpl(
             ProductRepository productRepository,
             ImagesRepository imagesRepository,
-            CloudinaryServiceImpl cloudinaryService
+            CloudinaryServiceImpl cloudinaryService,
+            ModelMapper modelMapper
             ){
         this.productRepository = productRepository;
         this.imagesRepository = imagesRepository;
         this.cloudinaryService = cloudinaryService;
+        this.modelMapper = modelMapper;
     }
 
     public List<?> findAll(){
@@ -38,34 +46,68 @@ public class ImagesServiceImpl implements ImagesService {
     }
 
     @Override
-    public ImageEntity uploadImage(Long productId, MultipartFile file, String name){
-        if(file.isEmpty()) throw new BadRequestException("File is not empty");
-        if(name.isEmpty()) throw new BadRequestException("Name image is not empty");
+    public ImageDto uploadImage(Long id, MultipartFile file, ImageDto imageDto){
 
-        ProductEntity productEntity = productRepository.findById(productId)
-                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(),"Product id not found: "+ productId));
-        String link = cloudinaryService.uploadImage(file, FolderContants.PRODUCTS_IMAGES_FOLDER);
+        ImageEntity findByIdImage = imagesRepository.findById(imageDto.getId())
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(),"Id image not found: "+ id));
 
-        ImageEntity imageEntity = new ImageEntity();
-        System.out.println(productEntity.getId()+"da");
-        imageEntity.setLink(link);
-        imageEntity.setProduct_id(productId);
-        imageEntity.setName(name);
+        ProductEntity productEntity = productRepository.findById(imageDto.getId())
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(),"Product id not found: "+ imageDto.getProduct_id()));
 
-        return imagesRepository.save(imageEntity);
+
+        ImageEntity imageEntity = modelMapper.map(imageDto,ImageEntity.class);
+
+        String images = "";
+        if(file != null){
+            images = cloudinaryService.uploadImage(file,FolderContants.IMAGES_FOLDER);
+            imageEntity.setLink(images);
+        }else{
+            imageEntity.setLink("https://res.cloudinary.com/ducnd1306/image/upload/v1667716002/sell-computer/images/avatars/eibisxdae7a3cysgkhpl.jpg");
+        }
+
+        imageEntity.setId(id);
+        imageEntity.setProduct_id(imageDto.getProduct_id());
+        imageEntity.setName(imageDto.getName());
+
+        return  modelMapper.map(imagesRepository.save(imageEntity), ImageDto.class);
+    }
+
+
+    @Override
+    public ImageDto createImage(ImageDto imageDto, MultipartFile file){
+
+        ProductEntity product = productRepository.findById(imageDto.getProduct_id())
+                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(),"Id product not found: "+ imageDto.getProduct_id()));
+
+        ImageEntity imageEntity = modelMapper.map(imageDto,ImageEntity.class);
+
+
+        String images = "";
+        if(file != null){
+            images = cloudinaryService.uploadImage(file,FolderContants.IMAGES_FOLDER);
+            imageEntity.setLink(images);
+        }else{
+            imageEntity.setLink("https://res.cloudinary.com/ducnd1306/image/upload/v1667716002/sell-computer/images/avatars/eibisxdae7a3cysgkhpl.jpg");
+        }
+        imageEntity.setName(imageDto.getName());
+        imageEntity.setProduct_id(imageDto.getProduct_id());
+
+        return modelMapper.map(imagesRepository.save(imageEntity), ImageDto.class);
     }
 
     @Override
-    public List<ImageProductDto> listImage(){
-        return imagesRepository.listImage();
+    public Page<ImageProductDto> listImage(Integer page, Integer pageSize){
+        return imagesRepository.listImage(PageRequest.of(page,pageSize));
     }
 
     @Override
-    public List<ImageProductDto> listImagesId(Long id){
+    public ImageProductDto listImagesId(Long id){
         ImageEntity imageEntity = imagesRepository.findById(id).
                 orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(),"Image id not found: " + id));
         return imagesRepository.listImagesId(id);
     }
+
+
 
 
 

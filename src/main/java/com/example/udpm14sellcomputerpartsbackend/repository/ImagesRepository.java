@@ -3,6 +3,8 @@ package com.example.udpm14sellcomputerpartsbackend.repository;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ImageEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,12 +16,15 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ImageProductDto(image.id,image.name,image.link,product.id,product.name) " +
             "FROM ImageEntity image INNER JOIN ProductEntity product ON image.product_id = product.id")
-    public List<ImageProductDto> listImage();
+    public Page<ImageProductDto> listImage(Pageable page);
+
+
+
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ImageProductDto(image.id,image.name,image.link,product.id,product.name) " +
             "FROM ImageEntity image INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "WHERE image.id = :id")
-    public List<ImageProductDto> listImagesId(Long id);
+    ImageProductDto listImagesId(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.name,product.price,product.quantity,product.createDate," +
