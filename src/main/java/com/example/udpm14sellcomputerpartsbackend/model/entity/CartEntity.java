@@ -15,6 +15,8 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     private BigDecimal price;
 
     private BigDecimal total;

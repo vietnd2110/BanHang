@@ -32,6 +32,15 @@ public class CartController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCartById(@PathVariable("id") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Lấy thông tin Cart theo id")
+                .data(cartService.getById(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
     @Operation(summary = "lấy thông tin tổng tiền giỏ hàng và số lượng sản phẩn trong giỏ hàng", description = "ahihi")
     @GetMapping("/sumTotalAndQuantity")
     public ResponseEntity<?> sumTotalAndQuantity() {
