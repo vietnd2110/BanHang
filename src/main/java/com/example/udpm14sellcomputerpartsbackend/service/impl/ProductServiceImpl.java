@@ -4,9 +4,11 @@ import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.BrandEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.CategoryEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.VoucherEntity;
+import com.example.udpm14sellcomputerpartsbackend.repository.BrandRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.CategoryRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.VoucherRepository;
@@ -22,12 +24,15 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+
+    private final BrandRepository brandRepository;
     private final VoucherRepository voucherRepository;
     private final ModelMapper modelMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, VoucherRepository voucherRepository, ModelMapper modelMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository,BrandRepository  brandRepository,VoucherRepository voucherRepository, ModelMapper modelMapper) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.brandRepository = brandRepository;
         this.voucherRepository = voucherRepository;
         this.modelMapper = modelMapper;
     }
@@ -61,6 +66,13 @@ public class ProductServiceImpl implements ProductService {
         CategoryEntity categoryEntity = categoryRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found:"+id));
         return productRepository.findByCategory(id, PageRequest.of(pageSize, pageNumber));
+    }
+
+    @Override
+    public Page<ProductImageDto> findByBrand(Long id, Integer pageSize, Integer pageNumber) {
+        BrandEntity brandEntity = brandRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Brand id not found:" + id));
+        return productRepository.findByBrand(id, PageRequest.of(pageSize, pageNumber));
     }
 
 
