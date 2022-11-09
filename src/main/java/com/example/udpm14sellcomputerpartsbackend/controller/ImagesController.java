@@ -2,6 +2,8 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.ImageEntity;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.ImagesService;
@@ -25,38 +27,50 @@ public class ImagesController {
 
     private final ImagesService imagesService;
 
-    public ImagesController(ImagesService imagesService){
+    public ImagesController(ImagesService imagesService) {
         this.imagesService = imagesService;
     }
 
     @Operation(summary = "Danh sách images", description = "Danh sách image")
     @GetMapping("/list")
-    public ResponseEntity<?> findAll(){
-        return ResponseEntity.ok(DefaultResponse.success(imagesService.listImage()));
+    public ResponseEntity<?> findAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "page-number", required = false) Integer pageNumber
+    ) {
+        return ResponseEntity.ok(DefaultPagingResponse.success(imagesService.listImage(page, pageNumber)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllById(
             @PathVariable("id") Long id
-    ){
+    ) {
         return ResponseEntity.ok(DefaultResponse.success(imagesService.listImagesId(id)));
     }
 
     @Operation(summary = "Thêm mới images theo id của product", description = "Thêm mới images theo id của product")
-    @PostMapping(value = "/upload-image/{id}",consumes = "multipart/form-data")
+    @PutMapping(value = "/upload-image/{id}", consumes = "multipart/form-data")
     public ResponseEntity<?> uploadImage(
             @PathVariable("id") Long productId,
-            @Valid @RequestBody  MultipartFile file,
-            @RequestParam("name") String name
-    ){
-        return ResponseEntity.ok(DefaultResponse.success(imagesService.uploadImage(productId, file, name)));
+            @RequestParam(required = false) MultipartFile file,
+            @ModelAttribute ImageDto imageDto
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(imagesService.uploadImage(productId, file, imageDto)));
     }
 
     @Operation(summary = "Xóa images", description = "Xóa images")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteImage(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteImage(@PathVariable("id") Long id) {
         imagesService.deleteImage(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success !"));
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> create(
+            @ModelAttribute ImageDto imageDto,
+            @RequestParam(required = false) MultipartFile file
+    ){
+        return ResponseEntity.ok(
+                DefaultResponse.success(imagesService.createImage(imageDto,file)));
     }
 
 
@@ -64,7 +78,7 @@ public class ImagesController {
     @GetMapping("/product-id/{id}")
     public ResponseEntity<?> findAllByProductAndImages(
             @PathVariable("id") Long id
-    ){
+    ) {
         List<ProductImageDto> productImageDtos = imagesService.findAllByProductAndImages(id);
         SampleResponse response = SampleResponse
                 .builder()

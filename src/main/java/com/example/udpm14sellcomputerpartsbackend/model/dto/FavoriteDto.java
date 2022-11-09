@@ -19,6 +19,7 @@ public class FavoriteDto {
     private Long slyt;
     private String link;
     private Long productId;
+    private Long categoryId;
 
 }
 
