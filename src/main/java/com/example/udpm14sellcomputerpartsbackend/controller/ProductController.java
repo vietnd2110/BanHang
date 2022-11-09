@@ -100,6 +100,18 @@ public class ProductController {
 
     }
 
+    @GetMapping("/brand/{id}")
+    public ResponseEntity<?> getAllByBrand(
+            @PathVariable("id") Long bid,
+            @RequestParam(value = "page") Integer pageSize,
+            @RequestParam(value = "page-number") Integer pageNumber
+    ) {
+        Page<ProductImageDto> page = productService.findByBrand(bid, pageSize, pageNumber);
+
+        return ResponseEntity.ok(DefaultPagingResponse.success(page));
+
+    }
+
     @PutMapping("update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
         SampleResponse response = SampleResponse.builder()
