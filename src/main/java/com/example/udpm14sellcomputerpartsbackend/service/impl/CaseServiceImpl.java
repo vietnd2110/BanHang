@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CaseDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.CaseEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.CaseRepository;
@@ -25,6 +26,13 @@ public class CaseServiceImpl implements CaseService {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
     }
+
+
+    @Override
+    public List<ProductCaseDto> listProductCase(Long cateId){
+        return caseRepository.listProductCase(cateId);
+    }
+
 
     @Override
     public List<CaseDto> getByProductId(Long id) {
