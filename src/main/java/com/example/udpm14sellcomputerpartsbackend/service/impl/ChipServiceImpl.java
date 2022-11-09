@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductChipDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ChipEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.ChipRepository;
@@ -26,6 +27,13 @@ public class ChipServiceImpl implements ChipService {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
     }
+
+    //list product chip
+    @Override
+    public List<ProductChipDto> listProductChip(Long cateId){
+        return chipRepository.listProductChip(cateId);
+    }
+
 
     @Override
     public List<ChipDto> findAll() {

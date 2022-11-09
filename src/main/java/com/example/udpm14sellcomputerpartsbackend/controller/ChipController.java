@@ -27,6 +27,13 @@ public class ChipController {
     }
 
 
+    @GetMapping("/product-chip/{id}")
+    public ResponseEntity<?> listProductChip(
+            @PathVariable("id") Long categoryId
+    ){
+        return ResponseEntity.ok(DefaultResponse.success(chipService.listProductChip(categoryId)));
+    }
+
     @GetMapping("")
     public ResponseEntity<?> getAllChipandPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,

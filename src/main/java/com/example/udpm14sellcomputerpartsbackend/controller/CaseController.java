@@ -27,6 +27,13 @@ public class CaseController {
     }
 
 
+    @GetMapping("/product-case/{id}")
+    public ResponseEntity<?> listProductChip(
+            @PathVariable("id") Long categoryId
+    ){
+        return ResponseEntity.ok(DefaultResponse.success(caseService.listProductCase(categoryId)));
+    }
+
     @GetMapping
     public ResponseEntity<?> getAllCase() {
         SampleResponse response = SampleResponse.builder()
