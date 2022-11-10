@@ -11,6 +11,24 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@SqlResultSetMapping(
+        name = "ProductImageDto",
+        classes =
+        @ConstructorResult(
+                targetClass = ProductImageDto.class,
+                columns = {
+                        @ColumnResult(name = "id", type = Long.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "price", type = BigDecimal.class),
+                        @ColumnResult(name = "quantity", type = Integer.class),
+                        @ColumnResult(name = "createDate", type = LocalDateTime.class),
+                        @ColumnResult(name = "updateDate", type = LocalDateTime.class),
+                        @ColumnResult(name = "description", type = String.class),
+                        @ColumnResult(name = "status", type = StatusEnum.class),
+                        @ColumnResult(name = "imageLink", type = String.class),
+                        @ColumnResult(name = "imageName", type = String.class),
+                        @ColumnResult(name = "categoryId", type = Long.class),
+                }))
 @Entity
 @Setter
 @Getter

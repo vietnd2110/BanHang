@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.FolderContants;
+import com.example.udpm14sellcomputerpartsbackend.daos.ImageProductDao;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
@@ -28,17 +29,20 @@ public class ImagesServiceImpl implements ImagesService {
     private final ImagesRepository imagesRepository;
     private final CloudinaryServiceImpl cloudinaryService;
     private final ModelMapper modelMapper;
+    private final ImageProductDao imageProductDao;
 
     public ImagesServiceImpl(
             ProductRepository productRepository,
             ImagesRepository imagesRepository,
             CloudinaryServiceImpl cloudinaryService,
-            ModelMapper modelMapper
+            ModelMapper modelMapper,
+            ImageProductDao imageProductDao
             ){
         this.productRepository = productRepository;
         this.imagesRepository = imagesRepository;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
+        this.imageProductDao = imageProductDao;
     }
 
     public List<?> findAll(){
@@ -97,7 +101,7 @@ public class ImagesServiceImpl implements ImagesService {
 
     @Override
     public Page<ImageProductDto> listImage(Integer page, Integer pageSize){
-        return imagesRepository.listImage(PageRequest.of(page,pageSize));
+        return imageProductDao.imageProduct(PageRequest.of(page,pageSize));
     }
 
     @Override
@@ -106,9 +110,6 @@ public class ImagesServiceImpl implements ImagesService {
                 orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(),"Image id not found: " + id));
         return imagesRepository.listImagesId(id);
     }
-
-
-
 
 
     @Override

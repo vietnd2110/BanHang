@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.daos.ProductImageDao;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
@@ -29,18 +30,25 @@ public class ProductServiceImpl implements ProductService {
     private final BrandRepository brandRepository;
     private final VoucherRepository voucherRepository;
     private final ModelMapper modelMapper;
+    private final ProductImageDao productImageDao;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository,BrandRepository  brandRepository,VoucherRepository voucherRepository, ModelMapper modelMapper) {
+    public ProductServiceImpl(ProductRepository productRepository,
+                              CategoryRepository categoryRepository,
+                              VoucherRepository voucherRepository,
+                              ModelMapper modelMapper,
+                              ProductImageDao productImageDao) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
         this.voucherRepository = voucherRepository;
         this.modelMapper = modelMapper;
+        this.productImageDao = productImageDao;
     }
 
     @Override
-    public Page<ProductImageDto> findAll(Integer page, Integer pageNumber) {
-        return productRepository.listProduct(PageRequest.of(page,pageNumber));
+    public Page<ProductEntity> findAll(Integer page, Integer pageNumber) {
+//        return productImageDao.productImage(PageRequest.of(page,pageNumber));
+        return productRepository.findAll(PageRequest.of(page,pageNumber));
     }
 
     @Override
