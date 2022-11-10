@@ -28,10 +28,17 @@ public class CaseController {
 
 
     @GetMapping("/product-case/{id}")
-    public ResponseEntity<?> listProductChip(
+    public ResponseEntity<?> listProductCase(
             @PathVariable("id") Long categoryId
     ){
         return ResponseEntity.ok(DefaultResponse.success(caseService.listProductCase(categoryId)));
+    }
+
+    @GetMapping("/get-one/{id}")
+    public ResponseEntity<?> getOneProductCase(
+            @PathVariable("id") Long productId
+    ){
+        return ResponseEntity.ok(DefaultResponse.success(caseService.getOneProductCase(productId)));
     }
 
     @GetMapping
