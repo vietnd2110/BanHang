@@ -48,6 +48,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public CartEntity getById(Long id) {
+        return cartRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Cart id not found: " + id));
+    }
+
+    @Override
     public CartResponse sumTotalPriceAndQuantity(Long id) {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
         CartResponse cartResponse = new CartResponse();
@@ -69,6 +75,7 @@ public class CartServiceImpl implements CartService {
             if (cart == null) {
                 cart = new CartEntity();
                 cart.setUserId(uDetailService.getId());
+                cart.setName(productEntity.getName());
                 cart.setProductId(productEntity.getId());
                 cart.setImage(imageEntity.get(0).getLink());
                 cart.setPrice(productEntity.getPrice());
@@ -78,7 +85,7 @@ public class CartServiceImpl implements CartService {
             } else {//Neu san pham da co trong database tang so luong them 1
                 cart.setQuantity(cart.getQuantity() + 1);
                 if (productEntity.getQuantity() < cart.getQuantity()) {
-                    throw new BadRequestException("Bạn chỉ có thể mua tối đa :"+productEntity.getQuantity()+" của sản phẩm này");
+                    throw new BadRequestException("Bạn chỉ có thể mua tối đa :" + productEntity.getQuantity() + " của sản phẩm này");
                 } else {
                     Double price = Double.parseDouble(cart.getPrice().toString());
                     cart.setTotal(BigDecimal.valueOf(price * cart.getQuantity()));
@@ -99,7 +106,7 @@ public class CartServiceImpl implements CartService {
         }
         ProductEntity findQuantity = productRepository.findById(idProduct).get();
         if (findQuantity.getQuantity() < quantity) {
-            throw new BadRequestException("Bạn chỉ có thể mua tối đa :"+findQuantity.getQuantity()+" của sản phẩm này");
+            throw new BadRequestException("Bạn chỉ có thể mua tối đa :" + findQuantity.getQuantity() + " của sản phẩm này");
         }
         cart.setQuantity(quantity);
         Double price = Double.parseDouble(cart.getPrice().toString());

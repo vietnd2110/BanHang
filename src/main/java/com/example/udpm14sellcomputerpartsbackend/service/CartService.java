@@ -8,9 +8,16 @@ import java.util.List;
 
 public interface CartService {
     List<CartEntity> getAllByUser(Long id);
+
     List<CartEntity> getAllCart();
+
+    CartEntity getById(Long id);
+
     CartResponse sumTotalPriceAndQuantity(Long id);
+
     CartDto addToCart(CartDto cartDto);
+
     CartDto updateQuantity(Long idProduct, Integer quantity);
-    void delete (Long id);
+
+    void delete(Long id);
 }

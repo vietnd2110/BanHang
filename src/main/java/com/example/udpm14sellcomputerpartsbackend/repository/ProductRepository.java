@@ -108,6 +108,20 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "INNER JOIN ProductEntity product ON image.product_id = product.id where product.categoryId=:id")
     public Page<ProductImageDto> findByCategory(Long id, Pageable pageable);
 
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
+            "product.id," +
+            "product.name," +
+            "product.price," +
+            "product.quantity," +
+            "product.createDate," +
+            "product.updateDate," +
+            "product.description," +
+            "product.status," +
+            "image.link," +
+            "image.name) " +
+            "FROM ImageEntity image " +
+            "INNER JOIN ProductEntity product ON image.product_id = product.id where product.brandId=:id")
+    public Page<ProductImageDto> findByBrand(Long id, Pageable pageable);
 
     List<ProductEntity> findAllById(Long id);
 

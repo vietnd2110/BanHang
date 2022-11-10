@@ -13,7 +13,10 @@ public interface ProductService {
     Page<ProductImageDto> findAllByIDProduct(Long productId, Integer page, Integer pageNumber);
 
     Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber);
+
     Page<ProductImageDto> findByCategory(Long id, Integer pageSize, Integer pageNumber);
+
+    Page<ProductImageDto> findByBrand(Long id, Integer pageSize, Integer pageNumber);
 
     Page<ProductImageDto> getAllAndPage(Integer pageSize, Integer pageNumber);
 
