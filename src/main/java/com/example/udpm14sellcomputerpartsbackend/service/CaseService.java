@@ -8,6 +8,8 @@ import java.util.List;
 public interface CaseService {
     List<ProductCaseDto> listProductCase(Long cateId);
 
+    ProductCaseDto getOneProductCase(Long productId);
+
     List<CaseDto> getByProductId(Long id);
     CaseDto getById(Long id);
     List<CaseDto> getAll();

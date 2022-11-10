@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
@@ -109,7 +108,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.description," +
             "product.status," +
             "image.link," +
-            "image.name) " +
+            "image.name," +
+            "product.categoryId) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id where product.brandId=:id")
     public Page<ProductImageDto> findByBrand(Long id, Pageable pageable);

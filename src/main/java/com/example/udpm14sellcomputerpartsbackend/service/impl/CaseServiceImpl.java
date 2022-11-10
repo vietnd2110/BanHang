@@ -33,6 +33,11 @@ public class CaseServiceImpl implements CaseService {
         return caseRepository.listProductCase(cateId);
     }
 
+    @Override
+    public ProductCaseDto getOneProductCase(Long productId){
+        return caseRepository.getOneProductCase(productId);
+    }
+
 
     @Override
     public List<CaseDto> getByProductId(Long id) {

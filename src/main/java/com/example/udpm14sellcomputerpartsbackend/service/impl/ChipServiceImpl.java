@@ -34,6 +34,10 @@ public class ChipServiceImpl implements ChipService {
         return chipRepository.listProductChip(cateId);
     }
 
+    @Override
+    public ProductChipDto getOneProductChip(Long productId){
+        return chipRepository.getOneProductChip(productId);
+    }
 
     @Override
     public List<ChipDto> findAll() {

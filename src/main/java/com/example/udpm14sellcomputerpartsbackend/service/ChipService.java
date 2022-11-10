@@ -11,6 +11,8 @@ public interface ChipService {
     //list product chip
     List<ProductChipDto> listProductChip(Long cateId);
 
+    ProductChipDto getOneProductChip(Long productId);
+
     List<ChipDto> findAll();
 
     Page<ChipDto> findAllAndPage(Integer page, Integer page_size);
