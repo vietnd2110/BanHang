@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
+
 
     // filter theo gia tung khoang BETWEEN .. AND ...
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -45,12 +45,21 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 
     // lấy tất cả danh sách product và ảnh
+//    @Query(value = " SELECT " +
+//            " pro.id,pro.name,pro.price,pro.quantity,pro.create_date,pro.update_date, " +
+//            " pro.description,pro.status,image.link,image.name as imageName,pro.category_id " +
+//            " FROM images image " +
+//            " RIGHT JOIN products pro ON image.product_id = pro.id ",nativeQuery = true)
+//     Page<ProductAndImages> listProduct(Pageable page);
+
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.name,product.price,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id ")
     public Page<ProductImageDto> listProduct(Pageable page);
+
+
 
     //lấy tất cả danh sách product và ảnh theo id của product
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +

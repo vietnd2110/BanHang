@@ -5,11 +5,8 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-import java.util.Optional;
-
 public interface ProductService {
-    Page<ProductImageDto> findAll(Integer page, Integer pageNumber);
+    Page<ProductEntity> findAll(Integer page, Integer pageNumber);
 
     ProductEntity getOne(Long productId);
 

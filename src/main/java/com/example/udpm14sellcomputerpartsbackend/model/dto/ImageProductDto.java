@@ -7,6 +7,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+
+@SqlResultSetMapping(
+        name = "ImageProductDto",
+        classes =
+        @ConstructorResult(
+                targetClass = ImageProductDto.class,
+                columns = {
+                        @ColumnResult(name = "id", type = Long.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "link", type = String.class),
+                        @ColumnResult(name = "productId", type = Long.class),
+                        @ColumnResult(name = "productName", type = String.class),
+                }))
 
 @Entity
 @Setter
