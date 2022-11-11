@@ -35,6 +35,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceImpl(ProductRepository productRepository,
                               CategoryRepository categoryRepository,
                               VoucherRepository voucherRepository,
+                              BrandRepository brandRepository,
                               ModelMapper modelMapper,
                               ProductImageDao productImageDao) {
         this.productRepository = productRepository;

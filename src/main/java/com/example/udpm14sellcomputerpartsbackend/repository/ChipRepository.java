@@ -25,7 +25,7 @@ public interface ChipRepository extends JpaRepository<ChipEntity, Long> {
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
             "INNER JOIN ChipEntity chip ON chip.productId = pro.id " +
             "WHERE pro.categoryId = :cateId")
-    List<ProductChipDto> listProductChip(Long cateId);
+    Page<ProductChipDto> listProductChip(Long cateId,Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductChipDto(" +
             "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
@@ -33,8 +33,9 @@ public interface ChipRepository extends JpaRepository<ChipEntity, Long> {
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
             "INNER JOIN ChipEntity chip ON chip.productId = pro.id " +
-            "WHERE pro.id = :proId")
-    ProductChipDto getOneProductChip(Long proId);
+            "WHERE pro.id = :proId " +
+            "GROUP BY pro.id")
+    List<ProductChipDto> getOneProductChip(Long proId);
 
 
 

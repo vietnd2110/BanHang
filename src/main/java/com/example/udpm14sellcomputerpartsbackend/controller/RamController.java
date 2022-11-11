@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.RamService;
@@ -22,6 +23,26 @@ import javax.validation.Valid;
 )
 public class RamController {
     private final RamService ramService;
+
+
+
+    @GetMapping("/product-ram/{id}")
+    public ResponseEntity getAllProductRamWithCategoryId(
+            @PathVariable("id") Long categoryId,
+             @RequestParam(value = "page",defaultValue = "0") Integer page,
+            @RequestParam(value = "page-size") Integer pageSize
+    ) {
+        return ResponseEntity.ok(DefaultPagingResponse.success(ramService.getAllProductRamWithCategoryId(categoryId,page,pageSize)));
+    }
+
+    @GetMapping("/get-one/{id}")
+    public ResponseEntity getOneProductRamWithProductId(
+            @PathVariable("id") Long productId
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(ramService.getOneProductRamWithProductId(productId)));
+    }
+
+
 
     @GetMapping
     public ResponseEntity getAllHd() {

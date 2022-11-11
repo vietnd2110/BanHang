@@ -9,6 +9,8 @@ import com.example.udpm14sellcomputerpartsbackend.repository.CaseRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.CaseService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +31,12 @@ public class CaseServiceImpl implements CaseService {
 
 
     @Override
-    public List<ProductCaseDto> listProductCase(Long cateId){
-        return caseRepository.listProductCase(cateId);
+    public Page<ProductCaseDto> listProductCase(Long cateId, Integer page, Integer pageSize){
+        return caseRepository.listProductCase(cateId, PageRequest.of(page,pageSize));
     }
 
     @Override
-    public ProductCaseDto getOneProductCase(Long productId){
+    public   List<ProductCaseDto> getOneProductCase(Long productId){
         return caseRepository.getOneProductCase(productId);
     }
 
