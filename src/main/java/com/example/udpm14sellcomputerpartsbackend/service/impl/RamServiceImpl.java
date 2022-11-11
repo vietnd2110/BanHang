@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductRamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.RamEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
@@ -9,6 +10,8 @@ import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.RamService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,17 @@ public class RamServiceImpl implements RamService {
 
         return ramEntityList.stream().map(ramEntity -> modelMapper
                 .map(ramEntity, RamDto.class)).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public Page<ProductRamDto> getAllProductRamWithCategoryId(Long categoryId, Integer page, Integer pageSize){
+        return ramRepository.listProductRam(categoryId, PageRequest.of(page,pageSize));
+    }
+
+    @Override
+    public List<ProductRamDto> getOneProductRamWithProductId(Long productId){
+        return ramRepository.getOneProductRam(productId);
     }
 
     @Override

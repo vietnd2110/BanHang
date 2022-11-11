@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.VgaDto;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.CaseService;
@@ -29,9 +30,11 @@ public class CaseController {
 
     @GetMapping("/product-case/{id}")
     public ResponseEntity<?> listProductCase(
-            @PathVariable("id") Long categoryId
+            @PathVariable("id") Long categoryId,
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
+            @RequestParam(value = "page-size") Integer pageSize
     ){
-        return ResponseEntity.ok(DefaultResponse.success(caseService.listProductCase(categoryId)));
+        return ResponseEntity.ok(DefaultPagingResponse.success(caseService.listProductCase(categoryId,page,pageSize)));
     }
 
     @GetMapping("/get-one/{id}")

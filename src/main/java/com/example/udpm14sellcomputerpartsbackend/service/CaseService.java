@@ -2,13 +2,14 @@ package com.example.udpm14sellcomputerpartsbackend.service;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface CaseService {
-    List<ProductCaseDto> listProductCase(Long cateId);
+    Page<ProductCaseDto> listProductCase(Long cateId, Integer page, Integer pageSize);
 
-    ProductCaseDto getOneProductCase(Long productId);
+    List<ProductCaseDto> getOneProductCase(Long productId);
 
     List<CaseDto> getByProductId(Long id);
     CaseDto getById(Long id);

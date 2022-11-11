@@ -9,9 +9,9 @@ import java.util.List;
 public interface ChipService {
 
     //list product chip
-    List<ProductChipDto> listProductChip(Long cateId);
+    Page<ProductChipDto> listProductChip(Long cateId,Integer page, Integer pageSize);
 
-    ProductChipDto getOneProductChip(Long productId);
+    List<ProductChipDto> getOneProductChip(Long productId);
 
     List<ChipDto> findAll();
 
