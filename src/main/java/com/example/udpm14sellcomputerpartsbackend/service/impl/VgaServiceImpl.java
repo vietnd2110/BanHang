@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductVgaDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.VgaDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.VgaEntity;
@@ -8,6 +9,8 @@ import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.VgaRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.VgaService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,17 @@ public class VgaServiceImpl implements VgaService {
     private final VgaRepository vgaRepository;
     private final ModelMapper modelMapper;
     private final ProductRepository productRepository;
+
+
+    @Override
+    public Page<ProductVgaDto> listProductVga(Long cateId, Integer page, Integer pageSize){
+        return vgaRepository.listProductVga(cateId, PageRequest.of(page,pageSize));
+    }
+
+    @Override
+    public List<ProductVgaDto> getOneProductVga(Long productId){
+        return vgaRepository.getOneProductVga(productId);
+    }
 
     public VgaServiceImpl(VgaRepository vgaRepository, ModelMapper modelMapper, ProductRepository productRepository) {
         this.vgaRepository = vgaRepository;

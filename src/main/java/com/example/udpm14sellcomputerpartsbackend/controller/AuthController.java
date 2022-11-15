@@ -52,13 +52,14 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerAccount(@RequestBody UserRegister userRegister) throws MessagingException {
         return ResponseEntity.ok(
-                DefaultResponse.success(authService.registerAccount(userRegister, new StringBuffer("http://localhost:8080/api/v1/auth/register/verifi?code="))));
+                DefaultResponse.success(authService.registerAccount(userRegister, new StringBuffer("http://localhost:4200/register-verify/"))));
     }
 
     @Operation(summary = "Xác nhận email", description = "́Xác nhận email")
     @GetMapping("/register/verify")
     public ResponseEntity<?> verifiCode(@RequestParam("code") String code) {
-        return ResponseEntity.ok(authService.verifiCode(code));
+        return ResponseEntity.ok(
+                DefaultResponse.success(authService.verifiCode(code)));
     }
 
     @Operation(summary = "Đổi mật khẩu", description = "Đổi mật khẩu")

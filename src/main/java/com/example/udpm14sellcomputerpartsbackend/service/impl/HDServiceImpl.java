@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.HDDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductHdDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.HdEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.HDRepository;
@@ -9,6 +10,8 @@ import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.HDService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,17 @@ public class HDServiceImpl implements HDService {
     private final HDRepository hdRepository;
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+
+
+    @Override
+    public Page<ProductHdDto> listProductHd(Long cateId, Integer page, Integer pageSize){
+        return hdRepository.listProductHd(cateId, PageRequest.of(page,pageSize));
+    }
+
+    @Override
+    public List<ProductHdDto> getOneProductHd(Long productId){
+        return hdRepository.getOneProductHd(productId);
+    }
 
     @Override
     public List<HDDto> findAll() {

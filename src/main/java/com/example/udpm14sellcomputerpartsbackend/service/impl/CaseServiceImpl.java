@@ -36,7 +36,7 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
-    public   List<ProductCaseDto> getOneProductCase(Long productId){
+    public List<ProductCaseDto> getOneProductCase(Long productId){
         return caseRepository.getOneProductCase(productId);
     }
 

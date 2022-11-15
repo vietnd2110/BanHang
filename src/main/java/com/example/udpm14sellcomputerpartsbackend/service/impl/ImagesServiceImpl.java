@@ -63,7 +63,7 @@ public class ImagesServiceImpl implements ImagesService {
 
         String images = "";
         if(file != null){
-            images = cloudinaryService.uploadImage(file,FolderContants.IMAGES_FOLDER);
+            images = cloudinaryService.uploadImage(file,FolderContants.PRODUCTS_IMAGES_FOLDER);
             imageEntity.setLink(images);
         }else{
             imageEntity.setLink("https://res.cloudinary.com/ducnd1306/image/upload/v1667716002/sell-computer/images/avatars/eibisxdae7a3cysgkhpl.jpg");
@@ -88,7 +88,7 @@ public class ImagesServiceImpl implements ImagesService {
 
         String images = "";
         if(file != null){
-            images = cloudinaryService.uploadImage(file,FolderContants.IMAGES_FOLDER);
+            images = cloudinaryService.uploadImage(file,FolderContants.PRODUCTS_IMAGES_FOLDER);
             imageEntity.setLink(images);
         }else{
             imageEntity.setLink("https://res.cloudinary.com/ducnd1306/image/upload/v1667716002/sell-computer/images/avatars/eibisxdae7a3cysgkhpl.jpg");

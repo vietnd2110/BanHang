@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.VgaDto;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.VgaService;
@@ -25,6 +26,21 @@ public class VgaController {
         this.vgaService = vgaService;
     }
 
+    @GetMapping("/product-vga/{id}")
+    public ResponseEntity<?> listProductVga(
+            @PathVariable("id") Long categoryId,
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
+            @RequestParam(value = "page-size") Integer pageSize
+    ){
+        return ResponseEntity.ok(DefaultPagingResponse.success(vgaService.listProductVga(categoryId,page,pageSize)));
+    }
+
+    @GetMapping("/get-one/{id}")
+    public ResponseEntity<?> getOneProductVga(
+            @PathVariable("id") Long productId
+    ){
+        return ResponseEntity.ok(DefaultResponse.success(vgaService.getOneProductVga(productId)));
+    }
 
     @GetMapping
     public ResponseEntity getAllVga() {
