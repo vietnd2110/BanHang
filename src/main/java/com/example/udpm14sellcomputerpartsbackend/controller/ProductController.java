@@ -78,9 +78,7 @@ public class ProductController {
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
-        Page<ProductImageDto> page = productService.getAllAndPage(pageSize, pageNumber);
-
-        return ResponseEntity.ok(DefaultPagingResponse.success(page));
+        return ResponseEntity.ok(DefaultPagingResponse.success(productService.getAllAndPage(pageSize, pageNumber)));
     }
 
     @GetMapping("/category/{id}")
@@ -89,10 +87,8 @@ public class ProductController {
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber
     ) {
-        Page<ProductImageDto> page = productService.findByCategory(cid, pageSize, pageNumber);
-
-        return ResponseEntity.ok(DefaultPagingResponse.success(page));
-
+        return ResponseEntity.ok(
+                DefaultPagingResponse.success(productService.findByCategory(cid, pageSize, pageNumber)));
     }
 
     @GetMapping("/brand/{id}")

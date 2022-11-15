@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPsuDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.PsuDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.PsuEntity;
@@ -9,6 +10,8 @@ import com.example.udpm14sellcomputerpartsbackend.repository.PsuRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.PsuService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,16 @@ public class PsuServiceImpl implements PsuService {
     private final PsuRepository psuRepository;
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+
+    @Override
+    public Page<ProductPsuDto> listProductPsu(Long cateId, Integer page, Integer pageSize){
+        return psuRepository.listProductPsu(cateId, PageRequest.of(page,pageSize));
+    }
+
+    @Override
+    public List<ProductPsuDto> getOneProductPsu(Long productId){
+        return psuRepository.getOneProductPsu(productId);
+    }
 
     @Override
     public List<PsuDto> findAll() {
