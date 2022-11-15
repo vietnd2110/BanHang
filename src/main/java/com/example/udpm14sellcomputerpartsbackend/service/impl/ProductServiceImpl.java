@@ -21,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -64,6 +66,18 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity findById = productRepository.findById(productId)
                 .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
         return productRepository.listProductId(productId,PageRequest.of(page,pageNumber));
+    }
+
+    @Override
+    public ProductEntity updateQuantity(Long productId, int quantity){
+        Optional<ProductEntity> findByIdProduct = productRepository.findById(productId);
+        if(findByIdProduct.isPresent()){
+            ProductEntity product = findByIdProduct.get();
+            product.setQuantity(quantity);
+            return productRepository.save(product);
+        }
+        return findByIdProduct
+                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.example.udpm14sellcomputerpartsbackend.service.ChipService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -80,6 +81,7 @@ public class ChipController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(
             @Valid @RequestBody ChipDto chipDto
     ) {

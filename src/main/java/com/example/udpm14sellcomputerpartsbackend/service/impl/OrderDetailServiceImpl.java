@@ -2,7 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto;
-import com.example.udpm14sellcomputerpartsbackend.model.entity.OderEntity;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,7 +90,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public void check(Long user, Long order){
         UserEntity findUser = userRepository.findById(user)
                 .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "User id not found: "+user));
-        OderEntity findOrder = orderRepository.findById(order)
+        OrderEntity findOrder = orderRepository.findById(order)
                 .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: "+order));
     }
 }

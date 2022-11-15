@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "orders")
 @Data
-public class OderEntity {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,23 @@ public class OderEntity {
     @Column(name = "shipping")
     private Float shipping;
 
+    @Column(name = "fullname")
+    private String fullname;
+
     @Column(name = "address")
     private String address;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "reason")
+    private String reason;
 
     @Column(name = "create_date")
     @CreationTimestamp
@@ -40,9 +55,6 @@ public class OderEntity {
 
     @Column(name = "discount")
     private Float discount;
-
-    @Column(name = "phone")
-    private String phone;
 
     @JsonProperty("account_id")
     private Long accountId;
