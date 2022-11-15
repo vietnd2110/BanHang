@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.HDDto;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.HDService;
@@ -22,6 +23,22 @@ import javax.validation.Valid;
 )
 public class HDController {
     private final HDService hdService;
+
+    @GetMapping("/product-hd/{id}")
+    public ResponseEntity<?> listProductHd(
+            @PathVariable("id") Long categoryId,
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
+            @RequestParam(value = "page-size") Integer pageSize
+    ){
+        return ResponseEntity.ok(DefaultPagingResponse.success(hdService.listProductHd(categoryId,page,pageSize)));
+    }
+
+    @GetMapping("/get-one/{id}")
+    public ResponseEntity<?> getOneProductHd(
+            @PathVariable("id") Long productId
+    ){
+        return ResponseEntity.ok(DefaultResponse.success(hdService.getOneProductHd(productId)));
+    }
 
     @GetMapping
     public ResponseEntity getAllHd() {

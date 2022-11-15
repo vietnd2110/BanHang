@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.PsuDto;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.PsuService;
@@ -22,6 +23,22 @@ import javax.validation.Valid;
 )
 public class PsuController {
     private final PsuService psuService;
+
+    @GetMapping("/product-psu/{id}")
+    public ResponseEntity<?> listProductPsu(
+            @PathVariable("id") Long categoryId,
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
+            @RequestParam(value = "page-size") Integer pageSize
+    ){
+        return ResponseEntity.ok(DefaultPagingResponse.success(psuService.listProductPsu(categoryId,page,pageSize)));
+    }
+
+    @GetMapping("/get-one/{id}")
+    public ResponseEntity<?> getOneProductPsu(
+            @PathVariable("id") Long productId
+    ){
+        return ResponseEntity.ok(DefaultResponse.success(psuService.getOneProductPsu(productId)));
+    }
 
     @GetMapping
     public ResponseEntity getAllPsu() {

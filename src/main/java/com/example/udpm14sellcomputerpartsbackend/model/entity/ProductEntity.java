@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -28,11 +29,11 @@ public class ProductEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "create_date")
+    @Column(name = "create_date",columnDefinition = "DATETIME")
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    @Column(name = "update_date")
+    @Column(name = "update_date",columnDefinition = "DATETIME")
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
