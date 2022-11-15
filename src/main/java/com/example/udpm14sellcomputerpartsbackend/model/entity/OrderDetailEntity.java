@@ -21,6 +21,10 @@ public class OrderDetailEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
+    private BigDecimal total;
+
+    private String image;
+
     @JsonProperty("product_id")
     private Long productId;
 

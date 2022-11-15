@@ -12,6 +12,8 @@ public interface ProductService {
 
     Page<ProductImageDto> findAllByIDProduct(Long productId, Integer page, Integer pageNumber);
 
+    ProductEntity updateQuantity(Long productId, int quantity);
+
     Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber);
 
     Page<ProductImageDto> findByCategory(Long id, Integer pageSize, Integer pageNumber);
