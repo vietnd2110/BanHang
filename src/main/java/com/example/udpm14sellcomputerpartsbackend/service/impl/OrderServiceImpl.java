@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.CartEntity;
@@ -191,41 +192,16 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<OrderEntity> listStatusWaitForConfirmation(){
-        return orderRepository.findAllByStatusEquals(OrderStatusEnum.CHOXACNHAN);
+    public List<OrderEntity> listStatus(OrderStatusEnum status){
+        return orderRepository.findAllByStatusEquals(status);
     }
 
     @Override
-    public List<OrderEntity> listStatusOrderConfirmed(){
-        return orderRepository.findAllByStatusEquals(OrderStatusEnum.DAXACNHAN);
+    public OrderStatusEnum[] status(){
+        OrderStatusEnum [] status = OrderStatusEnum.values();
+        System.out.println(status);
+        return status;
     }
-
-    @Override
-    public List<OrderEntity> listStatusWaitForPay(){
-        return orderRepository.findAllByStatusEquals(OrderStatusEnum.CHOTHANHTOAN);
-    }
-
-    @Override
-    public List<OrderEntity> listStatusBeingShipped() {
-        return orderRepository.findAllByStatusEquals(OrderStatusEnum.DANGVANCHUYEN);
-    }
-
-    @Override
-    public List<OrderEntity> listStatusDelivered() {
-        return orderRepository.findAllByStatusEquals(OrderStatusEnum.DAGIAO);
-    }
-
-    @Override
-    public List<OrderEntity> listStatusCancelled() {
-        return orderRepository.findAllByStatusEquals(OrderStatusEnum.DAHUY);
-    }
-
-
-
-
-
-
-
 
 
 

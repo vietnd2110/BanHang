@@ -62,5 +62,8 @@ public class OrderEntity {
     @JsonProperty("staff_id")
     private Long staffId;
 
+    @JsonProperty("payment_id")
+    private Long paymentId;
+
 
 }

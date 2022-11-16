@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/order")
 @Tag(
@@ -28,6 +30,7 @@ public class OrderController {
 
     @Operation(summary = "Đặt hàng", description = "Đặt hàng")
     @PostMapping("/check-out")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     public ResponseEntity<?> checkoutOrder(@Valid @RequestBody OrderEntity order) throws MessagingException {
         return ResponseEntity.ok(DefaultResponse.success(orderService.checkoutOrder(order)));
     }
@@ -73,41 +76,18 @@ public class OrderController {
 
 
     //    list status order
-    @Operation(summary = "Danh sách hóa đơn đang chờ xác nhận", description = "Danh sách hóa đơn đang chờ xác nhận")
-    @GetMapping("/list-wait-for-confirm/{id}")
-    public ResponseEntity<?> listWaitForConfirm( ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusWaitForConfirmation()));
+    @Operation(summary = "Danh sách hóa đơn theo status", description = "Danh sách hóa đơn theo status")
+    @GetMapping("/list-status/{status}")
+    public ResponseEntity<?> listStatus(
+            @PathVariable("status") OrderStatusEnum status
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatus(status)));
     }
 
-
-    @Operation(summary = "Danh sách hóa đơn đã xác nhận", description = "Danh sách hóa đơn đã xác nhận")
-    @GetMapping("/list-order-confirm/{id}")
-    public ResponseEntity<?> listStatusOrderConfirmed( ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusOrderConfirmed()));
+    @GetMapping("/status")
+    public ResponseEntity<?> status(){
+        return ResponseEntity.ok(DefaultResponse.success(orderService.status()));
     }
 
-    @Operation(summary = "Danh sách hóa đơn chờ xác nhận", description = "Danh sách hóa đơn chờ xác nhận")
-    @GetMapping("/list-wait-for-pay/{id}")
-    public ResponseEntity<?> listStatusWaitForPay( ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusWaitForPay()));
-    }
-
-    @Operation(summary = "Danh sách hóa đơn chờ xác nhận", description = "Danh sách hóa đơn chờ xác nhận")
-    @GetMapping("/list-being-shipped/{id}")
-    public ResponseEntity<?> listStatusBeingShipped( ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusBeingShipped()));
-    }
-
-    @Operation(summary = "Danh sách hóa đơn đã giao hàng", description = "Danh sách hóa đơn đã giao hàng")
-    @GetMapping("/list-delivered/{id}")
-    public ResponseEntity<?> listStatusDelivered( ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusDelivered()));
-    }
-
-    @Operation(summary = "Danh sách hóa đơn đã hủy", description = "Danh sách hóa đơn đã hủy")
-    @GetMapping("/list-cancelled/{id}")
-    public ResponseEntity<?> listStatusCancelled( ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusCancelled()));
-    }
 
 }
