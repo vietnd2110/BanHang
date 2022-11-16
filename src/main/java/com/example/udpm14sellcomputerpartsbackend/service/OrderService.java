@@ -1,5 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 
 import javax.mail.MessagingException;
@@ -16,15 +18,8 @@ public interface OrderService {
 
     OrderEntity checkoutOrder(OrderEntity order) throws MessagingException;
 
-    List<OrderEntity> listStatusWaitForConfirmation();
 
-    List<OrderEntity> listStatusOrderConfirmed();
+    List<OrderEntity> listStatus(OrderStatusEnum status);
 
-    List<OrderEntity> listStatusWaitForPay();
-
-    List<OrderEntity> listStatusBeingShipped();
-
-    List<OrderEntity> listStatusDelivered();
-
-    List<OrderEntity> listStatusCancelled();
+    OrderStatusEnum[] status();
 }
