@@ -40,5 +40,10 @@ public class FilterProductServiceImpl implements FilterProductService {
         return productRepository.listFilterProductPriceASC(PageRequest.of(page,pageNumber));
     }
 
+    @Override
+    public Page<ProductImageDto> listFilterProductByColor(Integer page, Integer pageNumber, Long id) {
+        return productRepository.listFilterProductByColor(PageRequest.of(page,pageNumber), id);
+    }
+
 
 }

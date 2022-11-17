@@ -12,4 +12,6 @@ public interface FilterProductService {
     Page<ProductImageDto> listFilterProductPriceDesc(Integer page, Integer pageNumber);
 
     Page<ProductImageDto> listFilterProductPriceAsc(Integer page, Integer pageNumber);
+
+    Page<ProductImageDto> listFilterProductByColor(Integer page, Integer pageNumber, Long id);
 }

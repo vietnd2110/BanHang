@@ -24,6 +24,15 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "WHERE product.price BETWEEN :start AND :end ")
     public Page<ProductImageDto> listFilterProduct(BigDecimal start, BigDecimal end, Pageable page);
 
+    // filter theo color
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
+            "product.id,product.name,product.price,product.quantity,product.createDate," +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "FROM ImageEntity image " +
+            "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN ColorEntity  color ON image.product_id = color.productId " +
+            "WHERE color.id=:id" )
+    public Page<ProductImageDto> listFilterProductByColor(Pageable page, Long id);
 
     // filter theo gia giảm dần
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +

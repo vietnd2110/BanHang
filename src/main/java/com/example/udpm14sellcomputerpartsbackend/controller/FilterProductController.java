@@ -2,7 +2,6 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 
 
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
-import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.FilterProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -60,6 +59,18 @@ public class FilterProductController {
     ){
         DefaultPagingResponse defaultPagingResponse =
                 DefaultPagingResponse.success(filterProductService.listFilterProductPriceAsc(page,pageNumber));
+        return ResponseEntity.ok(defaultPagingResponse);
+    }
+
+    @Operation(summary = "Lọc tất cả danh sách theo color", description = "Lọc tất cả danh sách theo color")
+    @GetMapping("/color/{id}")
+    public ResponseEntity filterProductPriceByColor(
+            @PathVariable("id") Long id,
+            @RequestParam("page") Integer page,
+            @RequestParam("page-number") Integer pageNumber
+    ){
+        DefaultPagingResponse defaultPagingResponse =
+                DefaultPagingResponse.success(filterProductService.listFilterProductByColor(page,pageNumber, id));
         return ResponseEntity.ok(defaultPagingResponse);
     }
 
