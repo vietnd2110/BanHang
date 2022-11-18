@@ -57,7 +57,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id ")
-    public Page<ProductImageDto> listProduct(Pageable page);
+    Page<ProductImageDto> listProduct(Pageable page);
 
 
 

@@ -6,7 +6,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import org.springframework.data.domain.Page;
 
 public interface ProductService {
-    Page<ProductEntity> findAll(Integer page, Integer pageNumber);
+    Page<ProductImageDto> findAll(Integer page, Integer pageNumber);
 
     ProductEntity getOne(Long productId);
 

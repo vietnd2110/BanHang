@@ -8,9 +8,9 @@ import javax.mail.MessagingException;
 import java.util.List;
 
 public interface OrderService {
-    OrderEntity orderConfirmed(Long orderId);
+    List<OrderEntity> getAll();
 
-    OrderEntity waitForPay(Long orderId);
+    OrderEntity orderConfirmed(Long orderId);
 
     OrderEntity beingShipped(Long orderId);
 

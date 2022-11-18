@@ -1,7 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
-import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.CartEntity;
@@ -49,13 +48,19 @@ public class OrderServiceImpl implements OrderService {
         this.mailService = mailService;
     }
 
+
+    @Override
+    public List<OrderEntity> getAll(){
+        return orderRepository.findAll();
+    }
+
     @Override
     public OrderEntity orderConfirmed(Long orderId) {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
             OrderEntity order = findByOrderId.get();
-            order.setStatus(OrderStatusEnum.DAXACNHAN);
+            order.setStatus(OrderStatusEnum.DANGSULY);
             order.setStaffId(uDetailService.getId());
             return orderRepository.save(order);
         }
@@ -64,17 +69,6 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    @Override
-    public OrderEntity waitForPay(Long orderId) {
-        Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
-        if (findByOrderId.isPresent()) {
-            OrderEntity order = findByOrderId.get();
-            order.setStatus(OrderStatusEnum.CHOTHANHTOAN);
-            return orderRepository.save(order);
-        }
-        return findByOrderId
-                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
-    }
 
     @Override
     public OrderEntity beingShipped(Long orderId) {
@@ -118,7 +112,6 @@ public class OrderServiceImpl implements OrderService {
                     System.out.println(updateQuantity + "updat");
                     System.out.println("vao day khong");
                 }
-
                 return orderRepository.save(order);
             }
         }
@@ -177,7 +170,7 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    public void sendEmailOrder(String email, OrderEntity order) throws MessagingException {
+    private void sendEmailOrder(String email, OrderEntity order) throws MessagingException {
         Map<String, Object> props = new HashMap<>();
         props.put("fullname", order.getFullname());
         props.put("phone", order.getPhone());
@@ -189,7 +182,6 @@ public class OrderServiceImpl implements OrderService {
         props.put("shipping", order.getShipping());
         mailService.sendMail(props, email, "sendEmailOrder", "ĐƠN HÀNG CỦA BẠN ĐÃ ĐẶT");
     }
-
 
     @Override
     public List<OrderEntity> listStatus(OrderStatusEnum status){

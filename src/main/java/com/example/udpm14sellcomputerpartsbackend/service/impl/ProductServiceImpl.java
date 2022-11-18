@@ -50,9 +50,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductEntity> findAll(Integer page, Integer pageNumber) {
+    public Page<ProductImageDto> findAll(Integer page, Integer pageNumber) {
 //        return productImageDao.productImage(PageRequest.of(page,pageNumber));
-        return productRepository.findAll(PageRequest.of(page,pageNumber));
+        return productRepository.listProduct(PageRequest.of(page,pageNumber));
     }
 
     @Override
