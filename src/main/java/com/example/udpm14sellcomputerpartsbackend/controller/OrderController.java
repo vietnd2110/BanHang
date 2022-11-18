@@ -28,6 +28,13 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @Operation(summary = "Danh sách tất cả hóa đơn", description = "Danh sách tất cả hóa đơn")
+    @PostMapping("")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
+    public ResponseEntity<?> getAll()  {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.getAll()));
+    }
+
     @Operation(summary = "Đặt hàng", description = "Đặt hàng")
     @PostMapping("/check-out")
     @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
@@ -43,16 +50,6 @@ public class OrderController {
             @PathVariable("id") Long orderId
     ) {
         return ResponseEntity.ok(DefaultResponse.success(orderService.orderConfirmed(orderId)));
-    }
-
-
-    @Operation(summary = "Chờ thanh toán đơn đặt hàng", description = "Chờ thanh toán đơn đặt hàng")
-    @GetMapping("/wait-for-pay/{id}")
-    @PreAuthorize("hasAuthority('STAFF')")
-    public ResponseEntity<?> waitForPay(
-            @PathVariable("id") Long orderId
-    ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.waitForPay(orderId)));
     }
 
     @Operation(summary = "Đang vận chuyển đơn đặt hàng", description = "Đang vận chuyển đơn đặt hàng")

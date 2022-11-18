@@ -32,7 +32,7 @@ public class ProductController {
     @GetMapping("/list")
     public ResponseEntity<?> findAll(
             @RequestParam(value = "page",defaultValue = "0") Integer page,
-            @RequestParam("page-number") Integer pageNumber
+            @RequestParam("page-size") Integer pageNumber
     ) {
        DefaultPagingResponse defaultPagingResponse =
                DefaultPagingResponse.success(productService.findAll(page,pageNumber));
@@ -52,7 +52,7 @@ public class ProductController {
     public ResponseEntity<?> findAllByIdProduct(
             @PathVariable("id") Long id,
             @RequestParam(value = "page",defaultValue = "0") Integer page,
-            @RequestParam("page-number") Integer pageNumber
+            @RequestParam("page-size") Integer pageNumber
     ){
       //  Page<ProductImageDto> productImageDtos = productService.findAllByIDProduct(id,page,pageSize);
 
@@ -67,7 +67,7 @@ public class ProductController {
     public ResponseEntity<?> search(
             @RequestParam(value = "name",required = false) String name,
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
-            @RequestParam(value = "page-number") Integer pageNumber
+            @RequestParam(value = "page-size") Integer pageNumber
     ) {
         return ResponseEntity.ok(DefaultPagingResponse.success(
                 productService.search(name,pageSize,pageNumber)));
@@ -76,7 +76,7 @@ public class ProductController {
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
-            @RequestParam(value = "page-number") Integer pageNumber
+            @RequestParam(value = "page-size") Integer pageNumber
     ) {
         return ResponseEntity.ok(DefaultPagingResponse.success(productService.getAllAndPage(pageSize, pageNumber)));
     }
@@ -85,7 +85,7 @@ public class ProductController {
     public ResponseEntity<?> getAllByCategory(
             @PathVariable("id") Long cid,
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
-            @RequestParam(value = "page-number") Integer pageNumber
+            @RequestParam(value = "page-size") Integer pageNumber
     ) {
         return ResponseEntity.ok(
                 DefaultPagingResponse.success(productService.findByCategory(cid, pageSize, pageNumber)));
@@ -95,7 +95,7 @@ public class ProductController {
     public ResponseEntity<?> getAllByBrand(
             @PathVariable("id") Long bid,
             @RequestParam(value = "page") Integer pageSize,
-            @RequestParam(value = "page-number") Integer pageNumber
+            @RequestParam(value = "page-size") Integer pageNumber
     ) {
         Page<ProductImageDto> page = productService.findByBrand(bid, pageSize, pageNumber);
 

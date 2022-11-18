@@ -30,7 +30,7 @@ public class CaseController {
 
     @GetMapping("/product-case/{id}")
     public ResponseEntity<?> listProductCase(
-            @PathVariable("id") Long categoryId,
+            @PathVariable(value = "id",required = false) Long categoryId,
             @RequestParam(value = "page",defaultValue = "0") Integer page,
             @RequestParam(value = "page-size") Integer pageSize
     ){
