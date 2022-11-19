@@ -37,7 +37,6 @@ public class OrderController {
 
     @Operation(summary = "Đặt hàng", description = "Đặt hàng")
     @PostMapping("/check-out")
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     public ResponseEntity<?> checkoutOrder(@Valid @RequestBody OrderEntity order) throws MessagingException {
         return ResponseEntity.ok(DefaultResponse.success(orderService.checkoutOrder(order)));
     }
