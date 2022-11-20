@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -122,5 +123,12 @@ public class CartServiceImpl implements CartService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "Không tồn tại sản phẩm: " + id + " trong giỏ hàng");
         }
         cartRepository.deleteById(cart.getId());
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll() {
+        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+        cartRepository.deleteAllByUserId(uDetailService.getId());
     }
 }

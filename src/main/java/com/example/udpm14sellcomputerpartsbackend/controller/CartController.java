@@ -100,4 +100,15 @@ public class CartController {
         cartService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @Operation(summary = "xóa hêt sản phẩm trong giỏ hàng theo user", description = "xóa sản phẩm trong giỏ hàng")
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<?> deleteAll() {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Xóa thành công")
+                .data(null)
+                .build();
+        cartService.deleteAll();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
