@@ -5,6 +5,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultRespon
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.VoucherService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -16,6 +17,7 @@ public class VoucherController {
         this.voucherService = voucherService;
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(SampleResponse.builder()
@@ -24,6 +26,8 @@ public class VoucherController {
                 .data(voucherService.getAll())
                 .build());
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable("id")Long id) {
         return ResponseEntity.ok(SampleResponse.builder()
@@ -33,11 +37,15 @@ public class VoucherController {
                 .build());
     }
 
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody VoucherDto voucherDto) {
         return ResponseEntity.ok(DefaultResponse.success(voucherService.create(voucherDto)));
     }
 
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("update/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
@@ -45,6 +53,7 @@ public class VoucherController {
         return ResponseEntity.ok(DefaultResponse.success(voucherService.update(id, voucherDto)));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         voucherService.delete(id);

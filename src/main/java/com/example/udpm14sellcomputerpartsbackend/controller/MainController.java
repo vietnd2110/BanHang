@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +26,7 @@ public class MainController {
         this.mainService = mainService;
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<?> getAllMain() {
         SampleResponse response = SampleResponse.builder()
@@ -35,6 +37,7 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page") Integer pageSize,
@@ -43,6 +46,8 @@ public class MainController {
         return ResponseEntity.ok(DefaultPagingResponse.success(page));
     }
 
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("product/{id}")
     public ResponseEntity<?> getAllMainByProduct(
             @PathVariable("id") Long id,
@@ -56,6 +61,8 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getMainById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -66,16 +73,19 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody MainDto mainDto) {
         return ResponseEntity.ok(DefaultResponse.success(mainService.create(mainDto)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody MainDto mainDto) {
         return ResponseEntity.ok(DefaultResponse.success(mainService.update(id, mainDto)));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         mainService.delete(id);

@@ -8,6 +8,7 @@ import com.example.udpm14sellcomputerpartsbackend.service.ColorService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ public class ColorController {
         this.colorService = colorService;
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllColor() {
         SampleResponse response = SampleResponse.builder()
@@ -31,6 +33,8 @@ public class ColorController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getColorById(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -41,6 +45,8 @@ public class ColorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping()
     public ResponseEntity<?> createBrand(@Valid @RequestBody ColorDto colorDto) {
         SampleResponse response = SampleResponse.builder()
@@ -51,6 +57,7 @@ public class ColorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteColor(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -61,6 +68,8 @@ public class ColorController {
         colorService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateColor(@RequestBody @Valid ColorDto colorDto,@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()

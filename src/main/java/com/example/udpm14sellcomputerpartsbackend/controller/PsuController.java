@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 public class PsuController {
     private final PsuService psuService;
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-psu/{id}")
     public ResponseEntity<?> listProductPsu(
             @PathVariable("id") Long categoryId,
@@ -33,6 +35,7 @@ public class PsuController {
         return ResponseEntity.ok(DefaultPagingResponse.success(psuService.listProductPsu(categoryId,page,pageSize)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductPsu(
             @PathVariable("id") Long productId
@@ -40,6 +43,7 @@ public class PsuController {
         return ResponseEntity.ok(DefaultResponse.success(psuService.getOneProductPsu(productId)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllPsu() {
         SampleResponse response = SampleResponse.builder()
@@ -49,6 +53,8 @@ public class PsuController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getPsuById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -58,6 +64,8 @@ public class PsuController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product/{id}")
     public ResponseEntity getAllPsuByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -68,12 +76,15 @@ public class PsuController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(
             @Valid @RequestBody PsuDto psuDto
     ) {
         return ResponseEntity.ok(DefaultResponse.success(psuService.create(psuDto)));
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
@@ -81,6 +92,8 @@ public class PsuController {
     ) {
         return ResponseEntity.ok(DefaultResponse.success(psuService.update(id, psuDto)));
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         psuService.delete(id);

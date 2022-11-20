@@ -7,6 +7,7 @@ import com.example.udpm14sellcomputerpartsbackend.service.GroupComponentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ public class GroupComponentController {
 
     private final GroupComponentService groupComponentService;
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(
             @Valid @RequestBody GroupComponentDto groupComponentDto
@@ -27,6 +29,7 @@ public class GroupComponentController {
         return ResponseEntity.ok(DefaultResponse.success(groupComponentService.createComponent(groupComponentDto)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
@@ -35,12 +38,15 @@ public class GroupComponentController {
         return ResponseEntity.ok(DefaultResponse.success(groupComponentService.updateComponent(id, groupComponentDto)));
     }
 
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteComponent(@PathVariable("id") Long id) {
         groupComponentService.deleteComponent(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/info")
     public ResponseEntity<?> getAllComponent() {
         SampleResponse response = SampleResponse.builder()
@@ -52,6 +58,7 @@ public class GroupComponentController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getComponentById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

@@ -10,6 +10,7 @@ import com.example.udpm14sellcomputerpartsbackend.service.ImagesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,7 @@ public class ImagesController {
     }
 
     @Operation(summary = "Danh sách images", description = "Danh sách image")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<?> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -40,6 +42,7 @@ public class ImagesController {
         return ResponseEntity.ok(DefaultPagingResponse.success(imagesService.listImage(page, pageNumber)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllById(
             @PathVariable("id") Long id
@@ -48,6 +51,7 @@ public class ImagesController {
     }
 
     @Operation(summary = "Thêm mới images theo id của product", description = "Thêm mới images theo id của product")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping(value = "/upload-image/{id}", consumes = "multipart/form-data")
     public ResponseEntity<?> uploadImage(
             @PathVariable("id") Long productId,
@@ -58,12 +62,14 @@ public class ImagesController {
     }
 
     @Operation(summary = "Xóa images", description = "Xóa images")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteImage(@PathVariable("id") Long id) {
         imagesService.deleteImage(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success !"));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(
             @ModelAttribute ImageDto imageDto,
@@ -75,6 +81,7 @@ public class ImagesController {
 
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-id/{id}")
     public ResponseEntity<?> findAllByProductAndImages(
             @PathVariable("id") Long id
