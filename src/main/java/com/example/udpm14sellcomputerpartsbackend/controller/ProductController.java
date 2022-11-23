@@ -1,6 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
-import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
@@ -41,6 +41,17 @@ public class ProductController {
         return ResponseEntity.ok(defaultPagingResponse);
     }
 
+    @Operation(summary = "Danh sách product theo status", description = "Danh sách product theo status")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
+    @GetMapping("/list-status/{status}")
+    public ResponseEntity<?> listStatus(
+            @PathVariable("status") StatusEnum status,
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
+            @RequestParam("page-size") Integer pageNumber
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(productService.listStatus(status,page,pageNumber)));
+    }
+
     @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOne(
@@ -48,7 +59,6 @@ public class ProductController {
     ){
        return ResponseEntity.ok(DefaultResponse.success(productService.getOne(id)));
     }
-
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ")
     @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
@@ -64,8 +74,6 @@ public class ProductController {
                 DefaultPagingResponse.success(productService.findAllByIDProduct(id,page,pageNumber));
         return ResponseEntity.ok(pagingResponse);
     }
-
-
 
     @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/search")
@@ -122,7 +130,6 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-
     @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("create")
     public ResponseEntity<?> create(@Valid @RequestBody ProductDto productDto) {
@@ -134,13 +141,10 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         productService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
-
-
 }
