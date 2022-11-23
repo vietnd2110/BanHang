@@ -1,5 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
@@ -46,6 +48,14 @@ public class CategoryController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Danh sách category theo status", description = "Danh sách category theo status")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
+    @GetMapping("/list-status/{status}")
+    public ResponseEntity<?> listStatus(
+            @PathVariable("status") StatusEnum status
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(categoryService.listStatus(status)));
+    }
 
     @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list-group/{groupId}")

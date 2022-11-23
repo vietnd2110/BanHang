@@ -50,6 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<CategoryEntity> listStatus(StatusEnum status) {
+        return categoryRepository.findAllByStatusEquals(status);
+    }
+
+    @Override
     public List<CategoryDto> getAllCategoryGroupId(Long groupId) {
         GroupComponentEntity componentEntity = groupComponentRepository.findById(groupId)
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Group component id not found: " + groupId));
@@ -90,9 +95,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long id) {
-        CategoryEntity findById = categoryRepository.findById(id).
+        CategoryEntity categoryEntity = categoryRepository.findById(id).
                 orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found: " + id));
-        categoryRepository.deleteById(findById.getId());
+        categoryEntity.setStatus(StatusEnum.DELETED);
+        categoryRepository.save(categoryEntity);
     }
 
 
