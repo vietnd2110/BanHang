@@ -12,7 +12,7 @@ public class FavoriteDto {
 
     private Long id;
     private String name;
-    private BigDecimal price;
+    private long price;
     private Integer quantity;
     private String description;
     private StatusEnum status;

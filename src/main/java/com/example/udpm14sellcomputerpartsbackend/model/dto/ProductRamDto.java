@@ -16,7 +16,7 @@ public class ProductRamDto {
     private Long productId;
     private String name;
     private Integer quantity;
-    private BigDecimal price;
+    private long price;
     private String description;
     private String imageLink;
     private Long ramId;

@@ -19,7 +19,7 @@ public class ProductDto {
     private String name;
 
     @DecimalMin(value = "0.0", inclusive = false)
-    private BigDecimal price;
+    private long price;
 
     @NotNull(message = "quantity not is null")
     @Min(value = 0, message = "quantity min is 0")
