@@ -24,7 +24,7 @@ public class ProductEntity {
     private String name;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private long price;
 
     @Column(name = "quantity")
     private Integer quantity;

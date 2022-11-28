@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderService;
@@ -29,7 +30,7 @@ public class OrderController {
     }
 
     @Operation(summary = "Danh sách tất cả hóa đơn", description = "Danh sách tất cả hóa đơn")
-    @PostMapping("")
+    @GetMapping("")
     @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     public ResponseEntity<?> getAll()  {
         return ResponseEntity.ok(DefaultResponse.success(orderService.getAll()));
@@ -37,7 +38,7 @@ public class OrderController {
 
     @Operation(summary = "Đặt hàng", description = "Đặt hàng")
     @PostMapping("/check-out")
-    public ResponseEntity<?> checkoutOrder(@Valid @RequestBody OrderEntity order) throws MessagingException {
+    public ResponseEntity<?> checkoutOrder(@Valid @RequestBody CreateOrderReq order) throws MessagingException {
         return ResponseEntity.ok(DefaultResponse.success(orderService.checkoutOrder(order)));
     }
 
@@ -65,7 +66,7 @@ public class OrderController {
     @GetMapping("/cancelled/{id}")
     public ResponseEntity<?> cancelled(
             @PathVariable("id") Long orderId,
-            @RequestParam String reason
+            @RequestParam() String reason
     ) {
         return ResponseEntity.ok(DefaultResponse.success(orderService.cancelled(orderId, reason)));
     }
@@ -83,6 +84,24 @@ public class OrderController {
     @GetMapping("/status")
     public ResponseEntity<?> status(){
         return ResponseEntity.ok(DefaultResponse.success(orderService.status()));
+    }
+
+
+    @Operation(summary = "Đặt lại đơn hàng đã mua", description = "Đặt lại đơn hàng đã mua")
+    @GetMapping("/re-order/{id}")
+    public ResponseEntity<?> reOrder(
+            @PathVariable("id") Long id
+    ) {
+        orderService.reOrder(id);
+        return ResponseEntity.ok(DefaultResponse.success("Đặt lại đơn hàng thành công"));
+    }
+
+    @Operation(summary = "Đếm số lượng đơn hàng theo trạng thái và tài khoản người dùng", description = "Đếm số lượng đơn hàng theo trạng thái và tài khoản người dùng")
+    @GetMapping("/count-order/{status}")
+    public ResponseEntity<?> countOrder(
+            @PathVariable("status") int status
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.countOrderStatus(status)));
     }
 
 

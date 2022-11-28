@@ -10,9 +10,9 @@ public class CartDto {
 
     private String name;
 
-    private BigDecimal price;
+    private long price;
 
-    private BigDecimal total;
+    private long total;
 
     private Integer quantity;
 

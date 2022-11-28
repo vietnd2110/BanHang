@@ -5,6 +5,6 @@ import lombok.Data;
 import java.math.BigDecimal;
 @Data
 public class CartResponse {
-    BigDecimal totalAmount;
+    long totalAmount;
     Integer quantityCart;
 }
