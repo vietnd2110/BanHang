@@ -25,7 +25,6 @@ import javax.validation.Valid;
 public class HDController {
     private final HDService hdService;
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-hd/{id}")
     public ResponseEntity<?> listProductHd(
             @PathVariable("id") Long categoryId,
@@ -36,7 +35,6 @@ public class HDController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductHd(
             @PathVariable("id") Long productId
@@ -44,7 +42,6 @@ public class HDController {
         return ResponseEntity.ok(DefaultResponse.success(hdService.getOneProductHd(productId)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllHd() {
         SampleResponse response = SampleResponse.builder()
@@ -55,7 +52,6 @@ public class HDController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getHdById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -66,7 +62,6 @@ public class HDController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product/{id}")
     public ResponseEntity getAllHdByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

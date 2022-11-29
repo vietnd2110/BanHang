@@ -33,7 +33,6 @@ public class CategoryController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllById(
             @PathVariable("id") Long id
@@ -49,7 +48,6 @@ public class CategoryController {
     }
 
     @Operation(summary = "Danh sách category theo status", description = "Danh sách category theo status")
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list-status/{status}")
     public ResponseEntity<?> listStatus(
             @PathVariable("status") StatusEnum status
@@ -57,7 +55,6 @@ public class CategoryController {
         return ResponseEntity.ok(DefaultResponse.success(categoryService.listStatus(status)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list-group/{groupId}")
     public ResponseEntity<?> listCategoryWithGroupId(
             @PathVariable("groupId") Long groupId
@@ -73,7 +70,6 @@ public class CategoryController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách và phân trang về thể loại", description = "Lấy tất cả danh sách và phân trang về thể loại")
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
@@ -85,7 +81,6 @@ public class CategoryController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách về thể loại", description = "Lấy tất cả danh sách về thể loại")
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(SampleResponse.builder()

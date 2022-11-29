@@ -17,7 +17,6 @@ public class VoucherController {
         this.voucherService = voucherService;
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(SampleResponse.builder()
@@ -27,7 +26,6 @@ public class VoucherController {
                 .build());
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable("id")Long id) {
         return ResponseEntity.ok(SampleResponse.builder()

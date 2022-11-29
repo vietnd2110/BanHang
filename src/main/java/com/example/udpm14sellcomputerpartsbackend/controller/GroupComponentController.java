@@ -46,7 +46,6 @@ public class GroupComponentController {
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/info")
     public ResponseEntity<?> getAllComponent() {
         SampleResponse response = SampleResponse.builder()
@@ -58,7 +57,6 @@ public class GroupComponentController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getComponentById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

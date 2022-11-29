@@ -26,7 +26,6 @@ public class RamController {
     private final RamService ramService;
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-ram/{id}")
     public ResponseEntity getAllProductRamWithCategoryId(
             @PathVariable("id") Long categoryId,
@@ -36,7 +35,6 @@ public class RamController {
         return ResponseEntity.ok(DefaultPagingResponse.success(ramService.getAllProductRamWithCategoryId(categoryId,page,pageSize)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity getOneProductRamWithProductId(
             @PathVariable("id") Long productId
@@ -44,7 +42,6 @@ public class RamController {
         return ResponseEntity.ok(DefaultResponse.success(ramService.getOneProductRamWithProductId(productId)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllRam() {
         SampleResponse response = SampleResponse.builder()
@@ -56,7 +53,6 @@ public class RamController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getRamById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -67,7 +63,6 @@ public class RamController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product/{id}")
     public ResponseEntity getAllHdByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

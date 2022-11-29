@@ -25,7 +25,6 @@ import javax.validation.Valid;
 public class PsuController {
     private final PsuService psuService;
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-psu/{id}")
     public ResponseEntity<?> listProductPsu(
             @PathVariable("id") Long categoryId,
@@ -35,7 +34,6 @@ public class PsuController {
         return ResponseEntity.ok(DefaultPagingResponse.success(psuService.listProductPsu(categoryId,page,pageSize)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductPsu(
             @PathVariable("id") Long productId
@@ -43,7 +41,6 @@ public class PsuController {
         return ResponseEntity.ok(DefaultResponse.success(psuService.getOneProductPsu(productId)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllPsu() {
         SampleResponse response = SampleResponse.builder()
@@ -54,7 +51,6 @@ public class PsuController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getPsuById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -65,7 +61,6 @@ public class PsuController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product/{id}")
     public ResponseEntity getAllPsuByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
