@@ -42,7 +42,7 @@ public class PromotionController {
         checkPromotion.setDiscountType(promotion.getDiscountType());
         checkPromotion.setDiscountValue(promotion.getDiscountValue());
         checkPromotion.setMaximumDiscountValue(promotion.getMaximumDiscountValue());
-        return ResponseEntity.ok(checkPromotion);
+        return ResponseEntity.ok(DefaultResponse.success(checkPromotion));
     }
 
     @PostMapping("/create")
