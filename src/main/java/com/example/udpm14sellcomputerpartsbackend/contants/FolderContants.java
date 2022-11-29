@@ -1,6 +1,9 @@
 package com.example.udpm14sellcomputerpartsbackend.contants;
 
 public class FolderContants {
+
+    public static final int DISCOUNT_PERCENT = 1;
+
     public static final String ROOT_FOLDER = "sell-computer";
     public static final String IMAGES_FOLDER = ROOT_FOLDER + "/images";
 

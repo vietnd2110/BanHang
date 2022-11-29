@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 
 import javax.mail.MessagingException;
@@ -16,10 +17,15 @@ public interface OrderService {
 
     OrderEntity cancelled(Long orderId,String reason);
 
-    OrderEntity checkoutOrder(OrderEntity order) throws MessagingException;
+    OrderEntity checkoutOrder(CreateOrderReq req) throws MessagingException;
 
 
     List<OrderEntity> listStatus(OrderStatusEnum status);
 
     OrderStatusEnum[] status();
+
+    // mua lại hàng
+    void reOrder(Long orderId);
+
+    long countOrderStatus(int status);
 }

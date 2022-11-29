@@ -9,6 +9,7 @@ import com.example.udpm14sellcomputerpartsbackend.service.CaseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ public class CaseController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-case/{id}")
     public ResponseEntity<?> listProductCase(
             @PathVariable(value = "id",required = false) Long categoryId,
@@ -37,6 +39,7 @@ public class CaseController {
         return ResponseEntity.ok(DefaultPagingResponse.success(caseService.listProductCase(categoryId,page,pageSize)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductCase(
             @PathVariable("id") Long productId
@@ -44,6 +47,7 @@ public class CaseController {
         return ResponseEntity.ok(DefaultResponse.success(caseService.getOneProductCase(productId)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllCase() {
         SampleResponse response = SampleResponse.builder()
@@ -53,6 +57,8 @@ public class CaseController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("product/{id}")
     public ResponseEntity<?> getAllCaseByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -62,6 +68,8 @@ public class CaseController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getCaseById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -72,12 +80,15 @@ public class CaseController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(
             @Valid @RequestBody CaseDto caseDto
     ) {
         return ResponseEntity.ok(DefaultResponse.success(caseService.create(caseDto)));
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
@@ -85,6 +96,8 @@ public class CaseController {
     ) {
         return ResponseEntity.ok(DefaultResponse.success(caseService.update(id, caseDto)));
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         caseService.delete(id);

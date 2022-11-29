@@ -5,6 +5,8 @@ import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +48,21 @@ public class UserServiceImpl implements UserService {
         userEntity.setImage(images);
         userRepository.save(userEntity);
         return images;
+    }
+
+    @Override
+    public Page<UserEntity> findAllByStaff(Integer pageSize, Integer pageNumber) {
+        return userRepository.findAllByStaff(PageRequest.of(pageSize, pageNumber));
+    }
+
+    @Override
+    public Page<UserEntity> findAllByAdmin(Integer pageSize, Integer pageNumber) {
+        return userRepository.findAllByAdmin(PageRequest.of(pageSize, pageNumber));
+    }
+
+    @Override
+    public Page<UserEntity> findAllByCustomer(Integer pageSize, Integer pageNumber) {
+        return userRepository.findAllByCustomer(PageRequest.of(pageSize, pageNumber));
     }
 
 

@@ -9,6 +9,7 @@ import com.example.udpm14sellcomputerpartsbackend.service.VgaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class VgaController {
         this.vgaService = vgaService;
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-vga/{id}")
     public ResponseEntity<?> listProductVga(
             @PathVariable("id") Long categoryId,
@@ -35,6 +37,7 @@ public class VgaController {
         return ResponseEntity.ok(DefaultPagingResponse.success(vgaService.listProductVga(categoryId,page,pageSize)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductVga(
             @PathVariable("id") Long productId
@@ -42,6 +45,7 @@ public class VgaController {
         return ResponseEntity.ok(DefaultResponse.success(vgaService.getOneProductVga(productId)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllVga() {
         SampleResponse response = SampleResponse.builder()
@@ -51,6 +55,8 @@ public class VgaController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getVgaById(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -60,6 +66,8 @@ public class VgaController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("product/{id}")
     public ResponseEntity getAllVgaByProduct(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -70,12 +78,15 @@ public class VgaController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(
             @Valid @RequestBody VgaDto vgaDto
     ) {
         return ResponseEntity.ok(DefaultResponse.success(vgaService.create(vgaDto)));
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
@@ -83,6 +94,8 @@ public class VgaController {
     ) {
         return ResponseEntity.ok(DefaultResponse.success(vgaService.update(id, vgaDto)));
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         vgaService.delete(id);

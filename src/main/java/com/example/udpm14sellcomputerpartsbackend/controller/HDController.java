@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 public class HDController {
     private final HDService hdService;
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-hd/{id}")
     public ResponseEntity<?> listProductHd(
             @PathVariable("id") Long categoryId,
@@ -33,6 +35,8 @@ public class HDController {
         return ResponseEntity.ok(DefaultPagingResponse.success(hdService.listProductHd(categoryId,page,pageSize)));
     }
 
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductHd(
             @PathVariable("id") Long productId
@@ -40,6 +44,7 @@ public class HDController {
         return ResponseEntity.ok(DefaultResponse.success(hdService.getOneProductHd(productId)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllHd() {
         SampleResponse response = SampleResponse.builder()
@@ -50,6 +55,7 @@ public class HDController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getHdById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -60,6 +66,7 @@ public class HDController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product/{id}")
     public ResponseEntity getAllHdByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -70,6 +77,7 @@ public class HDController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(
             @Valid @RequestBody HDDto hdDto
@@ -77,6 +85,7 @@ public class HDController {
         return ResponseEntity.ok(DefaultResponse.success(hdService.create(hdDto)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
@@ -85,6 +94,7 @@ public class HDController {
         return ResponseEntity.ok(DefaultResponse.success(hdService.update(id, hdDto)));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         hdService.delete(id);

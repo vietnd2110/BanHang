@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ public class RamController {
     private final RamService ramService;
 
 
-
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-ram/{id}")
     public ResponseEntity getAllProductRamWithCategoryId(
             @PathVariable("id") Long categoryId,
@@ -35,6 +36,7 @@ public class RamController {
         return ResponseEntity.ok(DefaultPagingResponse.success(ramService.getAllProductRamWithCategoryId(categoryId,page,pageSize)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity getOneProductRamWithProductId(
             @PathVariable("id") Long productId
@@ -42,10 +44,9 @@ public class RamController {
         return ResponseEntity.ok(DefaultResponse.success(ramService.getOneProductRamWithProductId(productId)));
     }
 
-
-
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
-    public ResponseEntity getAllHd() {
+    public ResponseEntity getAllRam() {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Get All Ram")
@@ -54,6 +55,8 @@ public class RamController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getRamById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -64,6 +67,7 @@ public class RamController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product/{id}")
     public ResponseEntity getAllHdByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -74,6 +78,7 @@ public class RamController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(
             @Valid @RequestBody RamDto ramDto
@@ -81,6 +86,7 @@ public class RamController {
         return ResponseEntity.ok(DefaultResponse.success(ramService.create(ramDto)));
     }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
@@ -89,6 +95,7 @@ public class RamController {
         return ResponseEntity.ok(DefaultResponse.success(ramService.update(id, ramDto)));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         ramService.delete(id);

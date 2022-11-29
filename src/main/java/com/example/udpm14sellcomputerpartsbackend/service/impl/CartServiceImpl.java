@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -79,16 +80,14 @@ public class CartServiceImpl implements CartService {
                 cart.setProductId(productEntity.getId());
                 cart.setImage(imageEntity.get(0).getLink());
                 cart.setPrice(productEntity.getPrice());
-                Double price = Double.parseDouble(productEntity.getPrice().toString());
-                cart.setTotal(BigDecimal.valueOf(price * 1));
+                cart.setTotal(productEntity.getPrice() * 1);
                 cart.setQuantity(1);
             } else {//Neu san pham da co trong database tang so luong them 1
                 cart.setQuantity(cart.getQuantity() + 1);
                 if (productEntity.getQuantity() < cart.getQuantity()) {
                     throw new BadRequestException("Bạn chỉ có thể mua tối đa :" + productEntity.getQuantity() + " của sản phẩm này");
                 } else {
-                    Double price = Double.parseDouble(cart.getPrice().toString());
-                    cart.setTotal(BigDecimal.valueOf(price * cart.getQuantity()));
+                    cart.setTotal(cart.getPrice() * cart.getQuantity());
                 }
             }
             return modelMapper.map(cartRepository.save(cart), CartDto.class);
@@ -109,8 +108,7 @@ public class CartServiceImpl implements CartService {
             throw new BadRequestException("Bạn chỉ có thể mua tối đa :" + findQuantity.getQuantity() + " của sản phẩm này");
         }
         cart.setQuantity(quantity);
-        Double price = Double.parseDouble(cart.getPrice().toString());
-        cart.setTotal(BigDecimal.valueOf(price * cart.getQuantity()));
+        cart.setTotal(cart.getPrice() * cart.getQuantity());
         return modelMapper.map(cartRepository.save(cart), CartDto.class);
     }
 
@@ -122,5 +120,12 @@ public class CartServiceImpl implements CartService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "Không tồn tại sản phẩm: " + id + " trong giỏ hàng");
         }
         cartRepository.deleteById(cart.getId());
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll() {
+        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+        cartRepository.deleteAllByUserId(uDetailService.getId());
     }
 }

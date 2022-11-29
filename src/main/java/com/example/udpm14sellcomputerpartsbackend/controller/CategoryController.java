@@ -1,5 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
@@ -9,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +33,7 @@ public class CategoryController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllById(
             @PathVariable("id") Long id
@@ -44,7 +48,16 @@ public class CategoryController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Danh sách category theo status", description = "Danh sách category theo status")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
+    @GetMapping("/list-status/{status}")
+    public ResponseEntity<?> listStatus(
+            @PathVariable("status") StatusEnum status
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(categoryService.listStatus(status)));
+    }
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list-group/{groupId}")
     public ResponseEntity<?> listCategoryWithGroupId(
             @PathVariable("groupId") Long groupId
@@ -60,6 +73,7 @@ public class CategoryController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách và phân trang về thể loại", description = "Lấy tất cả danh sách và phân trang về thể loại")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
@@ -71,6 +85,7 @@ public class CategoryController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách về thể loại", description = "Lấy tất cả danh sách về thể loại")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(SampleResponse.builder()
@@ -81,6 +96,7 @@ public class CategoryController {
     }
 
     @Operation(summary = "Thêm mới thể loại", description = "Thêm mới thể loại")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<?> createCategory(
             @ModelAttribute CategoryDto categoryDto,
@@ -90,6 +106,7 @@ public class CategoryController {
     }
 
     @Operation(summary = "Cập nhật mới thể loại", description = "Cập nhật thể loại")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable("id") Long id,
@@ -101,6 +118,7 @@ public class CategoryController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping(value = "/update-image/{id}",consumes = "multipart/form-data")
     public ResponseEntity<?> updateImageCategory(
             @PathVariable("id") Long id,
@@ -111,6 +129,7 @@ public class CategoryController {
 
 
     @Operation(summary = "Xóa thể loại", description = "Xóa thể loại")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         categoryService.delete(id);

@@ -50,6 +50,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<ProductImageDto> listStatus(StatusEnum status, Integer page, Integer pageNumber) {
+        return productRepository.listProductByStatus(PageRequest.of(page, pageNumber), status);
+    }
+
+    @Override
     public Page<ProductImageDto> findAll(Integer page, Integer pageNumber) {
 //        return productImageDao.productImage(PageRequest.of(page,pageNumber));
         return productRepository.listProduct(PageRequest.of(page,pageNumber));
@@ -153,7 +158,8 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Long id) {
         ProductEntity productEntity = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found:" + id));
-        productRepository.deleteById(productEntity.getId());
+        productEntity.setStatus(StatusEnum.DELETED);
+        productRepository.save(productEntity);
     }
 
 }

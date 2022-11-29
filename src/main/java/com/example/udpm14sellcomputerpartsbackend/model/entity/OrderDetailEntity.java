@@ -16,12 +16,12 @@ public class OrderDetailEntity {
     private Long id;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private long price;
 
     @Column(name = "quantity")
     private Integer quantity;
 
-    private BigDecimal total;
+    private long total;
 
     private String image;
 

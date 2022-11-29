@@ -20,4 +20,6 @@ public interface CartService {
     CartDto updateQuantity(Long idProduct, Integer quantity);
 
     void delete(Long id);
+
+    void deleteAll();
 }

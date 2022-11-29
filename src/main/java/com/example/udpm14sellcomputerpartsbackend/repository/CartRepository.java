@@ -11,6 +11,9 @@ import java.util.List;
 public interface CartRepository extends JpaRepository<CartEntity, Long> {
 
     List<CartEntity> findAllByUserId(Long id);
+
+    void deleteAllByUserId(Long id);
+
     CartEntity findAllByUserIdAndProductId(Long id, Long productId);
 
     @Query("SELECT SUM(c.total) FROM CartEntity c WHERE c.userId=?1")

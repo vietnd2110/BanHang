@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class BrandController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách về hãng sản xuất", description = "Lấy tất cả danh sách về hãng sản xuất")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllBrand() {
         SampleResponse response = SampleResponse.builder()
@@ -35,6 +37,8 @@ public class BrandController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id")Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -46,6 +50,7 @@ public class BrandController {
     }
 
     @Operation(summary = "xóa hãng sản xuất", description = "xóa hãng sản xuất")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBrand(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -58,6 +63,7 @@ public class BrandController {
     }
 
     @Operation(summary = "Thêm mới hãng sản xuất", description = "Thêm mới hãng sản xuất")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PostMapping()
     public ResponseEntity<?> createBrand(@Valid @RequestBody BrandDto brandDto) {
         SampleResponse response = SampleResponse.builder()
@@ -69,6 +75,7 @@ public class BrandController {
     }
 
     @Operation(summary = "Cập nhật hãng sản xuất", description = "Cập nhật hãng sản xuất")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateBrand(@RequestBody @Valid BrandDto brandDto,@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()

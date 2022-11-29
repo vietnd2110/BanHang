@@ -2,7 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,7 +12,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class OrderEntity {
 
     @Id
@@ -30,6 +33,8 @@ public class OrderEntity {
 
     @Column(name = "phone")
     private String phone;
+
+    private String email;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -51,10 +56,10 @@ public class OrderEntity {
     private OrderStatusEnum status;
 
     @Column(name = "grand_total")
-    private Long grandTotal;
+    private long grandTotal;
 
     @Column(name = "discount")
-    private Float discount;
+    private Double discount;
 
     @JsonProperty("account_id")
     private Long accountId;
@@ -64,6 +69,5 @@ public class OrderEntity {
 
     @JsonProperty("payment_id")
     private Long paymentId;
-
 
 }
