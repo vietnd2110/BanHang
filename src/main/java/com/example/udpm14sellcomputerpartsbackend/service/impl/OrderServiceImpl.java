@@ -123,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderEntity checkoutOrder(OrderEntity order) throws MessagingException {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
 
-        BigDecimal total_amount = cartRepository.sumPrice(uDetailService.getId());
+        long total_amount = cartRepository.sumPrice(uDetailService.getId());
         Integer quantity_cart = cartRepository.sumQuantity(uDetailService.getId());
         System.out.println(total_amount + "total_order");
         if (uDetailService.getId() != null) {

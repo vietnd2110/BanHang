@@ -51,7 +51,7 @@ public class OrderEntity {
     private OrderStatusEnum status;
 
     @Column(name = "grand_total")
-    private BigDecimal grandTotal;
+    private Long grandTotal;
 
     @Column(name = "discount")
     private Float discount;
