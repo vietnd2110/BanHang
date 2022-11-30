@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
@@ -35,5 +36,10 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
             "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 " +
             "GROUP BY year (o.createDate)")
     List<ThongKeDto> listHoaDonTheoThang(Integer year, Integer month);
+
+    @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto(o.id, count (o.id), sum(o.grandTotal) )" +
+            "FROM OrderEntity o " +
+            "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 and day(o.createDate)=?3")
+    List<ThongKeDto> listHoaDonTheoNgayHienTai(Integer year, Integer mont, Integer day);
 
 }
