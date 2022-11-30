@@ -81,6 +81,14 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.listStatus(status)));
     }
 
+    @Operation(summary = "Danh sách hóa đơn theo status và account", description = "Danh sách hóa đơn theo status và account")
+    @GetMapping("/list-status-account/{status}")
+    public ResponseEntity<?> listStatusAndAccount(
+            @PathVariable("status") OrderStatusEnum status
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.listOrderStatusAndUserId(status)));
+    }
+
     @GetMapping("/status")
     public ResponseEntity<?> status(){
         return ResponseEntity.ok(DefaultResponse.success(orderService.status()));
@@ -103,6 +111,7 @@ public class OrderController {
     ) {
         return ResponseEntity.ok(DefaultResponse.success(orderService.countOrderStatus(status)));
     }
+
 
 
 }

@@ -11,9 +11,13 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     List<OrderEntity> findAllByStatusEquals(OrderStatusEnum status);
 
+    List<OrderEntity> findAllByStatusEqualsAndAccountId(OrderStatusEnum status, Long accountId);
+
     List<OrderEntity> findAllByAccountId(Long accountId);
 
     @Query(nativeQuery = true,value = "SELECT count(*) AS 'Số lượng' FROM `orders` WHERE orders.status = ?1 and orders.account_id = ?2 ")
     long countOrderStatus(int status,Long accountId);
+
+
 
 }
