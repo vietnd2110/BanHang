@@ -64,6 +64,7 @@ public class OrderServiceImpl implements OrderService {
             OrderEntity order = findByOrderId.get();
             order.setStatus(OrderStatusEnum.DANGSULY);
             order.setStaffId(uDetailService.getId());
+            order.setNameStaff(uDetailService.getFullname());
             return orderRepository.save(order);
         }
         return findByOrderId
@@ -235,9 +236,13 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByStatusEquals(status);
     }
 
-//    public List<OrderEntity> listOrderStatusAndUserId(){
-//
-//    }
+
+    // danh sách hóa đơn theo status và người dùng
+    @Override
+    public List<OrderEntity> listOrderStatusAndUserId(OrderStatusEnum status){
+        CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
+        return orderRepository.findAllByStatusEqualsAndAccountId(status,detailService.getId());
+    }
 
     @Override
     public OrderStatusEnum[] status() {

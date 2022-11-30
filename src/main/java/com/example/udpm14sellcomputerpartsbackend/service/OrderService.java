@@ -22,6 +22,10 @@ public interface OrderService {
 
     List<OrderEntity> listStatus(OrderStatusEnum status);
 
+    // danh sách hóa đơn theo status và người dùng
+    List<OrderEntity> listOrderStatusAndUserId(OrderStatusEnum status);
+
+
     OrderStatusEnum[] status();
 
     // mua lại hàng

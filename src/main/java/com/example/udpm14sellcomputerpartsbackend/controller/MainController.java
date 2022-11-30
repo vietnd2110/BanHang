@@ -26,7 +26,6 @@ public class MainController {
         this.mainService = mainService;
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<?> getAllMain() {
         SampleResponse response = SampleResponse.builder()
@@ -37,7 +36,6 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page") Integer pageSize,
@@ -47,7 +45,6 @@ public class MainController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("product/{id}")
     public ResponseEntity<?> getAllMainByProduct(
             @PathVariable("id") Long id,
@@ -62,7 +59,6 @@ public class MainController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getMainById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

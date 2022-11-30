@@ -23,7 +23,6 @@ public class ColorController {
         this.colorService = colorService;
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllColor() {
         SampleResponse response = SampleResponse.builder()
@@ -34,7 +33,6 @@ public class ColorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getColorById(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()

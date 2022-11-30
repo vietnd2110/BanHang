@@ -17,8 +17,7 @@ public interface CartRepository extends JpaRepository<CartEntity, Long> {
     CartEntity findAllByUserIdAndProductId(Long id, Long productId);
 
     @Query("SELECT SUM(c.total) FROM CartEntity c WHERE c.userId=?1")
-    long sumPrice(Long id);
-
+    Long sumPrice(Long id);
 
     @Query("SELECT SUM(c.quantity) FROM CartEntity c WHERE c.userId=?1")
     Integer sumQuantity(Long id);

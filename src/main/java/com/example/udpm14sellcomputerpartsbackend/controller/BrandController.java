@@ -27,7 +27,6 @@ public class BrandController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách về hãng sản xuất", description = "Lấy tất cả danh sách về hãng sản xuất")
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllBrand() {
         SampleResponse response = SampleResponse.builder()
@@ -38,7 +37,6 @@ public class BrandController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id")Long id) {
         SampleResponse response = SampleResponse.builder()

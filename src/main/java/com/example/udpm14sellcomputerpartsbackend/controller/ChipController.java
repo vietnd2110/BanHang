@@ -28,7 +28,6 @@ public class ChipController {
     }
 
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-chip/{id}")
     public ResponseEntity<?> listProductChip(
             @PathVariable("id") Long categoryId,
@@ -38,7 +37,6 @@ public class ChipController {
         return ResponseEntity.ok(DefaultPagingResponse.success(chipService.listProductChip(categoryId,page,pageSize)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductChip(
             @PathVariable("id") Long productId
@@ -46,7 +44,6 @@ public class ChipController {
         return ResponseEntity.ok(DefaultResponse.success(chipService.getOneProductChip(productId)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> getAllChipandPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -65,7 +62,6 @@ public class ChipController {
 //        return ResponseEntity.status(HttpStatus.OK).body(response);
 //    }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getChipById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -76,7 +72,6 @@ public class ChipController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product/{id}")
     public ResponseEntity getAllChipByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

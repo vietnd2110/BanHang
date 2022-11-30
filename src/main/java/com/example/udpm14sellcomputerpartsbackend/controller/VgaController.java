@@ -27,7 +27,6 @@ public class VgaController {
         this.vgaService = vgaService;
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-vga/{id}")
     public ResponseEntity<?> listProductVga(
             @PathVariable("id") Long categoryId,
@@ -37,7 +36,6 @@ public class VgaController {
         return ResponseEntity.ok(DefaultPagingResponse.success(vgaService.listProductVga(categoryId,page,pageSize)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductVga(
             @PathVariable("id") Long productId
@@ -45,7 +43,6 @@ public class VgaController {
         return ResponseEntity.ok(DefaultResponse.success(vgaService.getOneProductVga(productId)));
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping
     public ResponseEntity getAllVga() {
         SampleResponse response = SampleResponse.builder()
@@ -56,7 +53,6 @@ public class VgaController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getVgaById(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -67,7 +63,6 @@ public class VgaController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("product/{id}")
     public ResponseEntity getAllVgaByProduct(@PathVariable Long id) {
         SampleResponse response = SampleResponse.builder()
