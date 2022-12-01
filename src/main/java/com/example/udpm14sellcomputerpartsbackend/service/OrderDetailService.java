@@ -18,4 +18,5 @@ public interface OrderDetailService {
 
     Page<OrderDetailEntity> getByUser(Long userId, Integer pageSize, Integer pageNumber);
 
+    List<OrderDetailEntity> getAllOrderId(Long id);
 }

@@ -23,4 +23,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
     @Query("SELECT o FROM OrderDetailEntity o WHERE o.userId=:userId")
     Page<OrderDetailEntity> findAllByUserId(Long userId, Pageable pageable);
 
+    List<OrderDetailEntity> findAllByOrderId(Long id);
+
 }
