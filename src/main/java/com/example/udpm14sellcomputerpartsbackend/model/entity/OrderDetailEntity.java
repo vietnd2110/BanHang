@@ -18,6 +18,8 @@ public class OrderDetailEntity {
     @Column(name = "price")
     private long price;
 
+    private String name;
+
     @Column(name = "quantity")
     private Integer quantity;
 

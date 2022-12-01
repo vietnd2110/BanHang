@@ -5,6 +5,7 @@ import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.*;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.OrderConfirm;
 import com.example.udpm14sellcomputerpartsbackend.repository.CartRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
@@ -57,19 +58,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderEntity orderConfirmed(Long orderId) {
+    public OrderEntity orderConfirmed(Long orderId, OrderConfirm orderConfirm) {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
             OrderEntity order = findByOrderId.get();
-            order.setStatus(OrderStatusEnum.DANGSULY);
-            order.setStaffId(uDetailService.getId());
-            order.setNameStaff(uDetailService.getFullname());
-            return orderRepository.save(order);
+            if(order.getStatus() == OrderStatusEnum.CHOXACNHAN){
+                order.setStatus(OrderStatusEnum.DANGXULY);
+                order.setStaffId(uDetailService.getId());
+                order.setNameStaff(uDetailService.getFullname());
+                order.setShipping(orderConfirm.getShipping());
+                return orderRepository.save(order);
+            }
         }
         return findByOrderId
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
-
     }
 
 
@@ -78,8 +81,25 @@ public class OrderServiceImpl implements OrderService {
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
             OrderEntity order = findByOrderId.get();
-            order.setStatus(OrderStatusEnum.DANGVANCHUYEN);
-            return orderRepository.save(order);
+            if(order.getStatus() == OrderStatusEnum.DANGXULY){
+                order.setStatus(OrderStatusEnum.DANGVANCHUYEN);
+                return orderRepository.save(order);
+            }
+        }
+        return findByOrderId
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
+    }
+
+    //đã giao
+    @Override
+    public OrderEntity delivered(Long orderId){
+        Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
+        if (findByOrderId.isPresent()) {
+            OrderEntity order = findByOrderId.get();
+            if(order.getStatus() == OrderStatusEnum.DANGVANCHUYEN){
+                order.setStatus(OrderStatusEnum.DAGIAO);
+                return orderRepository.save(order);
+            }
         }
         return findByOrderId
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
@@ -92,9 +112,9 @@ public class OrderServiceImpl implements OrderService {
         if (findByOrderId.isPresent()) {
             OrderEntity order = findByOrderId.get();
 
-            if (order.getAccountId() != uDetailService.getId()) {
-                throw new BadRequestException("Bạn không phải là chủ đơn hàng");
-            }
+//            if (order.getAccountId() != uDetailService.getId()) {
+//                throw new BadRequestException("Bạn không phải là chủ đơn hàng");
+//            }
 
             if (order.getStatus() == OrderStatusEnum.DANGVANCHUYEN) {
                 throw new BadRequestException("Đơn hàng của bạn đang vận chuyển không thể hủy đơn hàng");
@@ -196,6 +216,7 @@ public class OrderServiceImpl implements OrderService {
             long total = orderDetail.getPrice() * orderDetail.getQuantity();
             orderDetail.setTotal(total);
 
+            orderDetail.setName(cartItem.getName());
             orderDetail.setImage(cartItem.getImage());
             orderDetail.setProductId(cartItem.getProductId());
             orderDetail.setOrderId(order.getId());
@@ -275,6 +296,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    @Override
+    public OrderEntity findByIdOrder(Long id){
+        Optional<OrderEntity> optional = orderRepository.findById(id);
+        if(!optional.isPresent()){
+            throw new BadRequestException("Order id not found");
+        }
+        return optional.get();
+    }
 
 
 }

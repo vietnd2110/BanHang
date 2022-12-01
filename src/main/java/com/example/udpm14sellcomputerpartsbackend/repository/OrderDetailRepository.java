@@ -78,4 +78,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
             "WHERE o.userId = ?1")
     Page<OrderDetailDto> findAllByUserId(Long userId, Pageable pageable);
 
+    List<OrderDetailEntity> findAllByOrderId(Long id);
+
 }

@@ -96,4 +96,17 @@ public class OrderDetailController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @Operation(summary = "lấy danh sách order detail theo order id", description = "lấy danh sách order detail theo order id")
+    @GetMapping("/order-id/{id}")
+    public ResponseEntity<?> getOrderDetailByOrderId(@PathVariable("id") Long orderId) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get OrderDetail by id")
+                .data(orderDetailService.getAllOrderId(orderId))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
 }

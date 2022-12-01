@@ -3,6 +3,7 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.OrderConfirm;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,14 +43,15 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.checkoutOrder(order)));
     }
 
-
     @Operation(summary = "Xác nhận đơn đặt hàng", description = "Xác nhận đơn đặt hàng")
-    @GetMapping("/order-confirm/{id}")
+    @PutMapping("/order-confirm/{id}")
     @PreAuthorize("hasAuthority('STAFF')")
     public ResponseEntity<?> orderConfirmed(
-            @PathVariable("id") Long orderId
-    ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.orderConfirmed(orderId)));
+            @PathVariable("id") Long orderId,
+            @Valid @RequestBody OrderConfirm orderConfirm
+            ) {
+        return ResponseEntity.ok(
+                DefaultResponse.success(orderService.orderConfirmed(orderId,orderConfirm)));
     }
 
     @Operation(summary = "Đang vận chuyển đơn đặt hàng", description = "Đang vận chuyển đơn đặt hàng")
@@ -61,12 +63,21 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.beingShipped(orderId)));
     }
 
+    @Operation(summary = "Đã giao đơn đặt hàng", description = "Đã giao đơn đặt hàng")
+    @GetMapping("/delivered/{id}")
+    @PreAuthorize("hasAuthority('STAFF')")
+    public ResponseEntity<?> delivered(
+            @PathVariable("id") Long orderId
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.delivered(orderId)));
+    }
+
 
     @Operation(summary = "Hủy đơn đặt hàng", description = "Hủy đơn đặt hàng")
     @GetMapping("/cancelled/{id}")
     public ResponseEntity<?> cancelled(
             @PathVariable("id") Long orderId,
-            @RequestParam() String reason
+            @RequestParam(name = "reason", required = false) String reason
     ) {
         return ResponseEntity.ok(DefaultResponse.success(orderService.cancelled(orderId, reason)));
     }
@@ -112,6 +123,13 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.countOrderStatus(status)));
     }
 
+    @Operation(summary = "Lấy ra order theo id", description = "Lấy ra order theo id")
+    @GetMapping("/get-one/{id}")
+    public ResponseEntity<?> findByOrderId(
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.findByIdOrder(id)));
+    }
 
 
 }
