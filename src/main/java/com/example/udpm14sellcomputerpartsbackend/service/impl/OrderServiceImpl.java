@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderEntity orderConfirmed(Long orderId, OrderConfirm orderConfirm) {
+    public OrderEntity orderConfirmed(Long orderId, Float shipping) {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
@@ -67,8 +67,12 @@ public class OrderServiceImpl implements OrderService {
                 order.setStatus(OrderStatusEnum.DANGXULY);
                 order.setStaffId(uDetailService.getId());
                 order.setNameStaff(uDetailService.getFullname());
-                order.setShipping(orderConfirm.getShipping());
+                System.out.println(shipping + "shi");
+                order.setShipping(shipping);
+                order.setGrandTotal((long) (order.getGrandTotal() + order.getShipping() - order.getDiscount()));
                 return orderRepository.save(order);
+            }else{
+                throw new BadRequestException("Trạng thái phải là đang chờ xác nhận mới xác nhận được");
             }
         }
         return findByOrderId
