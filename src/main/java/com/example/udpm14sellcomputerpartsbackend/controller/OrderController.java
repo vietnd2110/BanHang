@@ -44,14 +44,14 @@ public class OrderController {
     }
 
     @Operation(summary = "Xác nhận đơn đặt hàng", description = "Xác nhận đơn đặt hàng")
-    @PutMapping("/order-confirm/{id}")
+    @GetMapping("/order-confirm/{id}")
     @PreAuthorize("hasAuthority('STAFF')")
     public ResponseEntity<?> orderConfirmed(
             @PathVariable("id") Long orderId,
-            @Valid @RequestBody OrderConfirm orderConfirm
+            @RequestParam(name = "shipping",required = false) Float shipping
             ) {
         return ResponseEntity.ok(
-                DefaultResponse.success(orderService.orderConfirmed(orderId,orderConfirm)));
+                DefaultResponse.success(orderService.orderConfirmed(orderId,shipping)));
     }
 
     @Operation(summary = "Đang vận chuyển đơn đặt hàng", description = "Đang vận chuyển đơn đặt hàng")

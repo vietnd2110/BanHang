@@ -13,7 +13,7 @@ public interface OrderService {
     List<OrderEntity> getAll();
 
 
-    OrderEntity orderConfirmed(Long orderId, OrderConfirm orderConfirm);
+    OrderEntity orderConfirmed(Long orderId, Float shipping);
 
     OrderEntity beingShipped(Long orderId);
 
