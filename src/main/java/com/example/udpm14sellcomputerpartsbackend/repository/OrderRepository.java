@@ -3,6 +3,7 @@ package com.example.udpm14sellcomputerpartsbackend.repository;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +27,12 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
             "FROM OrderEntity o " +
             "GROUP BY year (o.createDate)")
     List<StatisticalDto> listHoaDonCacNam();
+
+    @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto(o.id, YEAR(o.createDate), MONTH(o.createDate), count (o.id), sum(o.grandTotal) )" +
+            "FROM OrderEntity o " +
+            "GROUP BY year (o.createDate), Month (o.createDate)")
+    List<ThongKeThangVaNamDto> listHoaDonThangVaNam();
+
 
     @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto(o.id, YEAR(o.createDate), count (o.id), sum(o.grandTotal) )" +
             "FROM OrderEntity o " +
