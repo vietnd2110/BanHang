@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class StatisticalServiceImpl implements StatisticalService {
     @Override
     public List<StatisticalDto> listHoaDonCacNam() {
         return orderRepository.listHoaDonCacNam();
+    }
+
+    @Override
+    public List<ThongKeThangVaNamDto> listHoaDonCacThangVaNam() {
+        return orderRepository.listHoaDonThangVaNam();
     }
 
     @Override

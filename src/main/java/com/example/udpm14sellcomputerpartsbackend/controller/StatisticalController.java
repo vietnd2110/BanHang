@@ -34,6 +34,17 @@ public class StatisticalController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @Operation(summary = "lấy danh sách hóa đơn và doanh thu các năm", description = "")
+    @GetMapping("/list/month-year")
+    public ResponseEntity<?> listThangVaNam() {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Thống kê hóa đơn và doanh thu tháng + năm")
+                .data(service.listHoaDonCacThangVaNam())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     @Operation(summary = "lấy danh sách hóa đơn và doanh thu theo năm", description = "")
     @GetMapping("/list/{year}")
     public ResponseEntity<?> listByYear(@PathVariable("year") Integer year) {
