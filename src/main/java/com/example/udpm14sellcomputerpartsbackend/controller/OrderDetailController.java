@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
@@ -40,7 +41,7 @@ public class OrderDetailController {
     public ResponseEntity<?> getAllOrderDetailAndPage(
             @RequestParam(value = "page") Integer pageSize,
             @RequestParam(value = "page-number") Integer pageNumber) {
-        Page<OrderDetailEntity> page = orderDetailService.getAllAndPage(pageSize, pageNumber);
+        Page<OrderDetailDto> page = orderDetailService.getAllAndPage(pageSize, pageNumber);
         return ResponseEntity.ok(DefaultPagingResponse.success(page));
     }
 

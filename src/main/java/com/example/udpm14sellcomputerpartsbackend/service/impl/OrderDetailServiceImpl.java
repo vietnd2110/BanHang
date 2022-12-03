@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
@@ -23,13 +24,13 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 
     @Override
-    public List<OrderDetailEntity> getAll() {
-        return orderDetailRepository.findAll();
+    public List<OrderDetailDto> getAll() {
+        return orderDetailRepository.getAll();
     }
 
     @Override
-    public Page<OrderDetailEntity> getAllAndPage(Integer pageSize, Integer pageNumber) {
-        Page<OrderDetailEntity> list = orderDetailRepository.getAllAndPage(PageRequest.of(pageSize, pageNumber));
+    public Page<OrderDetailDto> getAllAndPage(Integer pageSize, Integer pageNumber) {
+        Page<OrderDetailDto> list = orderDetailRepository.getAllAndPage(PageRequest.of(pageSize, pageNumber));
         return list;
     }
 
@@ -40,21 +41,21 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
-    public Page<OrderDetailEntity> getByOrder(Long id, Integer pageSize, Integer pageNumber) {
-        Page<OrderDetailEntity> list = orderDetailRepository.findAllByOrderId(id, PageRequest.of(pageSize, pageNumber));
+    public Page<OrderDetailDto> getByOrder(Long id, Integer pageSize, Integer pageNumber) {
+        Page<OrderDetailDto> list = orderDetailRepository.findAllByOrderId(id, PageRequest.of(pageSize, pageNumber));
         return list;
     }
 
     @Override
-    public Page<OrderDetailEntity> getByUserLogin(Integer pageSize, Integer pageNumber) {
+    public Page<OrderDetailDto> getByUserLogin(Integer pageSize, Integer pageNumber) {
         CustomerDetailService user = CurrentUserUtils.getCurrentUserUtils();
-        Page<OrderDetailEntity> list = orderDetailRepository.findAllByUserId(user.getId(), PageRequest.of(pageSize, pageNumber));
+        Page<OrderDetailDto> list = orderDetailRepository.findAllByUserId(user.getId(), PageRequest.of(pageSize, pageNumber));
         return list;
     }
 
     @Override
-    public Page<OrderDetailEntity> getByUser(Long userId, Integer pageSize, Integer pageNumber) {
-        Page<OrderDetailEntity> list = orderDetailRepository.findAllByUserId(userId, PageRequest.of(pageSize, pageNumber));
+    public Page<OrderDetailDto> getByUser(Long userId, Integer pageSize, Integer pageNumber) {
+        Page<OrderDetailDto> list = orderDetailRepository.findAllByUserId(userId, PageRequest.of(pageSize, pageNumber));
         return list;
     }
 
