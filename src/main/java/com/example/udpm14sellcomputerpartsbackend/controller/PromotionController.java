@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.sql.Timestamp;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/promotion")
 @AllArgsConstructor
 public class PromotionController {

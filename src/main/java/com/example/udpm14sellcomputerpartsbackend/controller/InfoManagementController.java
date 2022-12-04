@@ -14,7 +14,7 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/management")
 public class InfoManagementController {
