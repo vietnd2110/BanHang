@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/thong-ke")
 public class StatisticalController {
 
