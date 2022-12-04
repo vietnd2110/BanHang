@@ -52,15 +52,15 @@ public class ChipController {
        return ResponseEntity.ok(DefaultPagingResponse.success(chipService.findAllAndPage(page,pageNumber)));
     }
 
-//    @GetMapping
-//    public ResponseEntity getAllChip() {
-//        SampleResponse response = SampleResponse.builder()
-//                .success(true)
-//                .message("Get All Chip")
-//                .data(chipService.findAll())
-//                .build();
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
+    @GetMapping("/list")
+    public ResponseEntity getAllChip() {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Get All Chip")
+                .data(chipService.findAll())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity getChipById(@PathVariable("id") Long id) {
