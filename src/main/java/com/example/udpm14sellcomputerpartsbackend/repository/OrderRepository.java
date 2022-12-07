@@ -50,5 +50,4 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
             "FROM OrderEntity o " +
             "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 and day(o.createDate)=?3")
     List<ThongKeDto> listHoaDonTheoNgayHienTai(Integer year, Integer mont, Integer day);
-
 }
