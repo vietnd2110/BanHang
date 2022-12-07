@@ -53,4 +53,7 @@ public class ProductEntity {
     @JsonProperty("brand_id")
     private Long brandId;
 
+    @ManyToOne
+    @JoinColumn(name = "pc_id", nullable = false)
+    private PCEntity pc;
 }
