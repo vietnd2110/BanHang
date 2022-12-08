@@ -21,7 +21,4 @@ public class HdEntity {
     @JsonProperty("product_id")
     private Long productId;
 
-    @ManyToOne
-    @JoinColumn(name = "pc_id", nullable = false)
-    private PCEntity pc;
 }

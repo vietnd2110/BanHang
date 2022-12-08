@@ -47,7 +47,4 @@ public class MainEntity {
     @JsonProperty("ram_id")
     private Long ramId;
 
-    @ManyToOne
-    @JoinColumn(name = "pc_id", nullable = false)
-    private PCEntity pc;
 }

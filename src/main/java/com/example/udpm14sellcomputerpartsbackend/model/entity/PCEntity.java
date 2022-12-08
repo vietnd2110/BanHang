@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -13,30 +14,29 @@ import java.util.List;
 public class PCEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    private Long id;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<ChipEntity> chip;
+    @JsonProperty("chip_id")
+    private Long chipId;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<MainEntity> main;
+    @JsonProperty("main_id")
+    private Long mainId;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<VgaEntity> vga;
+    @JsonProperty("vga_id")
+    private Long vgaId;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<RamEntity> ram;
+    @JsonProperty("ram_id")
+    private Long ramId;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<HdEntity> hd;
+    @JsonProperty("hd_id")
+    private Long hdId;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<PsuEntity> psu;
+    @JsonProperty("psu_id")
+    private Long psuId;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<CaseEntity> cases;
+    @JsonProperty("case_id")
+    private Long casesId;
 
-    @OneToMany(mappedBy = "pc", cascade = CascadeType.ALL)
-    private List<ProductEntity> product;
+    @JsonProperty("product_id")
+    private Long productId;
 }
