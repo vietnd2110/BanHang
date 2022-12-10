@@ -3,6 +3,7 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateDeliveryOrder;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.OrderConfirm;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderService;
@@ -47,11 +48,10 @@ public class OrderController {
     @GetMapping("/order-confirm/{id}")
     @PreAuthorize("hasAuthority('STAFF')")
     public ResponseEntity<?> orderConfirmed(
-            @PathVariable("id") Long orderId,
-            @RequestParam(name = "shipping",required = false) Float shipping
+            @PathVariable("id") Long orderId
             ) {
         return ResponseEntity.ok(
-                DefaultResponse.success(orderService.orderConfirmed(orderId,shipping)));
+                DefaultResponse.success(orderService.orderConfirmed(orderId)));
     }
 
     @Operation(summary = "Đang vận chuyển đơn đặt hàng", description = "Đang vận chuyển đơn đặt hàng")
@@ -100,6 +100,8 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.listOrderStatusAndUserId(status)));
     }
 
+
+
     @GetMapping("/status")
     public ResponseEntity<?> status(){
         return ResponseEntity.ok(DefaultResponse.success(orderService.status()));
@@ -129,6 +131,36 @@ public class OrderController {
             @PathVariable("id") Long id
     ) {
         return ResponseEntity.ok(DefaultResponse.success(orderService.findByIdOrder(id)));
+    }
+
+    @Operation(summary = "Danh sách hóa đơn theo trang thái chua thanh toán", description = "Danh sách hóa đơn theo trang thái chua thanh toán")
+    @GetMapping("/list-status-payment")
+    public ResponseEntity<?> listStatusPayment(
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusPayment()));
+    }
+
+    @Operation(summary = "Tạo hóa đơn tại quầy", description = "Tạo hóa đơn tại quầy")
+    @GetMapping("/create-order")
+    public ResponseEntity<?> createOrder(
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.createAnOrderAtTheCounter()));
+    }
+
+    @Operation(summary = "Đặt hàng tại quầy", description = "Đặt hàng tại quầy")
+    @GetMapping("/checkout-order/{id}")
+    public ResponseEntity<?> checkoutAtTheCounter(
+            @PathVariable("id") Long orderId
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.checkoutAtTheCounter(orderId)));
+    }
+
+    @Operation(summary = "Tạo đơn hang giao", description = "Tạo đơn hàng giao")
+    @PostMapping("/create-delivery-order")
+    public ResponseEntity<?> createDeliveryOrder(
+            @Valid @RequestBody CreateDeliveryOrder order
+            ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.createDeliveryOrder(order)));
     }
 
 
