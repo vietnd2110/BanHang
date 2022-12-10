@@ -78,7 +78,6 @@ public class ImagesController {
 
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ")
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
     @GetMapping("/product-id/{id}")
     public ResponseEntity<?> findAllByProductAndImages(
             @PathVariable("id") Long id

@@ -93,7 +93,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.id,product.name,product.price,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id ")
+            "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "GROUP BY product.id")
     public Page<ProductImageDto> listProductAndPage(Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -108,7 +109,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "image.link," +
             "image.name,product.categoryId) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id where CONCAT(product.name, ' ' , product.price, ' ') like %?1%")
+            "INNER JOIN ProductEntity product ON image.product_id = product.id where CONCAT(product.name, ' ' , product.price, ' ') like %?1% " +
+            "GROUP BY product.id")
     public Page<ProductImageDto> searchByName(String name, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -125,6 +127,22 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id where product.categoryId=:id")
     public Page<ProductImageDto> findByCategory(Long id, Pageable pageable);
+
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
+            "product.id," +
+            "product.name," +
+            "product.price," +
+            "product.quantity," +
+            "product.createDate," +
+            "product.updateDate," +
+            "product.description," +
+            "product.status," +
+            "image.link," +
+            "image.name,product.categoryId) " +
+            "FROM ImageEntity image " +
+            "INNER JOIN ProductEntity product ON image.product_id = product.id where product.id=:id " +
+            "GROUP BY product.id")
+    public Page<ProductImageDto> findByIdProduct(Long id, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id," +

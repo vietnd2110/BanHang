@@ -1,22 +1,27 @@
-package com.example.udpm14sellcomputerpartsbackend.model.dto;
+package com.example.udpm14sellcomputerpartsbackend.payload.request;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.RegexContants;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateOrderReq {
+public class CreateDeliveryOrder {
 
+    private Integer shipping;
 
+    @NotBlank(message = "fullname is not empty")
     private String fullname;
 
     @NotBlank(message = "province is not empty")
@@ -33,15 +38,10 @@ public class CreateOrderReq {
     @Length(max = 10)
     private String phone;
 
+    @NotBlank(message = "description is not empty")
     private String description;
 
-    @NotBlank(message = "shipping is not empty")
-    private Integer shipping;
 
-    @JsonProperty("payment_id")
-    private Long paymentId;
 
-    @JsonProperty("coupon_code")
-    private String couponCode;
 
 }

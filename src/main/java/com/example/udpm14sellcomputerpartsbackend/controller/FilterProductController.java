@@ -86,8 +86,8 @@ public class FilterProductController {
     @GetMapping("/color/{id}")
     public ResponseEntity filterProductPriceByColor(
             @PathVariable("id") Long id,
-            @RequestParam("page") Integer page,
-            @RequestParam("page-number") Integer pageNumber
+            @RequestParam(value = "page",defaultValue = "0") Integer page,
+            @RequestParam("page-size") Integer pageNumber
     ){
         DefaultPagingResponse defaultPagingResponse =
                 DefaultPagingResponse.success(filterProductService.listFilterProductByColor(page,pageNumber, id));

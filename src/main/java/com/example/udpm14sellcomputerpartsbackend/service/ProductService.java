@@ -23,6 +23,8 @@ public interface ProductService {
 
     Page<ProductImageDto> findByCategory(Long id, Integer pageSize, Integer pageNumber);
 
+    Page<ProductImageDto> findByIdProduct(Long id, Integer pageSize, Integer pageNumber);
+
     Page<ProductImageDto> findByBrand(Long id, Integer pageSize, Integer pageNumber);
 
     Page<ProductImageDto> getAllAndPage(Integer pageSize, Integer pageNumber);

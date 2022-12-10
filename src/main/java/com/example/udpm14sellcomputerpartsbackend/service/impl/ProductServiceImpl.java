@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -105,6 +104,15 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByCategory(id, PageRequest.of(pageSize, pageNumber));
     }
 
+
+    @Override
+    public Page<ProductImageDto> findByIdProduct(Long id, Integer pageSize, Integer pageNumber){
+        ProductEntity productEntity = productRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found:"+id));
+        return productRepository.findByIdProduct(id, PageRequest.of(pageSize, pageNumber));
+    }
+
+
     @Override
     public Page<ProductImageDto> findByBrand(Long id, Integer pageSize, Integer pageNumber) {
         BrandEntity brandEntity = brandRepository.findById(id)
@@ -161,5 +169,6 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setStatus(StatusEnum.DELETED);
         productRepository.save(productEntity);
     }
+
 
 }
