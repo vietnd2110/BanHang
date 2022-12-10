@@ -1,11 +1,12 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.PaymentStatus;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.*;
-import com.example.udpm14sellcomputerpartsbackend.payload.request.OrderConfirm;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateDeliveryOrder;
 import com.example.udpm14sellcomputerpartsbackend.repository.CartRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
@@ -58,20 +59,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderEntity orderConfirmed(Long orderId, Float shipping) {
+    public OrderEntity orderConfirmed(Long orderId) {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
             OrderEntity order = findByOrderId.get();
-            if(order.getStatus() == OrderStatusEnum.CHOXACNHAN){
+            if (order.getStatus() == OrderStatusEnum.CHOXACNHAN) {
                 order.setStatus(OrderStatusEnum.DANGXULY);
                 order.setStaffId(uDetailService.getId());
-                order.setNameStaff(uDetailService.getFullname());
-                System.out.println(shipping + "shi");
-                order.setShipping(shipping);
                 order.setGrandTotal((long) (order.getGrandTotal() + order.getShipping() - order.getDiscount()));
                 return orderRepository.save(order);
-            }else{
+            } else {
                 throw new BadRequestException("Trạng thái phải là đang chờ xác nhận mới xác nhận được");
             }
         }
@@ -85,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
             OrderEntity order = findByOrderId.get();
-            if(order.getStatus() == OrderStatusEnum.DANGXULY){
+            if (order.getStatus() == OrderStatusEnum.DANGXULY) {
                 order.setStatus(OrderStatusEnum.DANGVANCHUYEN);
                 return orderRepository.save(order);
             }
@@ -96,11 +94,11 @@ public class OrderServiceImpl implements OrderService {
 
     //đã giao
     @Override
-    public OrderEntity delivered(Long orderId){
+    public OrderEntity delivered(Long orderId) {
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
             OrderEntity order = findByOrderId.get();
-            if(order.getStatus() == OrderStatusEnum.DANGVANCHUYEN){
+            if (order.getStatus() == OrderStatusEnum.DANGVANCHUYEN) {
                 order.setStatus(OrderStatusEnum.DAGIAO);
                 return orderRepository.save(order);
             }
@@ -150,22 +148,71 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
     }
 
+    // đặt hàng tại quầy
+    @Override
+    public OrderEntity checkoutAtTheCounter(Long orderId) {
+        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+        // lấy tông tiền đơn hàng
+        long total_amount = cartRepository.sumPrice(uDetailService.getId());
+
+        System.out.println(total_amount + " total");
+        System.out.println(uDetailService.getId()  + "id sfafff");
+
+        Optional<OrderEntity> findByIdOrder = orderRepository.findById(orderId);
+        OrderEntity order = findByIdOrder.get();
+        if (findByIdOrder.isPresent()) {
+            order.setGrandTotal(total_amount + order.getShipping());
+            order.setPaymentStatus(PaymentStatus.DATHANHTOAN);
+            orderRepository.save(order);
+
+            Collection<CartEntity> listCartItems = cartService.getAllByUser(uDetailService.getId());
+            for (CartEntity cartItem : listCartItems) {
+                OrderDetailEntity orderDetail = new OrderDetailEntity();
+
+                orderDetail.setPrice(cartItem.getPrice());
+                orderDetail.setQuantity(cartItem.getQuantity());
+
+                long total = orderDetail.getPrice() * orderDetail.getQuantity();
+                orderDetail.setTotal(total);
+
+                orderDetail.setName(cartItem.getName());
+                orderDetail.setImage(cartItem.getImage());
+                orderDetail.setProductId(cartItem.getProductId());
+                orderDetail.setOrderId(order.getId());
+                orderDetail.setUserId(uDetailService.getId());
+
+                orderDetailRepository.save(orderDetail);
+                ProductEntity productEntity = productService.getOne(cartItem.getProductId());
+
+                int quantityOrderDetail = orderDetail.getQuantity();
+                int quantityProduct = productEntity.getQuantity();
+
+                int updateQuantity = quantityProduct - quantityOrderDetail;
+                productService.updateQuantity(productEntity.getId(), updateQuantity);
+                // xoa cart
+                cartRepository.deleteById(cartItem.getId());
+            }
+        } else {
+            throw new BadRequestException("Order id not found");
+        }
+        return order;
+    }
+
 
     @Override
     public OrderEntity checkoutOrder(CreateOrderReq req) throws MessagingException {
         OrderEntity order = new OrderEntity();
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
 
-        long total_amount = cartRepository.sumPrice(uDetailService.getId());
+        Long total_amount = cartRepository.sumPrice(uDetailService.getId());
         Integer quantity_cart = cartRepository.sumQuantity(uDetailService.getId());
         System.out.println(total_amount + "total_order");
         if (uDetailService.getId() != null) {
 
             order.setAccountId(uDetailService.getId());
-            order.setShipping(40000f);
+            order.setShipping(req.getShipping());
             order.setStatus(OrderStatusEnum.CHOXACNHAN);
             order.setEmail(uDetailService.getEmail());
-
 
             // Check promotion
             PromotionEntity promotion = promotionService.checkPromotion(req.getCouponCode());
@@ -193,11 +240,10 @@ public class OrderServiceImpl implements OrderService {
 
 
             order.setFullname(req.getFullname());
-            order.setAddress(req.getAddress());
             order.setPhone(req.getPhone());
             order.setDescription(req.getDescription());
             order.setPaymentId(req.getPaymentId());
-            order.setQuantity(quantity_cart);
+//            order.setQuantity(quantity_cart);
 
             System.out.println(total_amount + "total");
             System.out.println(order.getShipping() + "ship");
@@ -242,11 +288,11 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
+
     private void sendEmailOrder(String email, OrderEntity order) throws MessagingException {
         Map<String, Object> props = new HashMap<>();
         props.put("fullname", order.getFullname());
         props.put("phone", order.getPhone());
-        props.put("address", order.getAddress());
         props.put("description", order.getDescription());
         props.put("createDate", order.getCreateDate());
         props.put("discount", order.getDiscount());
@@ -261,12 +307,11 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByStatusEquals(status);
     }
 
-
     // danh sách hóa đơn theo status và người dùng
     @Override
-    public List<OrderEntity> listOrderStatusAndUserId(OrderStatusEnum status){
+    public List<OrderEntity> listOrderStatusAndUserId(OrderStatusEnum status) {
         CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
-        return orderRepository.findAllByStatusEqualsAndAccountId(status,detailService.getId());
+        return orderRepository.findAllByStatusEqualsAndAccountId(status, detailService.getId());
     }
 
     @Override
@@ -276,37 +321,76 @@ public class OrderServiceImpl implements OrderService {
         return status;
     }
 
-
     // mua lại hàng
     @Override
-    public void reOrder(Long orderId){
+    public void reOrder(Long orderId) {
         CustomerDetailService userUtils = CurrentUserUtils.getCurrentUserUtils();
 
-        List<OrderDetailEntity> findByIdOrder = orderDetailRepository.findAllByOrderIdAndUserId(orderId,userUtils.getId());
+        List<OrderDetailEntity> findByIdOrder = orderDetailRepository.findAllByOrderIdAndUserId(orderId, userUtils.getId());
 
         for (OrderDetailEntity order : findByIdOrder) {
             CartEntity cart = new CartEntity();
-            BeanUtils.copyProperties(order,cart);
+            BeanUtils.copyProperties(order, cart);
 
             cartRepository.save(cart);
         }
     }
 
-
     @Override
-    public long countOrderStatus(int status){
+    public long countOrderStatus(int status) {
         CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
-        return orderRepository.countOrderStatus(status,detailService.getId());
+        return orderRepository.countOrderStatus(status, detailService.getId());
     }
 
-
     @Override
-    public OrderEntity findByIdOrder(Long id){
+    public OrderEntity findByIdOrder(Long id) {
         Optional<OrderEntity> optional = orderRepository.findById(id);
-        if(!optional.isPresent()){
+        if (!optional.isPresent()) {
             throw new BadRequestException("Order id not found");
         }
         return optional.get();
+    }
+
+    @Override
+    public List<OrderEntity> listStatusPayment() {
+        return orderRepository.findAllByPaymentStatusEquals(PaymentStatus.CHUATHANHTOAN);
+    }
+
+    // tạo đơn hàng tại quầy
+    @Override
+    public OrderEntity createAnOrderAtTheCounter() {
+        CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
+
+        OrderEntity order = new OrderEntity();
+        order.setNameStaff(detailService.getFullname());
+        order.setStaffId(detailService.getId());
+        order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
+        order.setStatus(OrderStatusEnum.TAIQUAY);
+
+        return orderRepository.save(order);
+    }
+
+    // tạo đơn hàng Giao
+    @Override
+    public OrderEntity createDeliveryOrder(CreateDeliveryOrder req) {
+        CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
+
+        OrderEntity order = new OrderEntity();
+
+        order.setFullname(req.getFullname());
+        order.setProvince(req.getProvince());
+        order.setDistrict(req.getDistrict());
+        order.setWard(req.getWard());
+        order.setPhone(req.getPhone());
+        order.setDescription(req.getDescription());
+        order.setShipping(req.getShipping());
+
+        order.setNameStaff(detailService.getFullname());
+        order.setStaffId(detailService.getId());
+        order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
+        order.setStatus(OrderStatusEnum.TAIQUAY);
+
+        return orderRepository.save(order);
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,28 +18,30 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class OrderEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "shipping")
-    private Float shipping;
+    private Integer shipping;
 
     @Column(name = "fullname")
     private String fullname;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "province")
+    private String province;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "ward")
+    private String ward;
 
     @Column(name = "phone")
     private String phone;
 
     private String email;
-
-    @Column(name = "quantity")
-    private Integer quantity;
-
+//    @Column(name = "quantity")
+//    private Integer quantity;
     @Column(name = "description")
     private String description;
 
@@ -55,8 +58,13 @@ public class OrderEntity {
 
     private OrderStatusEnum status;
 
+    private PaymentStatus paymentStatus;
+
+    @Column(name = "name_staff")
+    private String nameStaff;
+
     @Column(name = "grand_total")
-    private long grandTotal;
+    private Long grandTotal;
 
     @Column(name = "discount")
     private Double discount;
@@ -67,9 +75,8 @@ public class OrderEntity {
     @JsonProperty("staff_id")
     private Long staffId;
 
-    private String nameStaff;
-
     @JsonProperty("payment_id")
     private Long paymentId;
+
 
 }

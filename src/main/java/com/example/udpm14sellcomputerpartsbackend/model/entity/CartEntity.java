@@ -19,7 +19,7 @@ public class CartEntity {
 
     private long price;
 
-    private long total;
+    private Long total;
 
     private Integer quantity;
 

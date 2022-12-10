@@ -23,7 +23,7 @@ public class OrderDetailEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    private long total;
+    private Long total;
 
     private String image;
 

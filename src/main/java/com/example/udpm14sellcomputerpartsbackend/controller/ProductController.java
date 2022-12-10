@@ -99,6 +99,16 @@ public class ProductController {
                 DefaultPagingResponse.success(productService.findByCategory(cid, pageSize, pageNumber)));
     }
 
+    @GetMapping("/product-id/{id}")
+    public ResponseEntity<?> getByIdProducty(
+            @PathVariable("id") Long cid,
+            @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
+            @RequestParam(value = "page-size") Integer pageNumber
+    ) {
+        return ResponseEntity.ok(
+                DefaultPagingResponse.success(productService.findByIdProduct(cid, pageSize, pageNumber)));
+    }
+
     @GetMapping("/brand/{id}")
     public ResponseEntity<?> getAllByBrand(
             @PathVariable("id") Long bid,

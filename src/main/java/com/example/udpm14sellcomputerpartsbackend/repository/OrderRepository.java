@@ -1,6 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
+import com.example.udpm14sellcomputerpartsbackend.contants.PaymentStatus;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto;
@@ -15,6 +16,8 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     List<OrderEntity> findAllByStatusEquals(OrderStatusEnum status);
+
+    List<OrderEntity> findAllByPaymentStatusEquals(PaymentStatus status);
 
     List<OrderEntity> findAllByStatusEqualsAndAccountId(OrderStatusEnum status, Long accountId);
 
