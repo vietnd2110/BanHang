@@ -7,14 +7,17 @@ import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPaging
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.ProductService;
+import com.example.udpm14sellcomputerpartsbackend.ultil.QrUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,7 +119,7 @@ public class ProductController {
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
-                .message("Create success")
+                .message("Update success")
                 .data(productService.update(id, productDto))
                 .build();
         return ResponseEntity.ok(response);
@@ -127,7 +130,7 @@ public class ProductController {
     public ResponseEntity<?> create(@Valid @RequestBody ProductDto productDto) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
-                .message("Update success")
+                .message("Create success")
                 .data(productService.create(productDto))
                 .build();
         return ResponseEntity.ok(response);
@@ -138,5 +141,13 @@ public class ProductController {
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         productService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
+    }
+    @GetMapping(value = "qrcode/{id}")
+    public void qrcode(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+        response.setContentType("image/png");
+        OutputStream outputStream = response.getOutputStream();
+        outputStream.write(QrUtils.getQRCodeImage(id, 200, 200));
+        outputStream.flush();
+        outputStream.close();
     }
 }
