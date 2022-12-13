@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -38,14 +40,36 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartEntity> getAllByUser(Long id) {
+    public Collection<CartEntity> getAllByUser(Long id) {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
-        return cartRepository.findAllByUserId(uDetailService.getId());
+        List<CartEntity> list = cartRepository.findAllByUserId(uDetailService.getId());
+
+        Map<Long, CartEntity> map = list.stream()
+                .collect(Collectors.toMap(CartEntity::getId, Function.identity()));
+
+        for (Map.Entry<Long, CartEntity> entry : map.entrySet()) {
+            CartEntity cart = entry.getValue();
+            Optional<ProductEntity> productEntity = productRepository.findById(entry.getKey());
+            cart.setPrice(productEntity.get().getPrice());
+            cart.setName(productEntity.get().getName());
+        }
+        return map.values();
     }
 
     @Override
-    public List<CartEntity> getAllCart() {
-        return cartRepository.findAll();
+    public Collection<CartEntity> getAllCart() {
+        List<CartEntity> list = cartRepository.findAll();
+
+        Map<Long, CartEntity> map = list.stream()
+                .collect(Collectors.toMap(CartEntity::getId, Function.identity()));
+
+        for (Map.Entry<Long, CartEntity> entry : map.entrySet()) {
+            CartEntity cart = entry.getValue();
+            Optional<ProductEntity> productEntity = productRepository.findById(entry.getKey());
+            cart.setPrice(productEntity.get().getPrice());
+            cart.setName(productEntity.get().getName());
+        }
+        return map.values();
     }
 
     @Override

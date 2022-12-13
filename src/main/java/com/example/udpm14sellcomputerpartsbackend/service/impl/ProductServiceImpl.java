@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.daos.ProductImageDao;
+import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
@@ -134,13 +135,18 @@ public class ProductServiceImpl implements ProductService {
         VoucherEntity voucherEntity = voucherRepository.findById(productDto.getVoucherId())
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Voucher id not found: " + productDto.getVoucherId()));
 
-        ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
+        ProductEntity find = productRepository.findAllByMaSanPham(productDto.getMaSanPham());
+        if (find==null){
+            ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
 
-        productEntity.setCategoryId(categoryEntity.getId());
-        productEntity.setVoucherId(voucherEntity.getId());
-        productEntity.setStatus(StatusEnum.ACTIVE);
+            productEntity.setCategoryId(categoryEntity.getId());
+            productEntity.setVoucherId(voucherEntity.getId());
+            productEntity.setStatus(StatusEnum.ACTIVE);
 
-        return modelMapper.map(productRepository.save(productEntity), ProductDto.class);
+            return modelMapper.map(productRepository.save(productEntity), ProductDto.class);
+        }else {
+            throw new BadRequestException("Mã sản phẩm đã tồn tại");
+        }
     }
 
     @Override
@@ -153,11 +159,11 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found:" + id));
 
         ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
+
         productEntity.setId(find.getId());
-        productEntity.setStatus(StatusEnum.ACTIVE);
-        productEntity.setCreateDate(find.getCreateDate());
         productEntity.setCategoryId(findCate.getId());
         productEntity.setVoucherId(voucherEntity.getId());
+        productEntity.setStatus(StatusEnum.ACTIVE);
 
         return modelMapper.map(productRepository.save(productEntity), ProductDto.class);
     }
