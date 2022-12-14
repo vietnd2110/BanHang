@@ -36,8 +36,8 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
             "product.description,product.status,image.link,image.name,product.categoryId) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
-            "WHERE product.maSanPham=:maSP")
-    ProductImageDto ProductAndImagesByMaSp(String maSP);
+            "WHERE product.code=:code")
+    ProductImageDto ProductAndImagesByMaSp(String code);
 
     @Query("SELECT p FROM ImageEntity p WHERE p.product_id =?1")
     public List<ImageEntity> getImageByProduct(Long id);
