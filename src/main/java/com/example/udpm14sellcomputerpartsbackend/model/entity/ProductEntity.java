@@ -20,8 +20,8 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ma_san_pham")
-    private String maSanPham;
+    @Column(name = "code")
+    private String code;
 
     @Column(name = "name")
     private String name;

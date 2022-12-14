@@ -127,7 +127,7 @@ public class ProductServiceImpl implements ProductService {
         VoucherEntity voucherEntity = voucherRepository.findById(productDto.getVoucherId())
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Voucher id not found: " + productDto.getVoucherId()));
 
-        ProductEntity find = productRepository.findAllByMaSanPham(productDto.getMaSanPham());
+        ProductEntity find = productRepository.findAllByCode(productDto.getCode());
         if (find==null){
             ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
 

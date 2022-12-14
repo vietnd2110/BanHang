@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class ProductDto {
     private Long id;
 
-    @NotBlank(message = "ma san pham name is not null")
-    private String maSanPham;
+    @NotBlank(message = "code is not null")
+    private String code;
 
     @NotBlank(message = "product name is not null")
     private String name;
