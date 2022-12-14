@@ -18,7 +18,6 @@ public class ProductDto {
     private String maSanPham;
 
     @NotBlank(message = "product name is not null")
-    @Size(max = 50)
     private String name;
 
     @DecimalMin(value = "0.0", inclusive = false)

@@ -71,9 +71,9 @@ public class ImagesController {
     public ResponseEntity<?> create(
             @ModelAttribute ImageDto imageDto,
             @RequestParam(required = false) MultipartFile file
-    ){
+    ) {
         return ResponseEntity.ok(
-                DefaultResponse.success(imagesService.createImage(imageDto,file)));
+                DefaultResponse.success(imagesService.createImage(imageDto, file)));
     }
 
 
@@ -92,5 +92,19 @@ public class ImagesController {
         return ResponseEntity.ok(response);
     }
 
-
+    @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo maSP product bên images ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ")
+    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
+    @GetMapping("/product-maSP/{ma}")
+    public ResponseEntity<?> listProductAndImagesByMaSp(
+            @PathVariable("ma") String maSP
+    ) {
+        ProductImageDto productImageDtos = imagesService.ProductAndImagesByMaSp(maSP);
+        SampleResponse response = SampleResponse
+                .builder()
+                .success(true)
+                .message("Get by maSP product success")
+                .data(productImageDtos)
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }
