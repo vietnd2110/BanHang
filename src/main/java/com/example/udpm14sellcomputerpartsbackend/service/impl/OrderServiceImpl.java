@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatus;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.PaymentStatus;
 import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
@@ -7,6 +8,7 @@ import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.*;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateDeliveryOrder;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateOrderAtTheCounter;
 import com.example.udpm14sellcomputerpartsbackend.repository.CartRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
@@ -19,6 +21,7 @@ import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.mail.MessagingException;
 import java.util.*;
@@ -125,6 +128,7 @@ public class OrderServiceImpl implements OrderService {
             } else {
                 order.setStatus(OrderStatusEnum.DAHUY);
                 order.setReason(reason);
+                order.setPaymentStatus(PaymentStatus.HUY);
 
                 Collection<OrderDetailEntity> listOrderDetail = orderDetailRepository.findAllByUserId(uDetailService.getId());
                 System.out.println(listOrderDetail + "abc");
@@ -356,16 +360,64 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByPaymentStatusEquals(PaymentStatus.CHUATHANHTOAN);
     }
 
-    // tạo đơn hàng tại quầy
+
     @Override
-    public OrderEntity createAnOrderAtTheCounter() {
+    public List<OrderEntity> listStatusPaymentPaid() {
+        return orderRepository.findAllByPaymentStatusEquals(PaymentStatus.DATHANHTOAN);
+    }
+
+    @Override
+    public List<OrderEntity> searchOrder(String name){
+        List<OrderEntity> page = null;
+        if(!StringUtils.hasText(name)){
+            page = orderRepository.findAllByPaymentStatusEquals(PaymentStatus.DATHANHTOAN);
+        }else{
+            page = orderRepository.searchAllByOrder(name,PaymentStatus.DATHANHTOAN);
+        }
+        return page;
+    }
+
+    // tao đơn hàng bán lẻ
+    @Override
+    public OrderEntity retailOrders(){
         CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
 
         OrderEntity order = new OrderEntity();
+
+        order.setFullname("Khách hàng lẻ");
+        order.setDescription("Khách hàng mua lẻ không muốn để lại thông tin");
+
         order.setNameStaff(detailService.getFullname());
         order.setStaffId(detailService.getId());
+        order.setShipping(0);
         order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
-        order.setStatus(OrderStatusEnum.TAIQUAY);
+        order.setStatus(OrderStatusEnum.DANGXULY);
+        order.setOrderStatus(OrderStatus.TAIQUAY);
+
+        return orderRepository.save(order);
+    }
+
+    // tạo đơn hàng tại quầy
+    @Override
+    public OrderEntity createAnOrderAtTheCounter(CreateOrderAtTheCounter req) {
+        CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
+
+        OrderEntity order = new OrderEntity();
+
+        order.setFullname(req.getFullname());
+        order.setProvince(req.getProvince());
+        order.setDistrict(req.getDistrict());
+        order.setWard(req.getWard());
+        order.setPhone(req.getPhone());
+        order.setDescription(req.getDescription());
+
+
+        order.setNameStaff(detailService.getFullname());
+        order.setStaffId(detailService.getId());
+        order.setShipping(0);
+        order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
+        order.setStatus(OrderStatusEnum.DANGXULY);
+        order.setOrderStatus(OrderStatus.TAIQUAY);
 
         return orderRepository.save(order);
     }
@@ -388,10 +440,51 @@ public class OrderServiceImpl implements OrderService {
         order.setNameStaff(detailService.getFullname());
         order.setStaffId(detailService.getId());
         order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
-        order.setStatus(OrderStatusEnum.TAIQUAY);
+        order.setStatus(OrderStatusEnum.DANGXULY);
+        order.setOrderStatus(OrderStatus.DONGIAO);
 
         return orderRepository.save(order);
     }
 
+    // cập nhật lại hóa đơn giao
+    @Override
+    public OrderEntity updateDeliveryOrder(Long orderId, CreateDeliveryOrder req){
+        Optional<OrderEntity> findById = orderRepository.findById(orderId);
+
+        if(findById.isPresent()){
+            OrderEntity order = findById.get();
+
+            order.setFullname(req.getFullname());
+            order.setProvince(req.getProvince());
+            order.setDistrict(req.getDistrict());
+            order.setWard(req.getWard());
+            order.setPhone(req.getPhone());
+            order.setDescription(req.getDescription());
+            order.setShipping(req.getShipping());
+
+            return orderRepository.save(order);
+        }else{
+            throw new BadRequestException("Order Id not found");
+        }
+
+    }
+
+    @Override
+    public OrderEntity updateAtTheCounterOrder(Long orderId, CreateOrderAtTheCounter req){
+        Optional<OrderEntity> findById = orderRepository.findById(orderId);
+        if(findById.isPresent()){
+            OrderEntity order = findById.get();
+            order.setFullname(req.getFullname());
+            order.setProvince(req.getProvince());
+            order.setDistrict(req.getDistrict());
+            order.setWard(req.getWard());
+            order.setPhone(req.getPhone());
+            order.setDescription(req.getDescription());
+            return orderRepository.save(order);
+        }else{
+            throw new BadRequestException("Order Id not found");
+        }
+
+    }
 
 }

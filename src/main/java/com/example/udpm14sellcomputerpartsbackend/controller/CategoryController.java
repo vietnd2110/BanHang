@@ -73,7 +73,7 @@ public class CategoryController {
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
-            @RequestParam(value = "page-number", required = false) Integer pageNumber
+            @RequestParam(value = "page-size", required = false) Integer pageNumber
     ) {
         Page<CategoryDto> page = categoryService.getAllAndPage(pageSize, pageNumber);
         return ResponseEntity.ok(DefaultPagingResponse.success(page

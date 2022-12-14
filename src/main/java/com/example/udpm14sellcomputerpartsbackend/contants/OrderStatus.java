@@ -5,10 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum PaymentStatus {
-    CHUATHANHTOAN(0),
-    DATHANHTOAN(1),
-    HUY(3);
+public enum OrderStatus {
 
+    TAIQUAY(0),
+    DONGIAO(1);
     private final int value;
 }

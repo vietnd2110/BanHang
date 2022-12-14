@@ -7,19 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateDeliveryOrder {
-
-    private Integer shipping;
+public class CreateOrderAtTheCounter {
 
     @NotBlank(message = "fullname is not empty")
     private String fullname;
@@ -39,8 +34,5 @@ public class CreateDeliveryOrder {
     private String phone;
 
     private String description;
-
-
-
 
 }

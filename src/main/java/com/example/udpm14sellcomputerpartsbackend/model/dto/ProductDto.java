@@ -15,7 +15,7 @@ public class ProductDto {
     private Long id;
 
     @NotBlank(message = "product name is not null")
-    @Size(max = 50)
+    @Size(max = 244)
     private String name;
 
     @DecimalMin(value = "0.0", inclusive = false)
@@ -31,6 +31,5 @@ public class ProductDto {
     private String description;
     private StatusEnum status;
     private Long categoryId;
-    private Long voucherId;
     private Long brandId;
 }

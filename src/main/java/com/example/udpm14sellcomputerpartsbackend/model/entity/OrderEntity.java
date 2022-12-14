@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.model.entity;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatus;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -57,6 +58,8 @@ public class OrderEntity {
     private LocalDateTime updateDate;
 
     private OrderStatusEnum status;
+
+    private OrderStatus orderStatus;
 
     private PaymentStatus paymentStatus;
 

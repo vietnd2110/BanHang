@@ -6,6 +6,8 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalD
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,10 @@ import java.util.Date;
 import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
+
+
+    @Query("SELECT ord FROM OrderEntity ord WHERE concat(ord.id, ' ' , ord.fullname, ' ' , ord.phone, ' ') like %?1% and ord.paymentStatus = ?2")
+    List<OrderEntity> searchAllByOrder(String name,PaymentStatus status);
 
     List<OrderEntity> findAllByStatusEquals(OrderStatusEnum status);
 
