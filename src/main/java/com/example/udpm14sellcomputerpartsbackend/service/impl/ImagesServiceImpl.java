@@ -128,6 +128,10 @@ public class ImagesServiceImpl implements ImagesService {
         return imagesRepository.listProductAndImages(productId);
     }
 
+    @Override
+    public ProductImageDto ProductAndImagesByMaSp(String maSP) {
+        return imagesRepository.ProductAndImagesByMaSp(maSP);
+    }
 
 
 }

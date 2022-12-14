@@ -21,4 +21,5 @@ public interface ImagesService {
     void deleteImage(Long id);
 
     List<ProductImageDto> findAllByProductAndImages(Long productId);
+    ProductImageDto ProductAndImagesByMaSp(String maSP);
 }

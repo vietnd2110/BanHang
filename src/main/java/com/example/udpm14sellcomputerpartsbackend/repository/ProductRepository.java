@@ -162,5 +162,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     List<ProductEntity> findAllById(Long id);
 
+    ProductEntity findAllByMaSanPham(String maSP);
+    Integer countByMaSanPham(String ma);
 
 }

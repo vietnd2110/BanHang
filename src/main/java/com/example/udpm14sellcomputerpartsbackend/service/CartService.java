@@ -4,12 +4,13 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.CartDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.CartEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.CartResponse;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface CartService {
-    List<CartEntity> getAllByUser(Long id);
+    Collection<CartEntity> getAllByUser(Long id);
 
-    List<CartEntity> getAllCart();
+    Collection<CartEntity> getAllCart();
 
     CartEntity getById(Long id);
 
