@@ -128,7 +128,7 @@ public class ProductServiceImpl implements ProductService {
         CategoryEntity categoryEntity = categoryRepository.findById(productDto.getCategoryId())
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found: " + productDto.getCategoryId()));
 
-        ProductEntity find = productRepository.findAllByMaSanPham(productDto.getMaSanPham());
+        ProductEntity find = productRepository.findAllByCode(productDto.getCode());
         if (find==null){
             ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
 
