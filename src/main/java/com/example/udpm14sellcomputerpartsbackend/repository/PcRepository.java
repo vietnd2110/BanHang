@@ -61,5 +61,5 @@ public interface PcRepository extends JpaRepository<PCEntity, Long> {
             "INNER JOIN CaseEntity cases  ON pc.casesId     = cases.id " +
             "WHERE pro.id=:productId " +
             "GROUP BY pro.id")
-    ProductPcDto ProductPcByProductId(Long productId);
+    List<ProductPcDto> ProductPcByProductId(Long productId);
 }

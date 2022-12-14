@@ -4,7 +4,9 @@ import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateDeliveryOrder;
+import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateOrderAtTheCounter;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.OrderConfirm;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -133,6 +135,14 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.findByIdOrder(id)));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> search(
+            @RequestParam(value = "name",required = false) String name
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(
+                orderService.searchOrder(name)));
+    }
+
     @Operation(summary = "Danh sách hóa đơn theo trang thái chua thanh toán", description = "Danh sách hóa đơn theo trang thái chua thanh toán")
     @GetMapping("/list-status-payment")
     public ResponseEntity<?> listStatusPayment(
@@ -140,11 +150,19 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusPayment()));
     }
 
-    @Operation(summary = "Tạo hóa đơn tại quầy", description = "Tạo hóa đơn tại quầy")
-    @GetMapping("/create-order")
-    public ResponseEntity<?> createOrder(
+    @Operation(summary = "Danh sách hóa đơn theo trang thái đã thanh toán", description = "Danh sách hóa đơn theo trang thái đã thanh toán")
+    @GetMapping("/list-status-payment-paid")
+    public ResponseEntity<?> listStatusPaymentPaid(
     ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.createAnOrderAtTheCounter()));
+        return ResponseEntity.ok(DefaultResponse.success(orderService.listStatusPaymentPaid()));
+    }
+
+    @Operation(summary = "Tạo hóa đơn tại quầy", description = "Tạo hóa đơn tại quầy")
+    @PostMapping("/create-order")
+    public ResponseEntity<?> createOrder(
+            @Valid @RequestBody CreateOrderAtTheCounter order
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.createAnOrderAtTheCounter(order)));
     }
 
     @Operation(summary = "Đặt hàng tại quầy", description = "Đặt hàng tại quầy")
@@ -163,5 +181,30 @@ public class OrderController {
         return ResponseEntity.ok(DefaultResponse.success(orderService.createDeliveryOrder(order)));
     }
 
+
+    @Operation(summary = "Cập nhật đơn hang giao", description = "Cập nhật đơn hàng giao")
+    @PutMapping("/update-delivery-order/{id}")
+    public ResponseEntity<?> updateDeliveryOrder(
+            @PathVariable("id") Long orderId,
+            @Valid @RequestBody CreateDeliveryOrder order
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.updateDeliveryOrder(orderId,order)));
+    }
+
+    @Operation(summary = "Tạo đơn hàng bán lẻ", description = "Tạo đơn hàng bán lẻ")
+    @GetMapping("/create-retail-order")
+    public ResponseEntity<?> retailOrder() {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.retailOrders()));
+    }
+
+
+    @Operation(summary = "Cập nhật đơn hang tại quầy", description = "Cập nhật đơn hàng tại quầy")
+    @PutMapping("/update-order/{id}")
+    public ResponseEntity<?> updateAtTheCounterOrder(
+            @PathVariable("id") Long orderId,
+            @Valid @RequestBody CreateOrderAtTheCounter order
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.updateAtTheCounterOrder(orderId,order)));
+    }
 
 }
