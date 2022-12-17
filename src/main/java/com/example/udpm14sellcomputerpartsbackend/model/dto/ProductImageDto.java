@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
                 targetClass = ProductImageDto.class,
                 columns = {
                         @ColumnResult(name = "id", type = Long.class),
+                        @ColumnResult(name = "code", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "price", type = long.class),
                         @ColumnResult(name = "quantity", type = Integer.class),
@@ -41,6 +42,7 @@ public class ProductImageDto implements Serializable {
 
     @Id
     private Long id;
+    private String code;
     private String name;
     private long price;
     private Integer quantity;

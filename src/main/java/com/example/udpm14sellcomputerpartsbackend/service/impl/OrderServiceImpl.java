@@ -216,7 +216,6 @@ public class OrderServiceImpl implements OrderService {
             order.setAccountId(uDetailService.getId());
             order.setShipping(req.getShipping());
             order.setStatus(OrderStatusEnum.CHOXACNHAN);
-            order.setEmail(uDetailService.getEmail());
 
             // Check promotion
             PromotionEntity promotion = promotionService.checkPromotion(req.getCouponCode());
