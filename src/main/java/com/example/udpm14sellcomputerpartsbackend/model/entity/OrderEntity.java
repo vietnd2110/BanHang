@@ -40,9 +40,6 @@ public class OrderEntity {
     @Column(name = "phone")
     private String phone;
 
-    private String email;
-//    @Column(name = "quantity")
-//    private Integer quantity;
     @Column(name = "description")
     private String description;
 

@@ -50,9 +50,17 @@ public class CartServiceImpl implements CartService {
         for (Map.Entry<Long, CartEntity> entry : map.entrySet()) {
             CartEntity cart = entry.getValue();
             Optional<ProductEntity> productEntity = productRepository.findById(entry.getKey());
-            cart.setPrice(productEntity.get().getPrice());
-            cart.setName(productEntity.get().getName());
+            System.out.println(entry.getKey() + "key của product");
+            if(productEntity.isPresent()){
+                ProductEntity productOld = productEntity.get();
+                cart.setPrice(productOld.getPrice());
+                cart.setName(productOld.getName());
+                System.out.println(productOld.getPrice() + "price của products");
+
+            }
+
         }
+        System.out.println(map.values() + "ajcbx");
         return map.values();
     }
 

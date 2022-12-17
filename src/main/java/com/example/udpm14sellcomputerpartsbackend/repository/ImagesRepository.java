@@ -20,7 +20,7 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
     ImageProductDto listImagesId(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.name,product.price,product.quantity," +
+            "product.id,product.code,product.name,product.price,product.quantity," +
             "product.createDate," +
             "product.updateDate," +
             "product.description,product.status,image.link,image.name,product.categoryId) " +
@@ -30,13 +30,14 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
     public List<ProductImageDto> listProductAndImages(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.name,product.price,product.quantity," +
+            "product.id,product.code,product.name,product.price,product.quantity," +
             "product.createDate," +
             "product.updateDate," +
             "product.description,product.status,image.link,image.name,product.categoryId) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
-            "WHERE product.code=:code")
+            "WHERE product.code=:code " +
+            "group by product.id")
     ProductImageDto ProductAndImagesByMaSp(String code);
 
     @Query("SELECT p FROM ImageEntity p WHERE p.product_id =?1")

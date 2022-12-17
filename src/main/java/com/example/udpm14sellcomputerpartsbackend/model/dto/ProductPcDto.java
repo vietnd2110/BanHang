@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductPcDto {
     private Long productId;
+    private String code;
     private String name;
     private Integer quantity;
     private long price;

@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 public class ProductChipDto {
 
     private Long productId;
+    private String code;
     private String name;
     private Integer quantity;
     private long price;
