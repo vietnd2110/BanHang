@@ -30,29 +30,29 @@ public class FilterProductServiceImpl implements FilterProductService {
     }
 
     @Override
-    public Page<ProductCaseDto> filterProductCase(Long category, BigDecimal start_price, BigDecimal end_price, Integer page, Integer pageNumber){
+    public Page<ProductCaseDto> filterProductCase(Long category, long start_price, long end_price, int page, int pageNumber){
         return filterRepository.listFilterProductCase(category,start_price,end_price,PageRequest.of(page,pageNumber));
     }
 
 
 
     @Override
-    public Page<ProductImageDto> filterProductByPrice(BigDecimal start_price, BigDecimal end_price, Integer page, Integer pageNumber){
+    public Page<ProductImageDto> filterProductByPrice(long start_price, long end_price, int page, int pageNumber){
        return productRepository.listFilterProduct(start_price,end_price,PageRequest.of(page,pageNumber));
     }
 
     @Override
-    public Page<ProductImageDto> listFilterProductPriceDesc(Integer page, Integer pageNumber){
+    public Page<ProductImageDto> listFilterProductPriceDesc(int page, int pageNumber){
         return productRepository.listFilterProductPriceDesc(PageRequest.of(page,pageNumber));
     }
 
     @Override
-    public Page<ProductImageDto> listFilterProductPriceAsc(Integer page, Integer pageNumber){
+    public Page<ProductImageDto> listFilterProductPriceAsc(int page, int pageNumber){
         return productRepository.listFilterProductPriceASC(PageRequest.of(page,pageNumber));
     }
 
     @Override
-    public Page<ProductImageDto> listFilterProductByColor(Integer page, Integer pageNumber, Long id) {
+    public Page<ProductImageDto> listFilterProductByColor(int page, int pageNumber, Long id) {
         return productRepository.listFilterProductByColor(PageRequest.of(page,pageNumber), id);
     }
 

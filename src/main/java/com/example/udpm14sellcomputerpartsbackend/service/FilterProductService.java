@@ -8,13 +8,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface FilterProductService {
-    Page<ProductCaseDto> filterProductCase(Long category, BigDecimal start_price, BigDecimal end_price, Integer page, Integer pageNumber);
+    Page<ProductCaseDto> filterProductCase(Long category, long start_price, long end_price, int page, int pageNumber);
 
-    Page<ProductImageDto> filterProductByPrice(BigDecimal start_price, BigDecimal end_price, Integer page, Integer pageNumber);
+    Page<ProductImageDto> filterProductByPrice(long start_price, long end_price, int page, int pageNumber);
 
-    Page<ProductImageDto> listFilterProductPriceDesc(Integer page, Integer pageNumber);
+    Page<ProductImageDto> listFilterProductPriceDesc(int page, int pageNumber);
 
-    Page<ProductImageDto> listFilterProductPriceAsc(Integer page, Integer pageNumber);
+    Page<ProductImageDto> listFilterProductPriceAsc(int page, int pageNumber);
 
-    Page<ProductImageDto> listFilterProductByColor(Integer page, Integer pageNumber, Long id);
+    Page<ProductImageDto> listFilterProductByColor(int page, int pageNumber, Long id);
 }
