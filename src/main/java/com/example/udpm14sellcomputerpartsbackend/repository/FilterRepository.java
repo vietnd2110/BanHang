@@ -21,7 +21,7 @@ public interface FilterRepository extends JpaRepository<ProductEntity,Long> {
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
             "INNER JOIN CaseEntity cases ON cases.productId = pro.id " +
             "WHERE pro.categoryId = :caseId AND pro.price BETWEEN :start AND :end")
-    public Page<ProductCaseDto> listFilterProductCase(Long caseId,BigDecimal start, BigDecimal end, Pageable page);
+    public Page<ProductCaseDto> listFilterProductCase(Long caseId,long start, long end, Pageable page);
 
 
 }
