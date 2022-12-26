@@ -73,7 +73,7 @@ public class CartServiceImpl implements CartService {
 
         for (Map.Entry<Long, CartEntity> entry : map.entrySet()) {
             CartEntity cart = entry.getValue();
-            Optional<ProductEntity> productEntity = productRepository.findById(entry.getKey());
+            Optional<ProductEntity> productEntity = productRepository.findById(entry.getValue().getProductId());
             cart.setPrice(productEntity.get().getPrice());
             cart.setName(productEntity.get().getName());
         }
