@@ -49,7 +49,7 @@ public class CartServiceImpl implements CartService {
 
         for (Map.Entry<Long, CartEntity> entry : map.entrySet()) {
             CartEntity cart = entry.getValue();
-            Optional<ProductEntity> productEntity = productRepository.findById(entry.getKey());
+            Optional<ProductEntity> productEntity = productRepository.findById(entry.getValue().getProductId());
             System.out.println(entry.getKey() + "key của product");
             if(productEntity.isPresent()){
                 ProductEntity productOld = productEntity.get();
