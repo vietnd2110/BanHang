@@ -160,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
         long total_amount = cartRepository.sumPrice(uDetailService.getId());
 
         System.out.println(total_amount + " total");
-        System.out.println(uDetailService.getId()  + "id sfafff");
+        System.out.println(uDetailService.getId() + "id sfafff");
 
         Optional<OrderEntity> findByIdOrder = orderRepository.findById(orderId);
         OrderEntity order = findByIdOrder.get();
@@ -366,19 +366,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderEntity> searchOrder(String name){
-        List<OrderEntity> page = null;
-        if(!StringUtils.hasText(name)){
-            page = orderRepository.findAllByPaymentStatusEquals(PaymentStatus.DATHANHTOAN);
-        }else{
-            page = orderRepository.searchAllByOrder(name,PaymentStatus.DATHANHTOAN);
+    public List<OrderEntity> searchOrder(String name) {
+        List<OrderEntity> findByPhone = orderRepository.findByPhone(name);
+        List<OrderEntity> list;
+        for (OrderEntity order : findByPhone) {
+            if (order.getPhone().equals(name)) {
+                list = orderRepository.searchAllByOrder(name, PaymentStatus.DATHANHTOAN);
+            } else {
+                throw new BadRequestException("Không tìm thầy");
+            }
+            return list;
         }
-        return page;
+        throw new BadRequestException("khong tim thay");
     }
 
     // tao đơn hàng bán lẻ
     @Override
-    public OrderEntity retailOrders(){
+    public OrderEntity retailOrders() {
         CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
 
         OrderEntity order = new OrderEntity();
@@ -407,9 +411,9 @@ public class OrderServiceImpl implements OrderService {
         order.setProvince(req.getProvince());
         order.setDistrict(req.getDistrict());
         order.setWard(req.getWard());
+        order.setAddress(req.getAddress());
         order.setPhone(req.getPhone());
         order.setDescription(req.getDescription());
-
 
         order.setNameStaff(detailService.getFullname());
         order.setStaffId(detailService.getId());
@@ -432,6 +436,7 @@ public class OrderServiceImpl implements OrderService {
         order.setProvince(req.getProvince());
         order.setDistrict(req.getDistrict());
         order.setWard(req.getWard());
+        order.setAddress(req.getAddress());
         order.setPhone(req.getPhone());
         order.setDescription(req.getDescription());
         order.setShipping(req.getShipping());
@@ -447,40 +452,43 @@ public class OrderServiceImpl implements OrderService {
 
     // cập nhật lại hóa đơn giao
     @Override
-    public OrderEntity updateDeliveryOrder(Long orderId, CreateDeliveryOrder req){
+    public OrderEntity updateDeliveryOrder(Long orderId, CreateDeliveryOrder req) {
         Optional<OrderEntity> findById = orderRepository.findById(orderId);
 
-        if(findById.isPresent()){
+        if (findById.isPresent()) {
             OrderEntity order = findById.get();
 
             order.setFullname(req.getFullname());
             order.setProvince(req.getProvince());
             order.setDistrict(req.getDistrict());
             order.setWard(req.getWard());
+            order.setAddress(req.getAddress());
             order.setPhone(req.getPhone());
             order.setDescription(req.getDescription());
             order.setShipping(req.getShipping());
 
             return orderRepository.save(order);
-        }else{
+        } else {
             throw new BadRequestException("Order Id not found");
         }
 
     }
 
+    // cập nhật lại hóa đơn tại quầy
     @Override
-    public OrderEntity updateAtTheCounterOrder(Long orderId, CreateOrderAtTheCounter req){
+    public OrderEntity updateAtTheCounterOrder(Long orderId, CreateOrderAtTheCounter req) {
         Optional<OrderEntity> findById = orderRepository.findById(orderId);
-        if(findById.isPresent()){
+        if (findById.isPresent()) {
             OrderEntity order = findById.get();
             order.setFullname(req.getFullname());
             order.setProvince(req.getProvince());
             order.setDistrict(req.getDistrict());
             order.setWard(req.getWard());
+            order.setAddress(req.getAddress());
             order.setPhone(req.getPhone());
             order.setDescription(req.getDescription());
             return orderRepository.save(order);
-        }else{
+        } else {
             throw new BadRequestException("Order Id not found");
         }
 
