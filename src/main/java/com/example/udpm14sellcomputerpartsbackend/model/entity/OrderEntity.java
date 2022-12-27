@@ -37,6 +37,9 @@ public class OrderEntity {
     @Column(name = "ward")
     private String ward;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "phone")
     private String phone;
 

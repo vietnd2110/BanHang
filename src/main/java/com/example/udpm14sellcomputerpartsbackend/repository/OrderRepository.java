@@ -14,12 +14,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
 
-    @Query("SELECT ord FROM OrderEntity ord WHERE concat(ord.id, ' ' , ord.fullname, ' ' , ord.phone, ' ') like %?1% and ord.paymentStatus = ?2")
+    @Query("SELECT ord FROM OrderEntity ord WHERE ord.phone like %?1% and ord.paymentStatus = ?2")
     List<OrderEntity> searchAllByOrder(String name,PaymentStatus status);
+
+    List<OrderEntity> findByPhone(String phone);
 
     List<OrderEntity> findAllByStatusEquals(OrderStatusEnum status);
 
