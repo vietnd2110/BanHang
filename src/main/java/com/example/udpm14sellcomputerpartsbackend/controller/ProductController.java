@@ -50,7 +50,7 @@ public class ProductController {
             @RequestParam(value = "page",defaultValue = "0") Integer page,
             @RequestParam("page-size") Integer pageNumber
     ) {
-        return ResponseEntity.ok(DefaultResponse.success(productService.listStatus(status,page,pageNumber)));
+        return ResponseEntity.ok(DefaultPagingResponse.success(productService.listStatus(status,page,pageNumber)));
     }
 
     @GetMapping("/get-one/{id}")

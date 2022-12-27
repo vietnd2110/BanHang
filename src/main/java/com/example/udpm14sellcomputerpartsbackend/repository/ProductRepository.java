@@ -110,7 +110,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "image.link," +
             "image.name,product.categoryId) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id where CONCAT(product.name, ' ' , product.price, ' ') like %?1% " +
+            "INNER JOIN ProductEntity product ON image.product_id = product.id where CONCAT(product.name, ' ' , product.price, ' ', product.code, ' ') like %?1% " +
             "GROUP BY product.id")
     public Page<ProductImageDto> searchByName(String name, Pageable pageable);
 
