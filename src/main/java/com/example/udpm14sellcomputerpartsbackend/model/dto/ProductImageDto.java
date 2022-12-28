@@ -32,6 +32,9 @@ import java.time.LocalDateTime;
                         @ColumnResult(name = "imageLink", type = String.class),
                         @ColumnResult(name = "imageName", type = String.class),
                         @ColumnResult(name = "categoryId", type = Long.class),
+                        @ColumnResult(name = "categoryName", type = Long.class),
+                        @ColumnResult(name = "brandId", type = Long.class),
+                        @ColumnResult(name = "brandName", type = String.class),
                 }))
 @Entity
 @Setter
@@ -53,6 +56,7 @@ public class ProductImageDto implements Serializable {
     private String imageLink;
     private String imageName;
     private Long categoryId;
-
-
+    private String categoryName;
+    private Long brandId;
+    private String brandName;
 }

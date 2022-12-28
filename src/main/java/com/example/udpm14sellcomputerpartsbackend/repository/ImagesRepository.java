@@ -23,9 +23,11 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
             "product.id,product.code,product.name,product.price,product.quantity," +
             "product.createDate," +
             "product.updateDate," +
-            "product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "WHERE image.product_id = :id")
     public List<ProductImageDto> listProductAndImages(Long id);
 
@@ -33,9 +35,11 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
             "product.id,product.code,product.name,product.price,product.quantity," +
             "product.createDate," +
             "product.updateDate," +
-            "product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "WHERE product.code=:code " +
             "group by product.id")
     ProductImageDto ProductAndImagesByMaSp(String code);
