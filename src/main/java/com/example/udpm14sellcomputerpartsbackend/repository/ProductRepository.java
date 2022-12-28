@@ -19,37 +19,45 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     // filter theo gia tung khoang BETWEEN .. AND ...
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "WHERE product.price BETWEEN :start AND :end ")
     public Page<ProductImageDto> listFilterProduct(long start, long end, Pageable page);
 
     // filter theo color
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "INNER JOIN ColorEntity  color ON image.product_id = color.productId " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "WHERE color.id=:id" )
     public Page<ProductImageDto> listFilterProductByColor(Pageable page, Long id);
 
     // filter theo gia giảm dần
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "ORDER BY product.price DESC ")
     public Page<ProductImageDto> listFilterProductPriceDesc(Pageable page);
 
     // filter theo gia giảm dần
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "ORDER BY product.price ASC ")
     public Page<ProductImageDto> listFilterProductPriceASC(Pageable page);
 
@@ -64,16 +72,20 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id ")
+            "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id ")
     Page<ProductImageDto> listProduct(Pageable page);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "where product.status=:statusEnum")
     Page<ProductImageDto> listProductByStatus(Pageable page, StatusEnum statusEnum);
 
@@ -82,18 +94,22 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     //lấy tất cả danh sách product và ảnh theo id của product
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "WHERE product.id = :id")
     public Page<ProductImageDto> listProductId(Long id, Pageable page);
 
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
             "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
-            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId) " +
+            "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "JOIN CategoryEntity category on product.categoryId = category.id " +
+            "JOIN BrandEntity brand ON product.brandId = brand.id " +
             "GROUP BY product.id")
     public Page<ProductImageDto> listProductAndPage(Pageable pageable);
 
@@ -108,9 +124,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.description," +
             "product.status," +
             "image.link," +
-            "image.name,product.categoryId) " +
+            "image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id where CONCAT(product.name, ' ' , product.price, ' ', product.code, ' ') like %?1% " +
+            "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
+            "where CONCAT(product.name, ' ' , product.price, ' ', product.code, ' ') like %?1% " +
             "GROUP BY product.id")
     public Page<ProductImageDto> searchByName(String name, Pageable pageable);
 
@@ -125,9 +144,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.description," +
             "product.status," +
             "image.link," +
-            "image.name,product.categoryId) " +
+            "image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id where product.categoryId=:id")
+            "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id  where product.categoryId=:id")
     public Page<ProductImageDto> findByCategory(Long id, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -141,9 +162,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.description," +
             "product.status," +
             "image.link," +
-            "image.name,product.categoryId) " +
+            "image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id where product.id=:id " +
+            "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id  where product.id=:id " +
             "GROUP BY product.id")
     public Page<ProductImageDto> findByIdProduct(Long id, Pageable pageable);
 
@@ -159,9 +182,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.status," +
             "image.link," +
             "image.name," +
-            "product.categoryId) " +
+            "product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
-            "INNER JOIN ProductEntity product ON image.product_id = product.id where product.brandId=:id")
+            "INNER JOIN ProductEntity product ON image.product_id = product.id " +
+            "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
+            "where product.brandId=:id")
     public Page<ProductImageDto> findByBrand(Long id, Pageable pageable);
 
     List<ProductEntity> findAllById(Long id);
