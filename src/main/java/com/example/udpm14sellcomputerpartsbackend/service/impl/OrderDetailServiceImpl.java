@@ -7,6 +7,7 @@ import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailReposito
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderDetailService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,11 @@ import java.util.List;
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
     private final OrderDetailRepository orderDetailRepository;
+    private final ModelMapper modelMapper;
 
-    public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepository) {
+    public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepository, ModelMapper modelMapper) {
         this.orderDetailRepository = orderDetailRepository;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -62,6 +65,16 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     public List<OrderDetailEntity> getAllOrderId(Long id){
         return orderDetailRepository.findAllByOrderId(id);
+    }
+
+    @Override
+    public OrderDetailEntity update(Long id, OrderDetailEntity orderDetailEntity) {
+        OrderDetailEntity find = orderDetailRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Hóa đơn chi tiết không tồn tại"));
+
+        orderDetailEntity.setId(find.getId());
+
+        return orderDetailRepository.save(orderDetailEntity);
     }
 
 }
