@@ -108,5 +108,15 @@ public class OrderDetailController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PutMapping("update/{id}")
+    public ResponseEntity<?> updateOrderDetail(@PathVariable Long id,
+                                               @RequestBody OrderDetailEntity orderDetail) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Cập nhập thành công")
+                .data(orderDetailService.update(id, orderDetail))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 }
