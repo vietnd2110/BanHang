@@ -484,9 +484,17 @@ public class OrderServiceImpl implements OrderService {
             order.setProvince(req.getProvince());
             order.setDistrict(req.getDistrict());
             order.setWard(req.getWard());
-            order.setAddress(req.getAddress());
             order.setPhone(req.getPhone());
             order.setDescription(req.getDescription());
+
+//            if (req.getAddress() == null){
+//                order.setAddress(order.getAddress());
+//            }
+//            else{
+//                order.setAddress(req.getAddress());
+//            }
+            order.setAddress(req.getAddress());
+
             return orderRepository.save(order);
         } else {
             throw new BadRequestException("Order Id not found");
