@@ -1,10 +1,12 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+import com.example.udpm14sellcomputerpartsbackend.daos.StatisticalDao;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.StatisticalService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,9 @@ public class StatisticalController {
 
     @Autowired
     private StatisticalService service;
+
+    @Autowired
+    private StatisticalDao statisticalDao;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -80,6 +85,27 @@ public class StatisticalController {
                 .success(true)
                 .message("Thống kê hóa đơn và doanh thu ngày hiện tại")
                 .data(orderRepository.listHoaDonTheoNgayHienTai(yearNow,monthNow,dayNow))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+//
+//    @Operation(summary = "lấy danh sách sản phẩm bán chạy", description = "")
+//    @GetMapping("/top-product")
+//    public ResponseEntity<?> topSanPhamBanChay() {
+//        SampleResponse response = SampleResponse.builder()
+//                .success(true)
+//                .message("Thống kê sản phẩm bán chạy")
+//                .data(statisticalDao.topProduct())
+//                .build();
+//        return ResponseEntity.status(HttpStatus.OK).body(response);
+//    }
+    @Operation(summary = "lấy danh sách sản phẩm bán chạy", description = "")
+    @GetMapping("/top-product/{Soluong}")
+    public ResponseEntity<?> topSanPhamBanChay2(@PathVariable("Soluong") Integer soLuong) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Thống kê  sản phẩm bán chạy")
+                .data(orderRepository.topSanPhamBanChay(Pageable.ofSize(soLuong)))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

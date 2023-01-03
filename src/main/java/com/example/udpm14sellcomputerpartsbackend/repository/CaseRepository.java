@@ -17,7 +17,7 @@ public interface CaseRepository extends JpaRepository<CaseEntity, Long> {
 
     // list product case with id category
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,cases.id,cases.size,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
@@ -27,7 +27,7 @@ public interface CaseRepository extends JpaRepository<CaseEntity, Long> {
 
     // get one product with id product
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,cases.id,cases.size,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
