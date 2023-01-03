@@ -14,7 +14,7 @@ import java.util.List;
 public interface PcRepository extends JpaRepository<PCEntity, Long> {
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPcDto(" +
-            "pro.id,pro.code,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.code,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link, chip.socket, main.socket, vga.type, ram.ddr, hd.type, psu.wattage, cases.size) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
@@ -30,7 +30,7 @@ public interface PcRepository extends JpaRepository<PCEntity, Long> {
     Page<ProductPcDto> listProductPc(Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPcDto(" +
-            "pro.id,pro.code,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.code,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link, chip.socket, main.socket, vga.type, ram.ddr, hd.type, psu.wattage, cases.size) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
@@ -47,7 +47,7 @@ public interface PcRepository extends JpaRepository<PCEntity, Long> {
     Page<ProductPcDto> listProductPcByCategory(Long cateId, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPcDto(" +
-            "pro.id,pro.code,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.code,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link, chip.socket, main.socket, vga.type, ram.ddr, hd.type, psu.wattage, cases.size) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +

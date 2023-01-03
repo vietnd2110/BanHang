@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.repository;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.PaymentStatus;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ProductBanChayDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto;
@@ -63,4 +64,11 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
             "FROM OrderEntity o " +
             "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 and day(o.createDate)=?3")
     List<ThongKeDto> listHoaDonTheoNgayHienTai(Integer year, Integer mont, Integer day);
+
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ProductBanChayDto(productId,name, sum(quantity)) " +
+            "from OrderDetailEntity " +
+            "group by name " +
+            "order by sum(quantity) desc ")
+    List<ProductBanChayDto> topSanPhamBanChay(Pageable pageable);
+
 }

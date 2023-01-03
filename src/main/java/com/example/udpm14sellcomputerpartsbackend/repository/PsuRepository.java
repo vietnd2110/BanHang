@@ -16,7 +16,7 @@ public interface PsuRepository extends JpaRepository<PsuEntity, Long> {
     List<PsuEntity> findByProductId(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPsuDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,psu.id,psu.wattage,psu.size,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
@@ -25,7 +25,7 @@ public interface PsuRepository extends JpaRepository<PsuEntity, Long> {
     Page<ProductPsuDto> listProductPsu(Long cateId, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPsuDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,psu.id,psu.wattage,psu.size,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
