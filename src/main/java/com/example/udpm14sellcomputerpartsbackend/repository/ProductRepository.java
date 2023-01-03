@@ -18,7 +18,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     // filter theo gia tung khoang BETWEEN .. AND ...
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -29,7 +29,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     // filter theo color
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -41,7 +41,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     // filter theo gia giảm dần
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -52,7 +52,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     // filter theo gia giảm dần
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -71,7 +71,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 //     Page<ProductAndImages> listProduct(Pageable page);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -80,7 +80,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     Page<ProductImageDto> listProduct(Pageable page);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -93,7 +93,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     //lấy tất cả danh sách product và ảnh theo id của product
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -104,7 +104,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.quantity,product.createDate," +
+            "product.id,product.code,product.name,product.price,product.discount,product.quantity,product.createDate," +
             "product.updateDate,product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
@@ -118,6 +118,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.code," +
             "product.name," +
             "product.price," +
+            "product.discount," +
             "product.quantity," +
             "product.createDate," +
             "product.updateDate," +
@@ -138,6 +139,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.code," +
             "product.name," +
             "product.price," +
+            "product.discount," +
             "product.quantity," +
             "product.createDate," +
             "product.updateDate," +
@@ -156,6 +158,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.code," +
             "product.name," +
             "product.price," +
+            "product.discount," +
             "product.quantity," +
             "product.createDate," +
             "product.updateDate," +
@@ -175,6 +178,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "product.code," +
             "product.name," +
             "product.price," +
+            "product.discount," +
             "product.quantity," +
             "product.createDate," +
             "product.updateDate," +

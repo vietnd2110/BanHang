@@ -16,7 +16,7 @@ public interface HDRepository extends JpaRepository<HdEntity, Long> {
     List<HdEntity> findByProductId(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductHdDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,hd.id,hd.type,hd.pcle,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
@@ -25,7 +25,7 @@ public interface HDRepository extends JpaRepository<HdEntity, Long> {
     Page<ProductHdDto> listProductHd(Long cateId, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductHdDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,hd.id,hd.type,hd.pcle,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
