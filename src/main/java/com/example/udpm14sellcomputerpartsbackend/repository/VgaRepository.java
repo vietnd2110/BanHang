@@ -16,7 +16,7 @@ public interface VgaRepository extends JpaRepository<VgaEntity, Long> {
     List<VgaEntity> findByProductId(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductVgaDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,vga.id,vga.type,vga.size,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
@@ -25,7 +25,7 @@ public interface VgaRepository extends JpaRepository<VgaEntity, Long> {
     Page<ProductVgaDto> listProductVga(Long cateId, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductVgaDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
             "img.link,vga.id,vga.type,vga.size,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +

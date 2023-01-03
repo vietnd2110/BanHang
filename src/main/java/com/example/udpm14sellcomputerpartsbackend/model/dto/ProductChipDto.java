@@ -16,6 +16,7 @@ public class ProductChipDto {
     private String name;
     private Integer quantity;
     private long price;
+    private long discount;
     private String description;
     private String imageLink;
     private Long chipId;

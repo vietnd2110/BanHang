@@ -40,7 +40,7 @@ public class ProductEntity {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    private Float discount;
+    private Long discount;
 
     @Column(name = "description")
     private String description;

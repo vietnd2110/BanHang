@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
                         @ColumnResult(name = "code", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "price", type = long.class),
+                        @ColumnResult(name = "discount", type = Long.class),
                         @ColumnResult(name = "quantity", type = Integer.class),
                         @ColumnResult(name = "createDate", type = LocalDateTime.class),
                         @ColumnResult(name = "updateDate", type = LocalDateTime.class),
@@ -48,6 +49,7 @@ public class ProductImageDto implements Serializable {
     private String code;
     private String name;
     private long price;
+    private Long discount;
     private Integer quantity;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
