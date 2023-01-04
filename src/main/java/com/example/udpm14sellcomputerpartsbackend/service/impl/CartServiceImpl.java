@@ -111,7 +111,7 @@ public class CartServiceImpl implements CartService {
                 cart.setName(productEntity.getName());
                 cart.setProductId(productEntity.getId());
                 cart.setImage(imageEntity.get(0).getLink());
-                cart.setPrice(productEntity.getPrice());
+                cart.setPrice(productEntity.getDiscount());
                 cart.setTotal(productEntity.getDiscount() * 1);
                 cart.setQuantity(1);
             } else {//Neu san pham da co trong database tang so luong them 1
