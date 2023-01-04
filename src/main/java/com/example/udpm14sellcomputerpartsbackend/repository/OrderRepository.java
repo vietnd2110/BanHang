@@ -65,10 +65,13 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
             "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 and day(o.createDate)=?3")
     List<ThongKeDto> listHoaDonTheoNgayHienTai(Integer year, Integer mont, Integer day);
 
-    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ProductBanChayDto(productId,name, sum(quantity)) " +
-            "from OrderDetailEntity " +
-            "group by name " +
-            "order by sum(quantity) desc ")
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ProductBanChayDto(od.productId,od.name,p.code, sum(od.quantity), sum(od.total)) " +
+            "FROM OrderDetailEntity od " +
+            "INNER JOIN ProductEntity p ON p.id = od.productId " +
+            "INNER join OrderEntity o ON o.id = od.orderId " +
+            "WHERE o.status = 3 " +
+            "GROUP BY od.name " +
+            "ORDER BY SUM(od.quantity) desc ")
     List<ProductBanChayDto> topSanPhamBanChay(Pageable pageable);
 
 }
