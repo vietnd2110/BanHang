@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
             "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
-            "WHERE product.price BETWEEN :start AND :end ")
+            "WHERE product.discount BETWEEN :start AND :end ")
     public Page<ProductImageDto> listFilterProduct(long start, long end, Pageable page);
 
     // filter theo color
@@ -47,7 +47,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
             "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
-            "ORDER BY product.price DESC ")
+            "ORDER BY product.discount DESC ")
     public Page<ProductImageDto> listFilterProductPriceDesc(Pageable page);
 
     // filter theo gia giảm dần
@@ -58,7 +58,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
             "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
-            "ORDER BY product.price ASC ")
+            "ORDER BY product.discount ASC ")
     public Page<ProductImageDto> listFilterProductPriceASC(Pageable page);
 
 
