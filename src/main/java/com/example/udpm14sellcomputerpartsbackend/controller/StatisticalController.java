@@ -101,11 +101,21 @@ public class StatisticalController {
 //    }
     @Operation(summary = "lấy danh sách sản phẩm bán chạy", description = "")
     @GetMapping("/top-product/{Soluong}")
-    public ResponseEntity<?> topSanPhamBanChay2(@PathVariable("Soluong") Integer soLuong) {
+    public ResponseEntity<?> topSanPhamBanChay(@PathVariable("Soluong") Integer soLuong) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("Thống kê  sản phẩm bán chạy")
                 .data(orderRepository.topSanPhamBanChay(Pageable.ofSize(soLuong)))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @Operation(summary = "lấy 10 danh sách sản phẩm bán chạy", description = "")
+    @GetMapping("/top-10-product")
+    public ResponseEntity<?> top10SanPhamBanChay() {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Thống kê  sản phẩm bán chạy")
+                .data(orderRepository.topSanPhamBanChay(Pageable.ofSize(10)))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
