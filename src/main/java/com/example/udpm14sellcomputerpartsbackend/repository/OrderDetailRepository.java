@@ -22,12 +22,13 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
             "im.link," +
             "product.id," +
             "o.orderId," +
-            "us.username) " +
+            "us.id," +
+            "us.fullname) " +
             "FROM OrderDetailEntity o " +
             "INNER JOIN ProductEntity product ON o.productId = product.id " +
             "INNER JOIN ImageEntity im ON o.productId = im.product_id " +
             "INNER JOIN UserEntity us ON o.userId = us.id " +
-            "group by product.id")
+            "group by o.id")
     Page<OrderDetailDto> getAllAndPage(Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto(" +
@@ -39,12 +40,13 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
             "im.link," +
             "product.id," +
             "o.orderId," +
-            "us.username) " +
+            "us.id," +
+            "us.fullname) " +
             "FROM OrderDetailEntity o " +
             "INNER JOIN ProductEntity product ON o.productId = product.id " +
             "INNER JOIN ImageEntity im ON o.productId = im.product_id " +
             "INNER JOIN UserEntity us ON o.userId = us.id " +
-            "group by product.id")
+            "group by o.id")
     List<OrderDetailDto> getAll();
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto(" +
@@ -56,13 +58,14 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
             "im.link," +
             "product.id," +
             "o.orderId," +
-            "us.username) " +
+            "us.id," +
+            "us.fullname) " +
             "FROM OrderDetailEntity o " +
             "INNER JOIN ProductEntity product ON o.productId = product.id " +
             "INNER JOIN ImageEntity im ON o.productId = im.product_id " +
             "INNER JOIN UserEntity us ON o.userId = us.id " +
             "WHERE o.orderId = ?1 " +
-            "group by product.id")
+            "group by o.id")
     Page<OrderDetailDto> findAllByOrderId(Long id, Pageable pageable);
 
     List<OrderDetailEntity> findAllByOrderIdAndUserId(Long id,Long userId);
@@ -77,13 +80,14 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
             "im.link," +
             "product.id," +
             "o.orderId," +
-            "us.username) " +
+            "us.id," +
+            "us.fullname) " +
             "FROM OrderDetailEntity o " +
             "INNER JOIN ProductEntity product ON o.productId = product.id " +
             "INNER JOIN ImageEntity im ON o.productId = im.product_id " +
             "INNER JOIN UserEntity us ON o.userId = us.id " +
             "WHERE o.userId = ?1 " +
-            "group by product.id")
+            "group by o.id")
     Page<OrderDetailDto> findAllByUserId(Long userId, Pageable pageable);
 
     List<OrderDetailEntity> findAllByOrderId(Long id);

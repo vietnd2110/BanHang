@@ -21,5 +21,5 @@ public interface OrderDetailService {
 
     List<OrderDetailEntity> getAllOrderId(Long id);
 
-    OrderDetailEntity update(Long id, OrderDetailEntity orderDetailEntity);
+    OrderDetailEntity update(Long id, OrderDetailDto orderDetailDto);
 }

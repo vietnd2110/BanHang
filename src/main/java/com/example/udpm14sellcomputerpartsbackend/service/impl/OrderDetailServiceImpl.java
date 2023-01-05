@@ -68,11 +68,20 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
-    public OrderDetailEntity update(Long id, OrderDetailEntity orderDetailEntity) {
+    public OrderDetailEntity update(Long id, OrderDetailDto orderDetailDto) {
         OrderDetailEntity find = orderDetailRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Hóa đơn chi tiết không tồn tại"));
 
+        OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
         orderDetailEntity.setId(find.getId());
+        orderDetailEntity.setPrice(orderDetailDto.getPrice());
+        orderDetailEntity.setName(orderDetailDto.getName());
+        orderDetailEntity.setQuantity(orderDetailDto.getQuantity());
+        orderDetailEntity.setTotal(orderDetailDto.getTotal());
+        orderDetailEntity.setImage(orderDetailDto.getImage());
+        orderDetailEntity.setProductId(orderDetailDto.getProductId());
+        orderDetailEntity.setOrderId(orderDetailDto.getOrderId());
+        orderDetailEntity.setUserId(orderDetailDto.getUserId());
 
         return orderDetailRepository.save(orderDetailEntity);
     }
