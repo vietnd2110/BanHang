@@ -16,25 +16,28 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto(" +
             "o.id," +
             "o.price," +
+            "product.name," +
             "o.quantity," +
             "o.total," +
             "im.link," +
-            "product.name," +
+            "product.id," +
             "o.orderId," +
             "us.username) " +
             "FROM OrderDetailEntity o " +
             "INNER JOIN ProductEntity product ON o.productId = product.id " +
             "INNER JOIN ImageEntity im ON o.productId = im.product_id " +
-            "INNER JOIN UserEntity us ON o.userId = us.id")
+            "INNER JOIN UserEntity us ON o.userId = us.id " +
+            "group by product.id")
     Page<OrderDetailDto> getAllAndPage(Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto(" +
             "o.id," +
             "o.price," +
+            "product.name," +
             "o.quantity," +
             "o.total," +
             "im.link," +
-            "product.name," +
+            "product.id," +
             "o.orderId," +
             "us.username) " +
             "FROM OrderDetailEntity o " +
@@ -47,10 +50,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto(" +
             "o.id," +
             "o.price," +
+            "product.name," +
             "o.quantity," +
             "o.total," +
             "im.link," +
-            "product.name," +
+            "product.id," +
             "o.orderId," +
             "us.username) " +
             "FROM OrderDetailEntity o " +
@@ -67,10 +71,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto(" +
             "o.id," +
             "o.price," +
+            "product.name," +
             "o.quantity," +
             "o.total," +
             "im.link," +
-            "product.name," +
+            "product.id," +
             "o.orderId," +
             "us.username) " +
             "FROM OrderDetailEntity o " +
