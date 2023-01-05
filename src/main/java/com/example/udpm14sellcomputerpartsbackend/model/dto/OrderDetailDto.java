@@ -4,23 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-@SqlResultSetMapping(
-        name = "orderDetailDto",
-        classes =
-        @ConstructorResult(
-                targetClass = ImageProductDto.class,
-                columns = {
-                        @ColumnResult(name = "id", type       = Long.class),
-                        @ColumnResult(name = "price", type    = Long.class),
-                        @ColumnResult(name = "quantity", type = Integer.class),
-                        @ColumnResult(name = "total", type    = Long.class),
-                        @ColumnResult(name = "image", type    = String.class),
-                        @ColumnResult(name = "product", type  = String.class),
-                        @ColumnResult(name = "orderId", type  = Long.class),
-                        @ColumnResult(name = "username", type = String.class),
-                }))
 
-@Entity
 @Setter
 @Getter
 @AllArgsConstructor
@@ -28,10 +12,11 @@ import java.math.BigDecimal;
 @Data
 public class OrderDetailDto {
 
-    @Id
     private Long id;
 
     private Long price;
+
+    private String name;
 
     private Integer quantity;
 
@@ -39,7 +24,7 @@ public class OrderDetailDto {
 
     private String image;
 
-    private String productId;
+    private Long productId;
 
     private Long orderId;
 
