@@ -99,7 +99,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
             "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
-            "WHERE product.id = :id")
+            "WHERE product.id = :id " +
+            "group by product.id")
     public Page<ProductImageDto> listProductId(Long id, Pageable page);
 
 
@@ -150,7 +151,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
-            "INNER JOIN BrandEntity brand ON product.brandId = brand.id  where product.categoryId=:id")
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id  where product.categoryId=:id " +
+            "group by product.id")
     public Page<ProductImageDto> findByCategory(Long id, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
