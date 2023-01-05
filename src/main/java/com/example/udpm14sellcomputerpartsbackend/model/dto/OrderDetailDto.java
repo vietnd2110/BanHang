@@ -2,8 +2,6 @@ package com.example.udpm14sellcomputerpartsbackend.model.dto;
 
 import lombok.*;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Setter
 @Getter
@@ -28,5 +26,7 @@ public class OrderDetailDto {
 
     private Long orderId;
 
-    private String userId;
+    private Long userId;
+
+    private String username;
 }
