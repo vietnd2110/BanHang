@@ -6,9 +6,11 @@ import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPaging
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderDetailService;
+import com.example.udpm14sellcomputerpartsbackend.service.OrderService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/orderDetail")
 @Tag(description = "OrderDetail controller", name = "Các api về OrderDetail")
+@AllArgsConstructor
 public class OrderDetailController {
 
     private final OrderDetailService orderDetailService;
+    private final OrderService orderService;
 
-    public OrderDetailController(OrderDetailService orderDetailService) {
-        this.orderDetailService = orderDetailService;
-    }
+
 
     @Operation(summary = "lấy tất cả danh sách", description = "")
     @GetMapping("/list")
@@ -120,6 +122,32 @@ public class OrderDetailController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @GetMapping("/create-order-detail/{idO}/{idP}")
+    public ResponseEntity<?> createOrderDetail(
+            @PathVariable("idO") Long idOrder,
+            @PathVariable("idP") Long idProduct
+            ) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Cập nhập thành công")
+                .data(orderDetailService.addOrderDetail(idOrder, idProduct))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/sum-price-order/{id}")
+    public ResponseEntity<?> sumOrderDetail(
+            @PathVariable("id") Long idOrder
+    ) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Cập nhập thành công")
+                .data(orderService.sumTotalOrderDetail(idOrder))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 
     @DeleteMapping("delete/{orderDetailId}")
     public ResponseEntity<?> deleteOrderDetail(@PathVariable("orderDetailId") Long id) {

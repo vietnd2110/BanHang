@@ -192,9 +192,13 @@ public class OrderController {
     }
 
     @Operation(summary = "Tạo đơn hàng bán lẻ", description = "Tạo đơn hàng bán lẻ")
-    @GetMapping("/create-retail-order")
-    public ResponseEntity<?> retailOrder() {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.retailOrders()));
+    @GetMapping("/create-retail-order/{id}")
+    public ResponseEntity<?> retailOrder(
+            @PathVariable("id") Long idOrder
+    ) {
+        return ResponseEntity.ok(
+                DefaultResponse.success(orderService.retailOrders(idOrder))
+        );
     }
 
 
@@ -205,6 +209,12 @@ public class OrderController {
             @Valid @RequestBody CreateOrderAtTheCounter order
     ) {
         return ResponseEntity.ok(DefaultResponse.success(orderService.updateAtTheCounterOrder(orderId,order)));
+    }
+
+    @Operation(summary = "Tạo đơn hàng chờ", description = "Tạo đơn hàng chờ")
+    @GetMapping("/create-or")
+    public ResponseEntity<?> createO() {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.createOrder()));
     }
 
 }

@@ -30,12 +30,12 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     List<OrderEntity> findAllByPaymentStatusEquals(PaymentStatus status);
 
-    List<OrderEntity> findAllByStatusEqualsAndAccountId(OrderStatusEnum status, Long accountId);
+    List<OrderEntity> findAllByStatusEqualsAndUserId(OrderStatusEnum status, Long userId);
 
-    List<OrderEntity> findAllByAccountId(Long accountId);
+    List<OrderEntity> findAllByUserId(Long userId);
 
-    @Query(nativeQuery = true,value = "SELECT count(*) AS 'Số lượng' FROM `orders` WHERE orders.status = ?1 and orders.account_id = ?2 ")
-    long countOrderStatus(int status,Long accountId);
+    @Query(nativeQuery = true,value = "SELECT count(*) AS 'Số lượng' FROM `orders` WHERE orders.status = ?1 and orders.user_id = ?2 ")
+    long countOrderStatus(int status,Long userId);
 
     @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto(o.id, YEAR(o.createDate), count (o.id), sum(o.grandTotal) )" +
             "FROM OrderEntity o " +
@@ -73,5 +73,8 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
             "GROUP BY od.name " +
             "ORDER BY SUM(od.quantity) desc ")
     List<ProductBanChayDto> topSanPhamBanChay(Pageable pageable);
+
+    @Query(value = "SELECT COUNT(*) FROM `orders` WHERE orders.payment_status = 0",nativeQuery = true)
+    long countOrderStatus();
 
 }

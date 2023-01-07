@@ -32,6 +32,7 @@ public class ImagesController {
         this.imagesService = imagesService;
     }
 
+    @PreAuthorize("permitAll()")
     @Operation(summary = "Danh sách images", description = "Danh sách image")
     @GetMapping("/list")
     public ResponseEntity<?> findAll(
@@ -41,6 +42,7 @@ public class ImagesController {
         return ResponseEntity.ok(DefaultPagingResponse.success(imagesService.listImage(page, pageNumber)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllById(
             @PathVariable("id") Long id
@@ -78,6 +80,7 @@ public class ImagesController {
 
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ")
+    @PreAuthorize("permitAll()")
     @GetMapping("/product-id/{id}")
     public ResponseEntity<?> findAllByProductAndImages(
             @PathVariable("id") Long id
@@ -93,7 +96,7 @@ public class ImagesController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo maSP product bên images ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên images ")
-    @PreAuthorize("hasAnyAuthority('STAFF','ADMIN')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/product-maSP/{ma}")
     public ResponseEntity<?> listProductAndImagesByMaSp(
             @PathVariable("ma") String maSP

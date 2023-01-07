@@ -5,6 +5,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity
 import com.example.udpm14sellcomputerpartsbackend.payload.response.orderDetail.TotalPriceResponse;
 import org.springframework.data.domain.Page;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface OrderDetailService {
@@ -20,13 +21,13 @@ public interface OrderDetailService {
 
     Page<OrderDetailDto> getByUser(Long userId, Integer pageSize, Integer pageNumber);
 
-    List<OrderDetailEntity> getAllOrderId(Long id);
+    Collection<OrderDetailEntity> getAllOrderId(Long id);
 
     OrderDetailEntity update(Long id, OrderDetailDto orderDetailDto);
 
+    OrderDetailEntity addOrderDetail(Long idOrder, Long idProduct);
     OrderDetailEntity updateQuantity(Long productId, Long orderId, Integer quantity);
 
-    void delete(Long id);
 
     void deleteAllByOrderId(Long orderId);
 

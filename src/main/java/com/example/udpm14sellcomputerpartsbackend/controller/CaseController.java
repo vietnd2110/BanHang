@@ -29,6 +29,7 @@ public class CaseController {
     }
 
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/product-case/{id}")
     public ResponseEntity<?> listProductCase(
             @PathVariable(value = "id",required = false) Long categoryId,
@@ -38,6 +39,7 @@ public class CaseController {
         return ResponseEntity.ok(DefaultPagingResponse.success(caseService.listProductCase(categoryId,page,pageSize)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOneProductCase(
             @PathVariable("id") Long productId
@@ -45,6 +47,7 @@ public class CaseController {
         return ResponseEntity.ok(DefaultResponse.success(caseService.getOneProductCase(productId)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping
     public ResponseEntity<?> getAllCase() {
         SampleResponse response = SampleResponse.builder()
@@ -55,6 +58,7 @@ public class CaseController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("product/{id}")
     public ResponseEntity<?> getAllCaseByProduct(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -65,6 +69,7 @@ public class CaseController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/{id}")
     public ResponseEntity<?> getCaseById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()

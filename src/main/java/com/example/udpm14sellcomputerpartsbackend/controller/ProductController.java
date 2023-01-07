@@ -33,6 +33,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm", description = "Lấy tất cả danh sách san phẩm")
+    @PreAuthorize("permitAll()")
     @GetMapping("/list")
     public ResponseEntity<?> findAll(
             @RequestParam(value = "page",defaultValue = "0") Integer page,
@@ -44,6 +45,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Danh sách product theo status", description = "Danh sách product theo status")
+    @PreAuthorize("permitAll()")
     @GetMapping("/list-status/{status}")
     public ResponseEntity<?> listStatus(
             @PathVariable("status") StatusEnum status,
@@ -53,6 +55,7 @@ public class ProductController {
         return ResponseEntity.ok(DefaultPagingResponse.success(productService.listStatus(status,page,pageNumber)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/get-one/{id}")
     public ResponseEntity<?> getOne(
             @PathVariable("id") Long id
@@ -61,6 +64,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ", description = "Lấy tất cả danh sách san phẩm product và ảnh theo id product bên product ")
+    @PreAuthorize("permitAll()")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllByIdProduct(
             @PathVariable("id") Long id,
@@ -74,6 +78,7 @@ public class ProductController {
         return ResponseEntity.ok(pagingResponse);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/search")
     public ResponseEntity<?> search(
             @RequestParam(value = "name",required = false) String name,
@@ -84,6 +89,7 @@ public class ProductController {
                 productService.search(name,pageSize,pageNumber)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("")
     public ResponseEntity<?> getAllAndPage(
             @RequestParam(value = "page",defaultValue = "0") Integer pageSize,
@@ -92,6 +98,7 @@ public class ProductController {
         return ResponseEntity.ok(DefaultPagingResponse.success(productService.getAllAndPage(pageSize, pageNumber)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/category/{id}")
     public ResponseEntity<?> getAllByCategory(
             @PathVariable("id") Long cid,
@@ -102,6 +109,7 @@ public class ProductController {
                 DefaultPagingResponse.success(productService.findByCategory(cid, pageSize, pageNumber)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/product-id/{id}")
     public ResponseEntity<?> getByIdProducty(
             @PathVariable("id") Long cid,
@@ -112,6 +120,7 @@ public class ProductController {
                 DefaultPagingResponse.success(productService.findByIdProduct(cid, pageSize, pageNumber)));
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/brand/{id}")
     public ResponseEntity<?> getAllByBrand(
             @PathVariable("id") Long bid,
@@ -152,6 +161,8 @@ public class ProductController {
         productService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
+
+    @PreAuthorize("permitAll()")
     @GetMapping(value = "qrcode/{id}")
     public void qrcode(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
         response.setContentType("image/png");

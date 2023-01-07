@@ -7,7 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum OrderStatus {
 
-    TAIQUAY(0),
-    DONGIAO(1);
+    DONCHO(0),
+    DONLE(1),
+    TAIQUAY(2),
+    DONGIAO(3);
+
     private final int value;
 }
