@@ -69,7 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui/**",
 
             "/ws/**",
-            "/api/v1/"
     };
 
     @Override
@@ -81,8 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers("/api/v1/export/order/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/ws/**").permitAll()
-                .antMatchers("/api/v1/**").authenticated();
+                .antMatchers("/ws/**").permitAll();
+//                .antMatchers("/api/v1/**").authenticated();
 
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

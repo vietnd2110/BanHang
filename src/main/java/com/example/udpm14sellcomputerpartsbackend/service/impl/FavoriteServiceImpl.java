@@ -62,10 +62,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public List<?> listProductFavoritte(){
-        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
-        if (uDetailService == null) {
-            throw new BadRequestException("Bạn chưa đăng nhâp");
-        }
+//        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+//        if (uDetailService == null) {
+//            throw new BadRequestException("Bạn chưa đăng nhâp");
+//        }
         return productFavoriteDao.productFavorites();
     }
 

@@ -1,9 +1,13 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
+import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto;
-import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity;
+import com.example.udpm14sellcomputerpartsbackend.model.entity.*;
+import com.example.udpm14sellcomputerpartsbackend.repository.ImagesRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
+import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
+import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderDetailService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
@@ -13,16 +17,34 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
     private final OrderDetailRepository orderDetailRepository;
     private final ModelMapper modelMapper;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final ImagesRepository imagesRepository;
 
-    public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepository, ModelMapper modelMapper) {
+
+    public OrderDetailServiceImpl(
+            OrderDetailRepository orderDetailRepository,
+            ModelMapper modelMapper,
+            ProductRepository productRepository,
+            OrderRepository orderRepository,
+            ImagesRepository imagesRepository
+    ) {
         this.orderDetailRepository = orderDetailRepository;
         this.modelMapper = modelMapper;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
+        this.imagesRepository = imagesRepository;
     }
 
 
@@ -63,14 +85,25 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
-    public List<OrderDetailEntity> getAllOrderId(Long id){
-        return orderDetailRepository.findAllByOrderId(id);
+    public Collection<OrderDetailEntity> getAllOrderId(Long id) {
+        List<OrderDetailEntity> list =  orderDetailRepository.findAllByOrderId(id);
+
+        Map<Long, OrderDetailEntity> map = list.stream()
+                .collect(Collectors.toMap(OrderDetailEntity::getId, Function.identity()));
+
+        for (Map.Entry<Long, OrderDetailEntity> entry : map.entrySet()){
+            OrderDetailEntity orderDetail = entry.getValue();
+            Optional<ProductEntity> productEntity = productRepository.findById(orderDetail.getProductId());
+            orderDetail.setPrice(productEntity.get().getDiscount());
+            orderDetail.setName(productEntity.get().getName());
+        }
+        return map.values();
     }
 
     @Override
     public OrderDetailEntity update(Long id, OrderDetailDto orderDetailDto) {
         OrderDetailEntity find = orderDetailRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Hóa đơn chi tiết không tồn tại"));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Hóa đơn chi tiết không tồn tại"));
 
         OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
         orderDetailEntity.setId(find.getId());
@@ -84,6 +117,42 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         orderDetailEntity.setUserId(orderDetailDto.getUserId());
 
         return orderDetailRepository.save(orderDetailEntity);
+    }
+
+    @Override
+    public OrderDetailEntity addOrderDetail(Long idOrder, Long idProduct) {
+        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+
+        ProductEntity productEntity = productRepository.findById(idProduct)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "product id not found: " + idProduct));
+        OrderEntity orderEntity = orderRepository.findById(idOrder)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "order id not found: " + idOrder));
+
+        List<ImageEntity> imageEntity = imagesRepository.getImageByProduct(idProduct);
+
+        OrderDetailEntity orderDetail = orderDetailRepository.findAllByOrderIdAndProductId(idOrder,idProduct);
+
+        if (orderDetail == null) {
+            orderDetail = new OrderDetailEntity();
+            orderDetail.setPrice(productEntity.getDiscount());
+            orderDetail.setName(productEntity.getName());
+            orderDetail.setQuantity(1);
+            orderDetail.setTotal(productEntity.getDiscount() * 1);
+            orderDetail.setImage(imageEntity.get(0).getLink());
+            orderDetail.setProductId(idProduct);
+            orderDetail.setUserId(uDetailService.getId());
+            orderDetail.setOrderId(orderEntity.getId());
+            System.out.println("vao kkk");
+        } else {
+            System.out.println("vao kk 56565k");
+            orderDetail.setQuantity(orderDetail.getQuantity() + 1);
+            if (productEntity.getQuantity() < orderDetail.getQuantity()) {
+                throw new BadRequestException("Bạn chỉ có thể mua tối đa :" + productEntity.getQuantity() + " của sản phẩm này");
+            } else {
+                orderDetail.setTotal(orderDetail.getPrice() * orderDetail.getQuantity());
+            }
+        }
+        return orderDetailRepository.save(orderDetail);
     }
 
 }

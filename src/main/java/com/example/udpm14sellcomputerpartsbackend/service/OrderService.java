@@ -7,6 +7,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateDeliveryOrder;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateOrderAtTheCounter;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.OrderConfirm;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.OrderDetailResponse;
 import org.springframework.data.domain.Page;
 
 import javax.mail.MessagingException;
@@ -49,8 +50,10 @@ public interface OrderService {
 
     List<OrderEntity> searchOrder(String name);
 
+    OrderEntity createOrder();
+
     // tao đơn hàng bán lẻ
-    OrderEntity retailOrders();
+    OrderEntity retailOrders(Long idOrder);
 
     // tạo đơn hàng tại quầy
     OrderEntity createAnOrderAtTheCounter(CreateOrderAtTheCounter req);
@@ -62,4 +65,6 @@ public interface OrderService {
     OrderEntity updateDeliveryOrder(Long orderId, CreateDeliveryOrder req);
 
     OrderEntity updateAtTheCounterOrder(Long orderId, CreateOrderAtTheCounter req);
+
+    OrderDetailResponse sumTotalOrderDetail(Long idOrder);
 }

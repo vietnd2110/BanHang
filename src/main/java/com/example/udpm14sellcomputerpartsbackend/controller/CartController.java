@@ -8,6 +8,7 @@ import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
@@ -22,6 +23,7 @@ public class CartController {
     }
 
     @Operation(summary = "lấy danh sách giỏ hàng theo người dùng đăng nhập", description = "ahihi")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/user")
     public ResponseEntity<?> getCartByUser() {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
@@ -32,6 +34,8 @@ public class CartController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public ResponseEntity<?> getCartById(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -42,6 +46,7 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @Operation(summary = "lấy thông tin tổng tiền giỏ hàng và số lượng sản phẩn trong giỏ hàng", description = "ahihi")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/sumTotalAndQuantity")
     public ResponseEntity<?> sumTotalAndQuantity() {
         CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
@@ -54,6 +59,7 @@ public class CartController {
     }
 
     @Operation(summary = "lấy toàn bộ danh sách giỏ hàng", description = "")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/list")
     public ResponseEntity<?> getAllCart() {
         SampleResponse response = SampleResponse.builder()
@@ -65,6 +71,7 @@ public class CartController {
     }
 
     @Operation(summary = "thêm sản phẩm trong giỏ hàng", description = "request id sản phẩm")
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/addToCart")
     public ResponseEntity addToCart(@RequestBody CartDto cartDto) {
         SampleResponse response = SampleResponse.builder()
@@ -76,6 +83,7 @@ public class CartController {
     }
 
     @Operation(summary = "cập nhập sản phẩm trong giỏ hàng", description =" param số lượng sản phẩm")
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/updateQuantity/{id}")
     public ResponseEntity updateQuantity(
             @PathVariable("id") Long id,
@@ -90,6 +98,7 @@ public class CartController {
     }
 
     @Operation(summary = "xóa sản phẩm trong giỏ hàng", description = "xóa sản phẩm trong giỏ hàng")
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCart(@PathVariable("id") Long id) {
         SampleResponse response = SampleResponse.builder()
@@ -101,6 +110,7 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @Operation(summary = "xóa hêt sản phẩm trong giỏ hàng theo user", description = "xóa sản phẩm trong giỏ hàng")
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteAll() {
         SampleResponse response = SampleResponse.builder()

@@ -72,8 +72,8 @@ public class OrderEntity {
     @Column(name = "discount")
     private Double discount;
 
-    @JsonProperty("account_id")
-    private Long accountId;
+    @JsonProperty("user_id")
+    private Long userId;
 
     @JsonProperty("staff_id")
     private Long staffId;
