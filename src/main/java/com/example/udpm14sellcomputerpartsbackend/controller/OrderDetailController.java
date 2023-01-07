@@ -4,8 +4,10 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
+import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderService;
+import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -147,5 +149,50 @@ public class OrderDetailController {
     }
 
 
+    @DeleteMapping("delete/{orderDetailId}")
+    public ResponseEntity<?> deleteOrderDetail(@PathVariable("orderDetailId") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Xóa thành công")
+                .data(null)
+                .build();
+        orderDetailService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
+    @DeleteMapping("/deleteAll/{orderId}")
+    public ResponseEntity<?> deleteAll(@PathVariable("orderId") Long id) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Xóa tất cả order detail theo  thành công")
+                .data(null)
+                .build();
+        orderDetailService.deleteAllByOrderId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("/updateQuantity/{productId}/order/{orderId}")
+    public ResponseEntity updateQuantity(
+            @PathVariable("productId") Long productId,
+            @PathVariable("orderId") Long orderId,
+            @RequestParam("quantity") Integer quantity
+    ) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("update")
+                .data(orderDetailService.updateQuantity(productId, orderId, quantity))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/sumTotal/{orderId}")
+    public ResponseEntity<?> sumTotal(@PathVariable("orderId") Long orderId) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Tổng tiền theo order thành công")
+                .data(orderDetailService.total(orderId))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
