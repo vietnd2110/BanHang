@@ -92,4 +92,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
 
     List<OrderDetailEntity> findAllByOrderId(Long id);
 
+    void deleteAllByOrderId(Long orderId);
+
+    @Query("SELECT SUM(orderDetail.total) FROM OrderDetailEntity orderDetail where orderDetail.orderId=?1")
+    Long totalPrice(Long orderId);
+
+    OrderDetailEntity findAllByOrderIdAndProductId(Long orderId, Long productId);
+
 }
