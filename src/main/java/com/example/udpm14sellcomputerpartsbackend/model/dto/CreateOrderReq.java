@@ -28,7 +28,8 @@ public class CreateOrderReq {
     @NotBlank(message = "ward is not empty")
     private String ward;
 
-//    private String address;
+    @NotBlank
+    private String address;
 
     @NotBlank(message = "Phone number is not empty")
     @Pattern(regexp = RegexContants.PHONE_REGEX,message = "phone number validate failed")
