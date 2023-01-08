@@ -29,6 +29,8 @@ public interface OrderDetailService {
     OrderDetailEntity updateQuantity(Long productId, Long orderId, Integer quantity);
 
 
+    void delete(Long id);
+
     void deleteAllByOrderId(Long orderId);
 
     TotalPriceResponse total(Long orderId);

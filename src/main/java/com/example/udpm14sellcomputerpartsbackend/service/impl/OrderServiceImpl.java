@@ -455,18 +455,21 @@ public class OrderServiceImpl implements OrderService {
         Optional<OrderEntity> findById = orderRepository.findById(orderId);
         if (findById.isPresent()) {
             OrderEntity order = findById.get();
+
+            if (req.getAddress() == null) {
+                order.setAddress(order.getAddress());
+            } else {
+                order.setAddress(req.getAddress());
+            }
+
             order.setFullname(req.getFullname());
             order.setProvince(req.getProvince());
             order.setDistrict(req.getDistrict());
             order.setWard(req.getWard());
             order.setPhone(req.getPhone());
             order.setDescription(req.getDescription());
-//            if (req.getAddress() == null){
-//                order.setAddress(order.getAddress());
-//            } else{
-//                order.setAddress(req.getAddress());
-//            }
-            order.setAddress(req.getAddress());
+
+//            order.setAddress(req.getAddress());
             order.setOrderStatus(OrderStatus.TAIQUAY);
             order.setShipping(0);
 
@@ -545,8 +548,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDetailResponse sumTotalOrderDetail(Long idOrder) {
+
+        OrderEntity findByOrder = orderRepository.findById(idOrder)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + idOrder));
+
         OrderDetailResponse response = new OrderDetailResponse();
         response.setTotalAmount(orderDetailRepository.sumPrice(idOrder));
+        response.setShipping(findByOrder.getShipping());
         return response;
     }
 

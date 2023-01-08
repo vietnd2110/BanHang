@@ -10,11 +10,11 @@ import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.orderDetail.TotalPriceResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderDetailService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -49,11 +49,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.imagesRepository = imagesRepository;
-
-    private final ProductRepository productRepository;
-    public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepository, ProductRepository productRepository) {
-        this.orderDetailRepository = orderDetailRepository;
-        this.productRepository = productRepository;
     }
 
 
@@ -95,12 +90,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public Collection<OrderDetailEntity> getAllOrderId(Long id) {
-        List<OrderDetailEntity> list =  orderDetailRepository.findAllByOrderId(id);
+        List<OrderDetailEntity> list = orderDetailRepository.findAllByOrderId(id);
 
         Map<Long, OrderDetailEntity> map = list.stream()
                 .collect(Collectors.toMap(OrderDetailEntity::getId, Function.identity()));
 
-        for (Map.Entry<Long, OrderDetailEntity> entry : map.entrySet()){
+        for (Map.Entry<Long, OrderDetailEntity> entry : map.entrySet()) {
             OrderDetailEntity orderDetail = entry.getValue();
             Optional<ProductEntity> productEntity = productRepository.findById(orderDetail.getProductId());
             orderDetail.setPrice(productEntity.get().getDiscount());
@@ -139,14 +134,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
         List<ImageEntity> imageEntity = imagesRepository.getImageByProduct(idProduct);
 
-        OrderDetailEntity orderDetail = orderDetailRepository.findAllByOrderIdAndProductId(idOrder,idProduct);
+        OrderDetailEntity orderDetail = orderDetailRepository.findAllByOrderIdAndProductId(idOrder, idProduct);
 
         if (orderDetail == null) {
             orderDetail = new OrderDetailEntity();
             orderDetail.setPrice(productEntity.getDiscount());
             orderDetail.setName(productEntity.getName());
             orderDetail.setQuantity(1);
-            orderDetail.setTotal(productEntity.getDiscount() * 1);
+            orderDetail.setTotal(orderDetail.getPrice() * 1);
             orderDetail.setImage(imageEntity.get(0).getLink());
             orderDetail.setProductId(idProduct);
             orderDetail.setUserId(uDetailService.getId());
@@ -162,6 +157,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             }
         }
         return orderDetailRepository.save(orderDetail);
+    }
+
+    @Override
     public OrderDetailEntity updateQuantity(Long productId, Long orderId, Integer quantity) {
         OrderDetailEntity orderDetailEntity = orderDetailRepository.findAllByOrderIdAndProductId(orderId, productId);
         if (orderDetailEntity == null) {
@@ -173,7 +171,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             throw new BadRequestException("Bạn chỉ có thể mua tối đa :" + findQuantity.getQuantity() + " của sản phẩm này");
         }
         orderDetailEntity.setQuantity(quantity);
-        orderDetailEntity.setTotal(orderDetailEntity.getTotal() * orderDetailEntity.getQuantity());
+        orderDetailEntity.setTotal(orderDetailEntity.getPrice() * orderDetailEntity.getQuantity());
 
         return orderDetailRepository.save(orderDetailEntity);
     }
@@ -181,7 +179,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     public void delete(Long id) {
         OrderDetailEntity find = orderDetailRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Hóa đơn chi tiết không tồn tại"));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Hóa đơn chi tiết không tồn tại"));
         orderDetailRepository.deleteById(find.getId());
     }
 
