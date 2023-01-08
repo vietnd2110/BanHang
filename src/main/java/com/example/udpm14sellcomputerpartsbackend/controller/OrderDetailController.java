@@ -149,7 +149,7 @@ public class OrderDetailController {
     }
 
 
-    @DeleteMapping("delete/{orderDetailId}")
+    @DeleteMapping("/delete/{orderDetailId}")
     public ResponseEntity<?> deleteOrderDetail(@PathVariable("orderDetailId") Long id) {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
@@ -171,7 +171,7 @@ public class OrderDetailController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PutMapping("/updateQuantity/{productId}/order/{orderId}")
+    @GetMapping("/updateQuantity/{productId}/order/{orderId}")
     public ResponseEntity updateQuantity(
             @PathVariable("productId") Long productId,
             @PathVariable("orderId") Long orderId,
