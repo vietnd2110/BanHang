@@ -37,7 +37,6 @@ public class CreateOrderReq {
 
     private String description;
 
-    @NotBlank(message = "shipping is not empty")
     private Integer shipping;
 
     @JsonProperty("payment_id")
