@@ -197,6 +197,13 @@ public class OrderServiceImpl implements OrderService {
             order.setPhone(req.getPhone());
             order.setDescription(req.getDescription());
             order.setPaymentId(req.getPaymentId());
+            order.setAddress(req.getAddress());
+            order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
+            order.setPaymentId(req.getPaymentId());
+            order.setOrderStatus(OrderStatus.DONCHO);
+            order.setProvince(req.getProvince());
+            order.setDistrict(req.getDistrict());
+            order.setWard(req.getWard());
 //            order.setQuantity(quantity_cart);
 
             System.out.println(total_amount + "total");
