@@ -72,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<CategoryDto> getAllAndPage(Integer pageSize, Integer pageNumber) {
-        Page<CategoryEntity> entityPage = categoryRepository.findByStatusEquals(StatusEnum.ACTIVE, PageRequest.of(pageSize, pageNumber));
+        Page<CategoryEntity> entityPage = categoryRepository.findByStatusEqualsOrderByIdDesc(StatusEnum.ACTIVE, PageRequest.of(pageSize, pageNumber));
         return entityPage.map(categoryEntity -> modelMapper.map(categoryEntity, CategoryDto.class));
     }
 

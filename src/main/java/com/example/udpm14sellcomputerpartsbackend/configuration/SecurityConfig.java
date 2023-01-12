@@ -69,6 +69,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui/**",
 
             "/ws/**",
+
+            "/api/v1/product/**",
+            "/api/v1/case/**",
+            "/api/v1/chip/**",
+            "/api/v1/hd/**",
+            "/api/v1/main/**",
+            "/api/v1/pc/**",
+            "/api/v1/psu/**",
+            "/api/v1/ram/**",
+            "/api/v1/vga/**",
     };
 
     @Override
