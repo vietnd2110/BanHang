@@ -265,7 +265,7 @@ public class OrderServiceImpl implements OrderService {
     // danh sách hóa đơn theo status
     @Override
     public List<OrderEntity> listStatus(OrderStatusEnum status) {
-        return orderRepository.findAllByStatusEquals(status);
+        return orderRepository.findAllByStatusEqualsOrderByIdDesc(status);
     }
 
     // danh sách hóa đơn theo status và người dùng

@@ -15,7 +15,7 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity,Long> {
 
     List<CategoryEntity> findAllByStatusEquals(StatusEnum status);
 
-    Page<CategoryEntity> findByStatusEquals(StatusEnum status, Pageable pageable);
+    Page<CategoryEntity> findByStatusEqualsOrderByIdDesc(StatusEnum status, Pageable pageable);
 
     Optional<CategoryEntity> findById(Optional<Long> id);
 

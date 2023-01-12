@@ -76,7 +76,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "FROM ImageEntity image " +
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
-            "INNER JOIN BrandEntity brand ON product.brandId = brand.id ")
+            "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
+            "ORDER BY product.id desc ")
     Page<ProductImageDto> listProduct(Pageable page);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -111,7 +112,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "INNER JOIN ProductEntity product ON image.product_id = product.id " +
             "JOIN CategoryEntity category on product.categoryId = category.id " +
             "JOIN BrandEntity brand ON product.brandId = brand.id " +
-            "GROUP BY product.id")
+            "GROUP BY product.id " +
+            "order by product.id desc ")
     public Page<ProductImageDto> listProductAndPage(Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
@@ -132,7 +134,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "INNER JOIN CategoryEntity category on product.categoryId = category.id " +
             "INNER JOIN BrandEntity brand ON product.brandId = brand.id " +
             "where CONCAT(product.name, ' ' , product.price, ' ', product.code, ' ') like %?1% " +
-            "GROUP BY product.id")
+            "GROUP BY product.id " +
+            "order by product.id desc ")
     public Page<ProductImageDto> searchByName(String name, Pageable pageable);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
