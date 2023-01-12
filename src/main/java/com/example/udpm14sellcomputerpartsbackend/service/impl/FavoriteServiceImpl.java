@@ -9,6 +9,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.FavoriteEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.CountFavorite;
 import com.example.udpm14sellcomputerpartsbackend.repository.FavoriteRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
@@ -83,7 +84,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public List<FavoriteEntity> listFavoriteAccountId(Long accountId){
-        return favoriteRepository.findAllByAccountId(accountId);
+        return favoriteRepository.findAllByUserId(accountId);
     }
 
 
@@ -99,7 +100,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
         FavoriteEntity favoriteEntity = new FavoriteEntity();
         favoriteEntity.setProductId(productId);
-        favoriteEntity.setAccountId(uDetailService.getId());
+        favoriteEntity.setUserId(uDetailService.getId());
 
         return favoriteRepository.save(favoriteEntity);
     }
@@ -117,6 +118,15 @@ public class FavoriteServiceImpl implements FavoriteService {
         FavoriteEntity findById = favoriteRepository.findById(id).
                 orElseThrow(() -> new NotFoundException(HttpStatus.NO_CONTENT.value(), "Favorite id not found: " + id));
         favoriteRepository.deleteById(findById.getId());
+    }
+
+    // đếm số lượng yêu thích theo userId
+    @Override
+    public CountFavorite countFavorite(){
+        CustomerDetailService uDetailService = CurrentUserUtils.getCurrentUserUtils();
+        CountFavorite count = new CountFavorite();
+        count.setCount(favoriteRepository.countFavoriteByUserId(uDetailService.getId()));
+        return count;
     }
 
 

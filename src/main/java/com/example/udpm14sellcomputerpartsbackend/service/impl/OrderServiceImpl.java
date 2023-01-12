@@ -21,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 @Service
@@ -35,16 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final PromotionService promotionService;
     private final OrderDetailService orderDetailService;
 
-    public OrderServiceImpl(
-            CartServiceImpl cartService,
-            CartRepository cartRepository,
-            OrderRepository orderRepository,
-            ProductService productService,
-            OrderDetailRepository orderDetailRepository,
-            MailService mailService,
-            PromotionService promotionService,
-            OrderDetailService orderDetailService
-    ) {
+    public OrderServiceImpl(CartServiceImpl cartService, CartRepository cartRepository, OrderRepository orderRepository, ProductService productService, OrderDetailRepository orderDetailRepository, MailService mailService, PromotionService promotionService, OrderDetailService orderDetailService) {
         this.cartService = cartService;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
@@ -58,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderEntity> getAll() {
-        return orderRepository.findAll();
+        return orderRepository.findAllOrderById();
     }
 
     @Override
@@ -76,8 +69,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new BadRequestException("Trạng thái phải là đang chờ xác nhận mới xác nhận được");
             }
         }
-        return findByOrderId
-                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
+        return findByOrderId.orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
     }
 
 
@@ -91,8 +83,7 @@ public class OrderServiceImpl implements OrderService {
                 return orderRepository.save(order);
             }
         }
-        return findByOrderId
-                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
+        return findByOrderId.orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
     }
 
     //đã giao
@@ -106,8 +97,7 @@ public class OrderServiceImpl implements OrderService {
                 return orderRepository.save(order);
             }
         }
-        return findByOrderId
-                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
+        return findByOrderId.orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
     }
 
     @Override
@@ -148,8 +138,7 @@ public class OrderServiceImpl implements OrderService {
                 return orderRepository.save(order);
             }
         }
-        return findByOrderId
-                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
+        return findByOrderId.orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + orderId));
     }
 
 
@@ -200,7 +189,7 @@ public class OrderServiceImpl implements OrderService {
             order.setAddress(req.getAddress());
             order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
             order.setPaymentId(req.getPaymentId());
-            order.setOrderStatus(OrderStatus.DONCHO);
+            order.setOrderStatus(OrderStatus.DONGIAO);
             order.setProvince(req.getProvince());
             order.setDistrict(req.getDistrict());
             order.setWard(req.getWard());
@@ -210,7 +199,8 @@ public class OrderServiceImpl implements OrderService {
             System.out.println(order.getShipping() + "ship");
             System.out.println(order.getDiscount() + "discount");
 
-            order.setGrandTotal((long) (total_amount + order.getShipping() - order.getDiscount()));
+//            order.setGrandTotal((long) (total_amount + order.getShipping() - order.getDiscount()));
+            order.setGrandTotal((long) (total_amount - order.getDiscount()));
 
             System.out.println(uDetailService.getId() + "account id");
             order.setUserId(uDetailService.getId());
@@ -236,6 +226,12 @@ public class OrderServiceImpl implements OrderService {
             orderDetailRepository.save(orderDetail);
             ProductEntity productEntity = productService.getOne(cartItem.getProductId());
 
+            if (cartItem.getQuantity() > productEntity.getQuantity()) {
+                throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
+            } else if (productEntity.getQuantity() == 0) {
+                throw new BadRequestException("Sản phẩm này đã hết hàng");
+            }
+
             int quantityOrderDetail = orderDetail.getQuantity();
             int quantityProduct = productEntity.getQuantity();
 
@@ -244,7 +240,7 @@ public class OrderServiceImpl implements OrderService {
             // xoa cart
             cartRepository.deleteById(cartItem.getId());
         }
-        sendEmailOrder(uDetailService.getEmail(), order);
+//        sendEmailOrder(uDetailService.getEmail(), order);
 
         return order;
     }
@@ -314,7 +310,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderEntity> listStatusPayment() {
-        return orderRepository.findAllByPaymentStatusEquals(PaymentStatus.CHUATHANHTOAN);
+        return orderRepository.findAllByPaymentStatusEquals(PaymentStatus.DANGSULY);
     }
 
 
@@ -349,16 +345,33 @@ public class OrderServiceImpl implements OrderService {
     public OrderEntity createOrder() {
         CustomerDetailService detailService = CurrentUserUtils.getCurrentUserUtils();
 
-        if (countOrderStatus() > 9) {
+        if (this.countOrderStatus() > 9) {
             throw new BadRequestException("Chỉ được tạo tối đa 10 đơn hàng chờ");
         }
 
         OrderEntity order = new OrderEntity();
 
+        LocalDate date = LocalDate.now();
+        String year = String.valueOf(date.getYear());
+        String month = String.valueOf(date.getMonth().getValue());
+        String dayOfYear = String.valueOf(date.getDayOfMonth());
+        String dateT = year + month+ dayOfYear;
+
+
+        LocalTime time = LocalTime.now();
+        String second = String.valueOf(time.getSecond());
+        String hours = String.valueOf(time.getHour());
+        String minute = String.valueOf(time.getMinute() + 1);
+        String timeD = hours + minute + second;
+
+
+        order.setMahd("HD" +  dateT + timeD );
+
+
         order.setNameStaff(detailService.getFullname());
         order.setStaffId(detailService.getId());
         order.setShipping(0);
-        order.setPaymentStatus(PaymentStatus.CHUATHANHTOAN);
+        order.setPaymentStatus(PaymentStatus.DANGSULY);
         order.setStatus(OrderStatusEnum.DANGXULY);
         order.setOrderStatus(OrderStatus.DONCHO);
 
@@ -463,22 +476,23 @@ public class OrderServiceImpl implements OrderService {
         if (findById.isPresent()) {
             OrderEntity order = findById.get();
 
-            if (req.getAddress() == null) {
-                order.setAddress(order.getAddress());
-            } else {
-                order.setAddress(req.getAddress());
-            }
-
             order.setFullname(req.getFullname());
             order.setProvince(req.getProvince());
             order.setDistrict(req.getDistrict());
             order.setWard(req.getWard());
             order.setPhone(req.getPhone());
             order.setDescription(req.getDescription());
-
-//            order.setAddress(req.getAddress());
             order.setOrderStatus(OrderStatus.TAIQUAY);
             order.setShipping(0);
+
+            if (req.getAddress() == null) {
+                order.setAddress(order.getAddress());
+                System.out.println("vao day 1");
+            } else {
+                order.setAddress(req.getAddress());
+                System.out.println("vao day 2");
+            }
+            System.out.println("vao day 3");
 
             return orderRepository.save(order);
         } else {
@@ -538,6 +552,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    // đặt hàng tại quầy
     @Override
     public OrderEntity checkoutAtTheCounter(Long orderId) {
 
@@ -546,8 +561,39 @@ public class OrderServiceImpl implements OrderService {
         Optional<OrderEntity> findByIdOrder = orderRepository.findById(orderId);
         OrderEntity order = findByIdOrder.get();
         if (findByIdOrder.isPresent()) {
+
             order.setGrandTotal(total_amount + order.getShipping());
             order.setPaymentStatus(PaymentStatus.DATHANHTOAN);
+
+            if (order.getOrderStatus() == OrderStatus.DONGIAO) {
+                order.setStatus(OrderStatusEnum.DANGXULY);
+                System.out.println("vao order 1");
+            } else if (order.getOrderStatus() == OrderStatus.TAIQUAY) {
+                order.setStatus(OrderStatusEnum.DAHOANTHANH);
+                System.out.println("vao order 2");
+            } else {
+                System.out.println("vao order 3");
+                order.setStatus(OrderStatusEnum.DAHOANTHANH);
+            }
+            System.out.println("vao order 4");
+
+            Collection<OrderDetailEntity> listOrderDetail = orderDetailService.getAllOrderId(orderId);
+            for (OrderDetailEntity orderDetail : listOrderDetail) {
+
+                ProductEntity productEntity = productService.getOne(orderDetail.getProductId());
+
+                if (orderDetail.getQuantity() > productEntity.getQuantity())
+                    throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
+                else if (productEntity.getQuantity() == 0)
+                    throw new BadRequestException("Sản phẩm này đã hết hàng");
+
+                int quantityOrderDetail = orderDetail.getQuantity();
+                int quantityProduct = productEntity.getQuantity();
+
+                int updateQuantity = quantityProduct - quantityOrderDetail;
+                productService.updateQuantity(productEntity.getId(), updateQuantity);
+            }
+
             return orderRepository.save(order);
         }
         throw new BadRequestException("Lỗi khi thành toán");
@@ -556,14 +602,33 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDetailResponse sumTotalOrderDetail(Long idOrder) {
 
-        OrderEntity findByOrder = orderRepository.findById(idOrder)
-                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + idOrder));
+        OrderEntity findByOrder = orderRepository.findById(idOrder).orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Order id not found: " + idOrder));
 
         OrderDetailResponse response = new OrderDetailResponse();
         response.setTotalAmount(orderDetailRepository.sumPrice(idOrder));
         response.setShipping(findByOrder.getShipping());
         return response;
     }
+
+
+    // lọc theo loại đơn
+    @Override
+    public List<OrderEntity> filterStatusOrder(OrderStatus status){
+        return orderRepository.findAllByOrderStatusEquals(status);
+    }
+
+    @Override
+    public OrderEntity findByMahd(String mahd){
+
+        Optional<OrderEntity> findByMahd = orderRepository.findByMahd(mahd);
+
+        if(!findByMahd.isPresent())
+            throw new BadRequestException("Mã Hóa Đơn Không tìm thấy");
+
+        return findByMahd.get();
+    }
+
+
 
 
 //    public OrderEntity returnsTheGoods(Long idOrder, Reimburse reimburse){

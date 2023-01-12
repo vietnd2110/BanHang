@@ -2,6 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.service;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.FavoriteEntity;
+import com.example.udpm14sellcomputerpartsbackend.payload.response.CountFavorite;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface FavoriteService {
     FavoriteEntity favoriteProduct(Long productId);
 
     void deleteFavorite(Long id);
+
+    // đếm số lượng yêu thích theo userId
+    CountFavorite countFavorite();
 }

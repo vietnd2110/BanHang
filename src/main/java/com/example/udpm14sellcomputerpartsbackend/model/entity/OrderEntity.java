@@ -23,6 +23,9 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "mahd", unique = true)
+    private String mahd;
+
     private Integer shipping;
 
     @Column(name = "fullname")

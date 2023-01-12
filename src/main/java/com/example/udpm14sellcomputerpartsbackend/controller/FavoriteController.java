@@ -115,6 +115,11 @@ public class FavoriteController {
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
 
+    @Operation(summary = "đếm số lượng yêu thích theo userId", description = "đếm số lượng yêu thích theo userId")
+    @GetMapping("/count-favorite")
+    public ResponseEntity<?> countFavorite(){
+        return ResponseEntity.ok(DefaultResponse.success(favoriteService.countFavorite()));
+    }
 
 
 

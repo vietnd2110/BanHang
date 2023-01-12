@@ -23,8 +23,8 @@ public class FavoriteEntity {
     @JsonProperty("product_id")
     private Long productId;
 
-    @JsonProperty("account_id")
-    private Long accountId;
+    @JsonProperty("user_id")
+    private Long userId;
 
 
 }

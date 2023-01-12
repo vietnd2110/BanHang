@@ -61,6 +61,7 @@ public class AuthServiceImpl implements AuthService {
         userEntity.setRole(RoleEnum.CUSTOMER);
         userEntity.setVerificationCode(RandomString.make(16));
         userEntity.setStatus(StatusEnum.ACTIVE);
+        userEntity.setImage("https://res.cloudinary.com/ducnd1306/image/upload/v1673278507/sell-computer/images/avatars/qmyarums8lrrqamrqorv.jpg");
 
         userRegister = modelMapper.map(userRepository.save(userEntity),UserRegister.class);
 
@@ -68,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
         props.put("name", userEntity.getUsername());
         props.put("url", siteUrl.append(userEntity.getVerificationCode()).toString());
 
-        mailService.sendMail(props, userEntity.getEmail(), "sendEmail", "XÁC THỰC TÀI KHOẢN");
+//        mailService.sendMail(props, userEntity.getEmail(), "sendEmail", "XÁC THỰC TÀI KHOẢN");
 
         return userRegister;
     }

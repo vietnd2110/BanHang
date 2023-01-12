@@ -12,22 +12,25 @@ import java.util.Optional;
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity,Long> {
 
-    Optional<FavoriteEntity> findByAccountId(Long accountId);
+    Optional<FavoriteEntity> findByUserId(Long userId);
 
     Optional<FavoriteEntity> findByProductId(Long productId);
 
     List<FavoriteEntity> findAllByProductId(Long productId);
 
-    List<FavoriteEntity> findAllByAccountId(Long accountId);
+    List<FavoriteEntity> findAllByUserId(Long userId);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.FavoriteDto(" +
             "favor.id,prod.name,prod.price,prod.discount,prod.quantity,prod.description," +
             "prod.status,COUNT(favor),image.link,prod.id,prod.categoryId) FROM FavoriteEntity favor " +
             "INNER JOIN ProductEntity prod ON favor.productId = prod.id " +
             "INNER JOIN ImageEntity image ON image.product_id = prod.id " +
-            "WHERE favor.accountId = :accountId " +
+            "WHERE favor.userId = :userId " +
             "GROUP BY favor.productId")
-    List<FavoriteDto> listProductFavorite(Long accountId);
+    List<FavoriteDto> listProductFavorite(Long userId);
+
+    @Query(value = "SELECT COUNT(favorites.user_id) FROM `favorites` WHERE favorites.user_id = 1",nativeQuery = true)
+    Long countFavoriteByUserId(Long userId);
 
 
 }

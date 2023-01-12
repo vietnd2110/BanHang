@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatus;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.PaymentStatus;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ProductBanChayDto;
@@ -21,6 +22,10 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
 
+    @Query(value = "SELECT * FROM `orders`ORDER BY orders.id DESC",nativeQuery = true)
+    List<OrderEntity> findAllOrderById();
+
+
     @Query("SELECT ord FROM OrderEntity ord WHERE ord.phone like %?1% and ord.paymentStatus = ?2")
     List<OrderEntity> searchAllByOrder(String name,PaymentStatus status);
 
@@ -29,6 +34,8 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     List<OrderEntity> findAllByStatusEquals(OrderStatusEnum status);
 
     List<OrderEntity> findAllByPaymentStatusEquals(PaymentStatus status);
+
+    List<OrderEntity> findAllByOrderStatusEquals(OrderStatus status);
 
     List<OrderEntity> findAllByStatusEqualsAndUserId(OrderStatusEnum status, Long userId);
 
@@ -76,5 +83,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM `orders` WHERE orders.payment_status = 0",nativeQuery = true)
     long countOrderStatus();
+
+    Optional<OrderEntity> findByMahd(String mahd);
 
 }

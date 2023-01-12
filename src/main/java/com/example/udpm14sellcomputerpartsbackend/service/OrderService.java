@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.service;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatus;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.contants.StatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
@@ -67,4 +68,9 @@ public interface OrderService {
     OrderEntity updateAtTheCounterOrder(Long orderId, CreateOrderAtTheCounter req);
 
     OrderDetailResponse sumTotalOrderDetail(Long idOrder);
+
+    // lọc theo loại đơn
+    List<OrderEntity> filterStatusOrder(OrderStatus status);
+
+    OrderEntity findByMahd(String mahd);
 }

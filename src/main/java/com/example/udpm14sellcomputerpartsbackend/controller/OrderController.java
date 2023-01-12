@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
+import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatus;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CreateOrderReq;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
@@ -216,5 +217,23 @@ public class OrderController {
     public ResponseEntity<?> createO() {
         return ResponseEntity.ok(DefaultResponse.success(orderService.createOrder()));
     }
+
+    @Operation(summary = "Lọc theo loại đơn hàng", description = "Lọc theo loại đơn hàng")
+    @GetMapping("/filter-order/{mahd}")
+    public ResponseEntity<?> filterOrder(
+            @PathVariable("mahd")OrderStatus status
+            ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.filterStatusOrder(status)));
+    }
+
+    @Operation(summary = "Lọc theo loại đơn hàng", description = "Lọc theo loại đơn hàng")
+    @GetMapping("/find-mahd/{mahd}")
+    public ResponseEntity<?> findByMahd(
+            @PathVariable("mahd") String mahd
+    ) {
+        return ResponseEntity.ok(DefaultResponse.success(orderService.findByMahd(mahd)));
+    }
+
+
 
 }
