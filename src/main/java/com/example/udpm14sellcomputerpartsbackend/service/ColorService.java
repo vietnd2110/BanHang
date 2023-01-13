@@ -6,7 +6,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.ColorDto;
 import java.util.List;
 
 public interface ColorService {
-    List<ColorEntity> getAll();
+    List<ColorDto> getAll();
     ColorDto getById(Long id);
 
     ColorDto create(ColorDto colorDto);

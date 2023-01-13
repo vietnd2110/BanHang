@@ -38,10 +38,9 @@ public class PsuServiceImpl implements PsuService {
 
     @Override
     public List<PsuDto> findAll() {
-        List<PsuEntity> psuEntityList = psuRepository.findAll();
+        List<PsuDto> psuEntityList = psuRepository.getAll();
 
-        return psuEntityList.stream().map(psuEntity -> modelMapper
-                .map(psuEntity, PsuDto.class)).collect(Collectors.toList());
+        return psuEntityList;
     }
 
     @Override

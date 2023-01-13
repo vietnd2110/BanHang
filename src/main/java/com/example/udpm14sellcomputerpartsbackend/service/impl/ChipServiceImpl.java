@@ -41,16 +41,15 @@ public class ChipServiceImpl implements ChipService {
 
     @Override
     public List<ChipDto> findAll() {
-        List<ChipEntity> chipEntityList = chipRepository.findAll();
+        List<ChipDto> chipEntityList = chipRepository.getAll();
 
-        return chipEntityList.stream().map(chipEntity -> modelMapper
-                .map(chipEntity, ChipDto.class)).collect(Collectors.toList());
+        return chipEntityList;
     }
 
     @Override
     public Page<ChipDto> findAllAndPage(Integer page, Integer page_size){
-        Page<ChipEntity> pages = chipRepository.findAll(PageRequest.of(page,page_size));
-        return pages.map(chipEntity -> modelMapper.map(chipEntity,ChipDto.class));
+        Page<ChipDto> pages = chipRepository.getAll(PageRequest.of(page,page_size));
+        return pages;
     }
 
 
