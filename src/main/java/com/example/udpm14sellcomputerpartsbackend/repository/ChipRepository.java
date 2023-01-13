@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductChipDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ChipEntity;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,12 @@ import java.util.List;
 public interface ChipRepository extends JpaRepository<ChipEntity, Long> {
     List<ChipEntity> findByProductId(Long id);
 
-    Page<ChipEntity> findAll(Pageable page);
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto(" +
+            "chip.id, chip.socket, chip.productId, pro.name) " +
+            "FROM ChipEntity chip " +
+            "INNER JOIN ProductEntity pro ON chip.productId = pro.id " +
+            "order by chip.id DESC ")
+    Page<ChipDto> getAll(Pageable page);
 
 
     // list product chip
@@ -38,5 +44,10 @@ public interface ChipRepository extends JpaRepository<ChipEntity, Long> {
     List<ProductChipDto> getOneProductChip(Long proId);
 
 
-
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto(" +
+            "chip.id, chip.socket, chip.productId, pro.name) " +
+            "FROM ChipEntity chip " +
+            "INNER JOIN ProductEntity pro ON chip.productId = pro.id " +
+            "order by chip.id DESC ")
+    List<ChipDto> getAll();
 }
