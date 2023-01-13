@@ -1,11 +1,15 @@
 package com.example.udpm14sellcomputerpartsbackend.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HDDto {
 
     private Long id;
@@ -18,4 +22,6 @@ public class HDDto {
 
     @NotNull(message = "productID is not null")
     private Long productId;
+
+    private String productName;
 }

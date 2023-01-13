@@ -3,6 +3,8 @@ package com.example.udpm14sellcomputerpartsbackend.repository;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPsuDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductVgaDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.PsuDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.PsuEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,4 +44,10 @@ public interface PsuRepository extends JpaRepository<PsuEntity, Long> {
             "where group.id = 7")
     List<CateProductPcDto> listCateProductPsuDto();
 
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.PsuDto(" +
+            "psu.id, psu.wattage, psu.size, psu.productId, pro.name) " +
+            "FROM PsuEntity psu " +
+            "INNER JOIN ProductEntity pro ON psu.productId = pro.id " +
+            "order by psu.id DESC ")
+    List<PsuDto> getAll();
 }

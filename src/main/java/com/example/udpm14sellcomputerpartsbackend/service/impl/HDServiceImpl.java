@@ -39,10 +39,9 @@ public class HDServiceImpl implements HDService {
 
     @Override
     public List<HDDto> findAll() {
-        List<HdEntity> hdEntityList = hdRepository.findAll();
+        List<HDDto> hdEntityList = hdRepository.getAll();
 
-        return hdEntityList.stream().map(hdEntity -> modelMapper
-                .map(hdEntity, HDDto.class)).collect(Collectors.toList());
+        return hdEntityList;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductRamDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.RamEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,4 +43,10 @@ public interface RamRepository extends JpaRepository<RamEntity, Long> {
             "where group.id = 5")
     List<CateProductPcDto> listCateProductRamDto();
 
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto(" +
+            "ram.id, ram.ddr, ram.bus, ram.productId, pro.name) " +
+            "FROM RamEntity ram " +
+            "INNER JOIN ProductEntity pro ON ram.productId = pro.id " +
+            "order by ram.id DESC ")
+    List<RamDto> getAll();
 }

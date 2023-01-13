@@ -58,10 +58,9 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public List<CaseDto> getAll() {
-        List<CaseEntity> caseEntities = caseRepository.findAll();
+        List<CaseDto> caseEntities = caseRepository.getAll();
 
-        return caseEntities.stream().map(caseEntity -> modelMapper
-                .map(caseEntity, CaseDto.class)).collect(Collectors.toList());
+        return caseEntities;
     }
 
     @Override

@@ -26,8 +26,8 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
-    public List<ColorEntity> getAll() {
-        return colorRepository.findAll();
+    public List<ColorDto> getAll() {
+        return colorRepository.getAll();
     }
 
     @Override

@@ -28,10 +28,9 @@ public class RamServiceImpl implements RamService {
 
     @Override
     public List<RamDto> findAll() {
-        List<RamEntity> ramEntityList = ramRepository.findAll();
+        List<RamDto> ramEntityList = ramRepository.getAll();
 
-        return ramEntityList.stream().map(ramEntity -> modelMapper
-                .map(ramEntity, RamDto.class)).collect(Collectors.toList());
+        return ramEntityList;
     }
 
 
