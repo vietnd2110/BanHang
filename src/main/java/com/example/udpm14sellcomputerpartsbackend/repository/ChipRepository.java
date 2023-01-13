@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductChipDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ChipEntity;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,14 @@ public interface ChipRepository extends JpaRepository<ChipEntity, Long> {
             "WHERE pro.id = :proId " +
             "GROUP BY pro.id")
     List<ProductChipDto> getOneProductChip(Long proId);
+
+
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto( pro.id, pro.name ) " +
+            "from GroupComponentEntity group " +
+            "inner join CategoryEntity cate on group.id = cate.groupId " +
+            "inner join ProductEntity pro on pro.categoryId = cate.id " +
+            "where group.id = 1")
+    List<CateProductPcDto> listCateProductChipDto();
 
 
 

@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductRamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.RamEntity;
@@ -33,5 +34,11 @@ public interface RamRepository extends JpaRepository<RamEntity, Long> {
             "GROUP BY pro.id")
     List<ProductRamDto> getOneProductRam(Long productId);
 
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto( pro.id, pro.name ) " +
+            "from GroupComponentEntity group " +
+            "inner join CategoryEntity cate on group.id = cate.groupId " +
+            "inner join ProductEntity pro on pro.categoryId = cate.id " +
+            "where group.id = 5")
+    List<CateProductPcDto> listCateProductRamDto();
 
 }

@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPsuDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductVgaDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.PsuEntity;
@@ -33,5 +34,12 @@ public interface PsuRepository extends JpaRepository<PsuEntity, Long> {
             "WHERE pro.id = :proId " +
             "GROUP BY pro.id")
     List<ProductPsuDto> getOneProductPsu(Long proId);
+
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto( pro.id, pro.name ) " +
+            "from GroupComponentEntity group " +
+            "inner join CategoryEntity cate on group.id = cate.groupId " +
+            "inner join ProductEntity pro on pro.categoryId = cate.id " +
+            "where group.id = 7")
+    List<CateProductPcDto> listCateProductPsuDto();
 
 }

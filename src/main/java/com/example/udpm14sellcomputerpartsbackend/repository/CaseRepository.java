@@ -1,5 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
+import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductChipDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.CaseEntity;
@@ -44,5 +45,13 @@ public interface CaseRepository extends JpaRepository<CaseEntity, Long> {
 //            "INNER JOIN CaseEntity cases ON cases.productId = pro.id " +
 //            "WHERE pro.id = :idPro")
 //    List<ProductCaseDto> getOneProductCase(Long idPro);
+
+
+    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto( pro.id, pro.name ) " +
+            "from GroupComponentEntity group " +
+            "inner join CategoryEntity cate on group.id = cate.groupId " +
+            "inner join ProductEntity pro on pro.categoryId = cate.id " +
+            "where group.id = 9")
+    List<CateProductPcDto> listCateProductCaseDto();
 
 }

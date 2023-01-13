@@ -15,4 +15,6 @@ public class ChipDto {
 
     @NotNull(message = "productID is not null")
     private Long productId;
+
+    private String productName;
 }
