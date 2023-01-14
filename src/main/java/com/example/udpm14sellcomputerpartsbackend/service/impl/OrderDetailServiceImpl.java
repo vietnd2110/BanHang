@@ -13,6 +13,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.response.orderDetail.T
 import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.OrderDetailService;
+import com.example.udpm14sellcomputerpartsbackend.service.ProductService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final ImagesRepository imagesRepository;
+    private final ProductService productService;
 
 
     public OrderDetailServiceImpl(
@@ -42,13 +44,15 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             ModelMapper modelMapper,
             ProductRepository productRepository,
             OrderRepository orderRepository,
-            ImagesRepository imagesRepository
+            ImagesRepository imagesRepository,
+            ProductService productService
     ) {
         this.orderDetailRepository = orderDetailRepository;
         this.modelMapper = modelMapper;
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.imagesRepository = imagesRepository;
+        this.productService = productService;
     }
 
 
@@ -136,6 +140,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
         OrderDetailEntity orderDetail = orderDetailRepository.findAllByOrderIdAndProductId(idOrder, idProduct);
 
+        if (productEntity.getQuantity() == 0)
+            throw new BadRequestException("Sản phẩm này đã hết hàng");
+
+
+
         if (orderDetail == null) {
             orderDetail = new OrderDetailEntity();
             orderDetail.setPrice(productEntity.getDiscount());
@@ -144,6 +153,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             orderDetail.setTotal(orderDetail.getPrice() * 1);
             orderDetail.setImage(imageEntity.get(0).getLink());
             orderDetail.setProductId(idProduct);
+
+
             orderDetail.setUserId(uDetailService.getId());
             orderDetail.setOrderId(orderEntity.getId());
             System.out.println("vao kkk");
@@ -156,6 +167,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 orderDetail.setTotal(orderDetail.getPrice() * orderDetail.getQuantity());
             }
         }
+
         return orderDetailRepository.save(orderDetail);
     }
 

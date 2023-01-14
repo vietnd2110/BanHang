@@ -5,8 +5,10 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.VgaDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
+import com.example.udpm14sellcomputerpartsbackend.repository.VgaRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.VgaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,12 +22,11 @@ import javax.validation.Valid;
         description = "Vga controller",
         name = "Các api về Vga"
 )
+@AllArgsConstructor
 public class VgaController {
     private final VgaService vgaService;
+    private final VgaRepository vgaRepository;
 
-    public VgaController(VgaService vgaService) {
-        this.vgaService = vgaService;
-    }
 
     @GetMapping("/product-vga/{id}")
     public ResponseEntity<?> listProductVga(
@@ -95,5 +96,10 @@ public class VgaController {
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         vgaService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
+    }
+
+    @GetMapping("/list-vga")
+    public ResponseEntity<?> listCaVga() {
+        return ResponseEntity.ok(DefaultResponse.success(vgaRepository.listCateProductVgaDto()));
     }
 }
