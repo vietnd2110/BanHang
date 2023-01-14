@@ -4,6 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.PsuDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
+import com.example.udpm14sellcomputerpartsbackend.repository.PsuRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.PsuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 )
 public class PsuController {
     private final PsuService psuService;
+    private final PsuRepository psuRepository;
 
     @GetMapping("/product-psu/{id}")
     public ResponseEntity<?> listProductPsu(
@@ -93,5 +95,10 @@ public class PsuController {
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         psuService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
+    }
+
+    @GetMapping("/list-psu")
+    public ResponseEntity<?> listPsu() {
+        return ResponseEntity.ok(DefaultResponse.success(psuRepository.listCateProductPsuDto()));
     }
 }

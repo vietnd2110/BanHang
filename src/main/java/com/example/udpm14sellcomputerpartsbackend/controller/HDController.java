@@ -4,6 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.HDDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
+import com.example.udpm14sellcomputerpartsbackend.repository.HDRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.HDService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 )
 public class HDController {
     private final HDService hdService;
+    private final HDRepository hdRepository;
 
     @GetMapping("/product-hd/{id}")
     public ResponseEntity<?> listProductHd(
@@ -94,5 +96,10 @@ public class HDController {
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         hdService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
+    }
+
+    @GetMapping("/list-hd")
+    public ResponseEntity<?> listProductHd() {
+        return ResponseEntity.ok(DefaultResponse.success(hdRepository.listCateProductHdDto()));
     }
 }

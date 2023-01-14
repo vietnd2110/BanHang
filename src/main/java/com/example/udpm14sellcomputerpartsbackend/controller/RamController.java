@@ -4,6 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
+import com.example.udpm14sellcomputerpartsbackend.repository.RamRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.RamService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ import javax.validation.Valid;
 )
 public class RamController {
     private final RamService ramService;
-
+    private final RamRepository ramRepository;
 
     @GetMapping("/product-ram/{id}")
     public ResponseEntity getAllProductRamWithCategoryId(
@@ -95,5 +96,10 @@ public class RamController {
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         ramService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
+    }
+
+    @GetMapping("/list-ram")
+    public ResponseEntity<?> listRam() {
+        return ResponseEntity.ok(DefaultResponse.success(ramRepository.listCateProductRamDto()));
     }
 }
