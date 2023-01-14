@@ -1,6 +1,5 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
-import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.PCEntity;
 import org.springframework.data.domain.Page;
@@ -63,20 +62,4 @@ public interface PcRepository extends JpaRepository<PCEntity, Long> {
             "WHERE pro.id=:productId " +
             "GROUP BY pro.id")
     List<ProductPcDto> ProductPcByProductId(Long productId);
-
-
-//    @Query(value = "SELECT pro.id,pro.name FROM group_components grop " +
-//            "INNER JOIN categories cate on grop.id = cate.group_id " +
-//            "INNER JOIN products pro on pro.category_id = cate.id " +
-//            "WHERE grop.id = 11" , nativeQuery = true)
-//    List<CateProductPcDto> listCateProductDto();
-
-    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto( pro.id, pro.name ) " +
-            "from GroupComponentEntity group " +
-            "inner join CategoryEntity cate on group.id = cate.groupId " +
-            "inner join ProductEntity pro on pro.categoryId = cate.id " +
-            "where group.id = 11")
-    List<CateProductPcDto> listCateProductDto();
-
-
 }

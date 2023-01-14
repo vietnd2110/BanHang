@@ -4,10 +4,8 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.ChipRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.ChipService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,11 +20,12 @@ import javax.validation.Valid;
         description = "Chip controller",
         name = "Các api về chip"
 )
-@AllArgsConstructor
 public class ChipController {
     private final ChipService chipService;
-    private final ChipRepository chipRepository;
 
+    public ChipController(ChipService chipService) {
+        this.chipService = chipService;
+    }
 
 
     @PreAuthorize("permitAll()")
@@ -112,10 +111,4 @@ public class ChipController {
         chipService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
     }
-
-    @GetMapping("/list-chip")
-    public ResponseEntity<?> listCategoryProductChip() {
-        return ResponseEntity.ok(DefaultResponse.success(chipRepository.listCateProductChipDto()));
-    }
-
 }

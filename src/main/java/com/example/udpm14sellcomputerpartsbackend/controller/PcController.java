@@ -1,7 +1,6 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
-import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
 import com.example.udpm14sellcomputerpartsbackend.repository.PcRepository;
 import org.springframework.data.domain.PageRequest;
@@ -47,12 +46,4 @@ public class PcController {
     ) {
         return ResponseEntity.ok(DefaultPagingResponse.success(pcRepository.listProductPcByCategory(id,PageRequest.of(page, pageSize))));
     }
-
-
-
-    @GetMapping("/list-cate")
-    public ResponseEntity<?> listProductCate() {
-        return ResponseEntity.ok(DefaultResponse.success(pcRepository.listCateProductDto()));
-    }
-
 }

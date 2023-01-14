@@ -5,10 +5,8 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.VgaDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.CaseRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.CaseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,10 +21,12 @@ import javax.validation.Valid;
         description = "Case controller",
         name = "Các api về Case"
 )
-@AllArgsConstructor
 public class CaseController {
     private final CaseService caseService;
-    private final CaseRepository caseRepository;
+
+    public CaseController(CaseService caseService) {
+        this.caseService = caseService;
+    }
 
 
     @PreAuthorize("permitAll()")
@@ -102,10 +102,5 @@ public class CaseController {
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         caseService.delete(id);
         return ResponseEntity.ok(DefaultResponse.success("Delete success"));
-    }
-
-    @GetMapping("/list-case")
-    public ResponseEntity<?> listCase() {
-        return ResponseEntity.ok(DefaultResponse.success(caseRepository.listCateProductCaseDto()));
     }
 }

@@ -1,9 +1,8 @@
 package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
-import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto;
+import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto;
-import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeTrangThaiDonHang;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,12 @@ public class StatisticalServiceImpl implements StatisticalService {
     }
 
     @Override
-    public ThongKeTrangThaiDonHang thongKeTrangThaiDonHang() {
-        ThongKeTrangThaiDonHang thongKeTrangThaiDonHang = new ThongKeTrangThaiDonHang();
-        thongKeTrangThaiDonHang.setSoDonChoXacNhan(orderRepository.thongKeTrangThaiDonHang(OrderStatusEnum.CHOXACNHAN));
-        thongKeTrangThaiDonHang.setSoDonDangXuLy(orderRepository.thongKeTrangThaiDonHang(OrderStatusEnum.DANGXULY));
-        thongKeTrangThaiDonHang.setSoDonDangVanChuyen(orderRepository.thongKeTrangThaiDonHang(OrderStatusEnum.DANGVANCHUYEN));
-        thongKeTrangThaiDonHang.setSoDonDaGiao(orderRepository.thongKeTrangThaiDonHang(OrderStatusEnum.DAGIAO));
-        thongKeTrangThaiDonHang.setSoDonDaHuy(orderRepository.thongKeTrangThaiDonHang(OrderStatusEnum.DAHUY));
-        thongKeTrangThaiDonHang.setSoDonDaHoanThanh(orderRepository.thongKeTrangThaiDonHang(OrderStatusEnum.DAHOANTHANH));
+    public List<StatisticalDto> listThongKeTheoNam(Integer year) {
+        return orderRepository.listHoaDonTheoNam(year);
+    }
 
-        return thongKeTrangThaiDonHang;
+    @Override
+    public List<ThongKeDto> listThongKeTheoThangVaNam(Integer year, Integer month) {
+        return orderRepository.listHoaDonTheoThang(year, month);
     }
 }

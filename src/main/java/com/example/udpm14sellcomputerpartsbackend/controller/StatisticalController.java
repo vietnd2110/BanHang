@@ -38,48 +38,6 @@ public class StatisticalController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    @Operation(summary = "lấy danh sách hóa đơn và doanh thu từng ngày theo tháng và năm", description = "")
-    @GetMapping("/listHoaDonTungNgayTheoThangVaNam")
-    public ResponseEntity<?> listHoaDonTungNgayTheoThangVaNam(@RequestParam(value = "month") Integer month,
-                                                              @RequestParam(value = "year")  Integer year) {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("lấy danh sách hóa đơn và doanh thu từng ngày theo tháng và năm")
-                .data(orderRepository.listHoaDonTungNgayTheoThangVaNam(year,month))
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-    @Operation(summary = "lấy danh sách hóa đơn và doanh thu từng tháng theo năm", description = "")
-    @GetMapping("/listHoaDonTungThangTheoNam")
-    public ResponseEntity<?> listHoaDonTungThangTheoNam(@RequestParam(value = "year") Integer year) {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("lấy danh sách hóa đơn và doanh thu từng tháng theo năm")
-                .data(orderRepository.listHoaDonTungThangTheoNam(year))
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @Operation(summary = "Thống kê số đơn hàng và doanh thu tu trước tới nay", description = "")
-    @GetMapping("/ThongKeTuTruocToiNay")
-    public ResponseEntity<?> thongKeTuTruocToiNay() {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("Thống kê số đơn hàng và doanh thu tu trước tới nay")
-                .data(orderRepository.thongKeTuTruocToiNay())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-    @Operation(summary = "Thống kê trạng thái đơn hàng", description = "")
-    @GetMapping("/ThongKeTrangThaiDonHang")
-    public ResponseEntity<?> ThongKeTrangThaiDonHang() {
-        SampleResponse response = SampleResponse.builder()
-                .success(true)
-                .message("Thống kê trạng thái đơn hàng")
-                .data(service.thongKeTrangThaiDonHang())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 
     @Operation(summary = "lấy danh sách hóa đơn và doanh thu các năm", description = "")
     @GetMapping("/list/month-year")
@@ -88,6 +46,31 @@ public class StatisticalController {
                 .success(true)
                 .message("Thống kê hóa đơn và doanh thu tháng + năm")
                 .data(service.listHoaDonCacThangVaNam())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @Operation(summary = "lấy danh sách hóa đơn và doanh thu theo năm", description = "")
+    @GetMapping("/list/{year}")
+    public ResponseEntity<?> listByYear(@PathVariable("year") Integer year) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Thống kê hóa đơn và doanh thu theo năm")
+                .data(service.listThongKeTheoNam(year))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @Operation(summary = "lấy danh sách hóa đơn và doanh thu theo tháng và năm", description = "")
+    @GetMapping("/list/month")
+    public ResponseEntity<?> listByYear(
+            @RequestParam(value = "month") Integer month,
+            @RequestParam(value = "year")  Integer year
+    ) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("Thống kê hóa đơn và doanh thu theo tháng và nam")
+                .data(service.listThongKeTheoThangVaNam(year, month))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -105,7 +88,17 @@ public class StatisticalController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
+//
+//    @Operation(summary = "lấy danh sách sản phẩm bán chạy", description = "")
+//    @GetMapping("/top-product")
+//    public ResponseEntity<?> topSanPhamBanChay() {
+//        SampleResponse response = SampleResponse.builder()
+//                .success(true)
+//                .message("Thống kê sản phẩm bán chạy")
+//                .data(statisticalDao.topProduct())
+//                .build();
+//        return ResponseEntity.status(HttpStatus.OK).body(response);
+//    }
     @Operation(summary = "lấy danh sách sản phẩm bán chạy", description = "")
     @GetMapping("/top-product/{Soluong}")
     public ResponseEntity<?> topSanPhamBanChay(@PathVariable("Soluong") Integer soLuong) {
@@ -126,5 +119,4 @@ public class StatisticalController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 }

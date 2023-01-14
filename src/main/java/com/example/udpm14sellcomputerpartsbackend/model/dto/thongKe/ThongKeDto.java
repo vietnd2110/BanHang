@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ThongKeDto {
+
+    private Long id;
     private Long totalOrder;
     private Long totalMoney;
 }

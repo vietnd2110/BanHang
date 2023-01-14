@@ -1,6 +1,5 @@
 package com.example.udpm14sellcomputerpartsbackend.repository;
 
-import com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ColorDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.HDDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductHdDto;
@@ -37,12 +36,6 @@ public interface HDRepository extends JpaRepository<HdEntity, Long> {
             "GROUP BY pro.id")
     List<ProductHdDto> getOneProductHd(Long proId);
 
-    @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.CateProductPcDto( pro.id, pro.name ) " +
-            "from GroupComponentEntity group " +
-            "inner join CategoryEntity cate on group.id = cate.groupId " +
-            "inner join ProductEntity pro on pro.categoryId = cate.id " +
-            "where group.id = 2")
-    List<CateProductPcDto> listCateProductHdDto();
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.HDDto(" +
             "hd.id, hd.type,hd.pcle, hd.productId, pro.name) " +
             "FROM HdEntity hd " +
