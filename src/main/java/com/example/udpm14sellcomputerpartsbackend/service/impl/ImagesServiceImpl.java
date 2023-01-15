@@ -2,16 +2,14 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.FolderContants;
 import com.example.udpm14sellcomputerpartsbackend.daos.ImageProductDao;
-import com.example.udpm14sellcomputerpartsbackend.exception.BadRequestException;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
-import com.example.udpm14sellcomputerpartsbackend.model.dto.CategoryDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ImageProductDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ImageEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.ImagesRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.ImagesRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.ImagesService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;

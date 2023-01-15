@@ -4,7 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.contants.FolderContants;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.InfoManagementDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.InfoMangementService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;

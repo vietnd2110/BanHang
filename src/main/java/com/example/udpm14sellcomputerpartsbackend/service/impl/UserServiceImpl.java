@@ -3,7 +3,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 import com.example.udpm14sellcomputerpartsbackend.contants.FolderContants;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

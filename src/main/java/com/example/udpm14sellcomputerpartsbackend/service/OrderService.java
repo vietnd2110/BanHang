@@ -65,6 +65,7 @@ public interface OrderService {
     // cập nhật lại hóa đơn giao
     OrderEntity updateDeliveryOrder(Long orderId, CreateDeliveryOrder req);
 
+
     OrderEntity updateAtTheCounterOrder(Long orderId, CreateOrderAtTheCounter req);
 
     OrderDetailResponse sumTotalOrderDetail(Long idOrder);
@@ -72,5 +73,5 @@ public interface OrderService {
     // lọc theo loại đơn
     List<OrderEntity> filterStatusOrder(OrderStatus status);
 
-    OrderEntity findByMahd(String mahd);
+    OrderEntity findByMahdAndStatus(String mahd, OrderStatusEnum status);
 }

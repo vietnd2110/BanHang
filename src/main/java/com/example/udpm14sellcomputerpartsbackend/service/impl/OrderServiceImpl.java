@@ -10,9 +10,9 @@ import com.example.udpm14sellcomputerpartsbackend.model.entity.*;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateDeliveryOrder;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.CreateOrderAtTheCounter;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.OrderDetailResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.CartRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.CartRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.OrderDetailRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.OrderRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.*;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
@@ -618,9 +618,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderEntity findByMahd(String mahd){
+    public OrderEntity findByMahdAndStatus(String mahd,OrderStatusEnum status){
 
-        Optional<OrderEntity> findByMahd = orderRepository.findByMahd(mahd);
+        Optional<OrderEntity> findByMahd = orderRepository.findByMahdAndStatus(mahd,status);
 
         if(!findByMahd.isPresent())
             throw new BadRequestException("Mã Hóa Đơn Không tìm thấy");

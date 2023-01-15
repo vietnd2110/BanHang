@@ -4,7 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeTrangThaiDonHang;
-import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.OrderRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

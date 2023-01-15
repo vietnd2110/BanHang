@@ -35,5 +35,5 @@ public interface OrderDetailService {
 
     TotalPriceResponse total(Long orderId);
 
-    void delete(Long id);
+
 }

@@ -1,11 +1,10 @@
 package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.model.dto.CaseDto;
-import com.example.udpm14sellcomputerpartsbackend.model.dto.VgaDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.CaseRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.CaseRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.CaseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

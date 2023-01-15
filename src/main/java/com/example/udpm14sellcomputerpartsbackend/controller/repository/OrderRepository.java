@@ -1,4 +1,4 @@
-package com.example.udpm14sellcomputerpartsbackend.repository;
+package com.example.udpm14sellcomputerpartsbackend.controller.repository;
 
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatus;
 import com.example.udpm14sellcomputerpartsbackend.contants.OrderStatusEnum;
@@ -87,6 +87,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     @Query(value = "SELECT COUNT(*) FROM `orders` WHERE orders.payment_status = 0",nativeQuery = true)
     long countOrderStatus();
 
-    Optional<OrderEntity> findByMahd(String mahd);
+    Optional<OrderEntity> findByMahdAndStatus(String mahd, OrderStatusEnum status);
 
 }

@@ -3,7 +3,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.BrandDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.BrandEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.BrandRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.BrandRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.BrandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;

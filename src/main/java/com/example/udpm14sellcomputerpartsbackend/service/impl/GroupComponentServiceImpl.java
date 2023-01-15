@@ -3,7 +3,7 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 import com.example.udpm14sellcomputerpartsbackend.exception.NotFoundException;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.GroupComponentDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.GroupComponentEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.GroupComponentRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.GroupComponentRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.GroupComponentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

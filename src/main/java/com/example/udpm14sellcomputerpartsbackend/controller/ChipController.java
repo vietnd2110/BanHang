@@ -4,7 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.ChipDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.ChipRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.ChipRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.ChipService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

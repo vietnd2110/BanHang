@@ -6,8 +6,8 @@ import com.example.udpm14sellcomputerpartsbackend.exception.ObjectNotFoundExcept
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ReviewDto;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ReviewEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.ReviewRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.ProductRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.ReviewRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.ReviewService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;

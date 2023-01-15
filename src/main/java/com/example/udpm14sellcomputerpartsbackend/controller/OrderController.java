@@ -227,11 +227,12 @@ public class OrderController {
     }
 
     @Operation(summary = "Lọc theo loại đơn hàng", description = "Lọc theo loại đơn hàng")
-    @GetMapping("/find-mahd/{mahd}")
+    @GetMapping("/find-mahd/{mahd}/{status}")
     public ResponseEntity<?> findByMahd(
-            @PathVariable("mahd") String mahd
+            @PathVariable("mahd") String mahd,
+            @PathVariable("status") OrderStatusEnum status
     ) {
-        return ResponseEntity.ok(DefaultResponse.success(orderService.findByMahd(mahd)));
+        return ResponseEntity.ok(DefaultResponse.success(orderService.findByMahdAndStatus(mahd,status)));
     }
 
 

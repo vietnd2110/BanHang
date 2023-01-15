@@ -3,14 +3,12 @@ package com.example.udpm14sellcomputerpartsbackend.service.impl;
 import com.example.udpm14sellcomputerpartsbackend.daos.FilterProductDao;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto;
 import com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto;
-import com.example.udpm14sellcomputerpartsbackend.repository.FilterRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.FilterRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.FilterProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigDecimal;
 
 @Repository
 public class FilterProductServiceImpl implements FilterProductService {

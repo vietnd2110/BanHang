@@ -4,7 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.RamDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.RamRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.RamRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.RamService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

@@ -8,7 +8,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.request.ChangePassword
 import com.example.udpm14sellcomputerpartsbackend.payload.request.ForgotPassword;
 import com.example.udpm14sellcomputerpartsbackend.payload.request.UserRegister;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.BaseResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.MailService;
 import com.example.udpm14sellcomputerpartsbackend.service.AuthService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.HashUtil;

@@ -4,7 +4,7 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.PsuDto;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultPagingResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.DefaultResponse;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.PsuRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.PsuRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.PsuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

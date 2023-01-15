@@ -5,11 +5,10 @@ import com.example.udpm14sellcomputerpartsbackend.model.dto.export.ExportPdfOrde
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderDetailEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.OrderEntity;
 import com.example.udpm14sellcomputerpartsbackend.model.entity.ProductEntity;
-import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
-import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.OrderDetailRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.OrderRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.ProductRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.UserRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.ExportService;
 import com.example.udpm14sellcomputerpartsbackend.ultil.ExportOrderPdfUtils;
 import org.springframework.beans.factory.annotation.Autowired;

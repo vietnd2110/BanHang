@@ -2,7 +2,7 @@ package com.example.udpm14sellcomputerpartsbackend.controller;
 
 import com.example.udpm14sellcomputerpartsbackend.daos.StatisticalDao;
 import com.example.udpm14sellcomputerpartsbackend.payload.response.SampleResponse;
-import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.OrderRepository;
 import com.example.udpm14sellcomputerpartsbackend.service.StatisticalService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 
 @RestController
 @CrossOrigin(origins = "*")

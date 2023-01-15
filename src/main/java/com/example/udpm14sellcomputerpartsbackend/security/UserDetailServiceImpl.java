@@ -1,7 +1,7 @@
 package com.example.udpm14sellcomputerpartsbackend.security;
 
 import com.example.udpm14sellcomputerpartsbackend.model.entity.UserEntity;
-import com.example.udpm14sellcomputerpartsbackend.repository.UserRepository;
+import com.example.udpm14sellcomputerpartsbackend.controller.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

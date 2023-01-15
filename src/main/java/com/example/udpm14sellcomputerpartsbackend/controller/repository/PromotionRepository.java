@@ -1,4 +1,4 @@
-package com.example.udpm14sellcomputerpartsbackend.repository;
+package com.example.udpm14sellcomputerpartsbackend.controller.repository;
 
 import com.example.udpm14sellcomputerpartsbackend.model.entity.PromotionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
