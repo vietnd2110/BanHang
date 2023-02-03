@@ -13,7 +13,8 @@ public class FavoriteDto {
     private Long id;
     private String name;
     private long price;
-    private long discount;
+    private long priceNew;
+    private int discount;
     private Integer quantity;
     private String description;
     private StatusEnum status;

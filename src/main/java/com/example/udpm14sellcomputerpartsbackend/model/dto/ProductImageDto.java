@@ -49,7 +49,8 @@ public class ProductImageDto implements Serializable {
     private String code;
     private String name;
     private long price;
-    private Long discount;
+    private long priceNew;
+    private int discount;
     private Integer quantity;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public interface FilterRepository extends JpaRepository<ProductEntity,Long> {
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductCaseDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.priceNew,pro.discount,pro.description," +
             "img.link,cases.id,cases.size,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +

@@ -17,7 +17,8 @@ public class ProductVgaDto {
     private String name;
     private Integer quantity;
     private long price;
-    private long discount;
+    private long priceNew;
+    private int discount;
     private String description;
     private String imageLink;
     private Long vgaId;

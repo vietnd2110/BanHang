@@ -19,7 +19,7 @@ public class RamDto {
     @NotNull(message = "Bus is not null")
     private Integer bus;
 
-    @NotNull(message = "productID is not null")
+    @NotNull(message = "product id is not null")
     private Long productId;
 
     private String productName;

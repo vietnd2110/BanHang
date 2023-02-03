@@ -23,6 +23,7 @@ public class ProductDto {
 
     @DecimalMin(value = "0.0", inclusive = false)
     private long price;
+    private long priceNew;
 
     @NotNull(message = "quantity not is null")
     @Min(value = 0, message = "quantity min is 0")
@@ -30,7 +31,7 @@ public class ProductDto {
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
-    private Float discount;
+    private int discount;
     private String description;
     private StatusEnum status;
     private Long categoryId;

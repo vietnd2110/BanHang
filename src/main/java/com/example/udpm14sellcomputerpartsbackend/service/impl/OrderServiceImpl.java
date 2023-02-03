@@ -226,11 +226,11 @@ public class OrderServiceImpl implements OrderService {
             orderDetailRepository.save(orderDetail);
             ProductEntity productEntity = productService.getOne(cartItem.getProductId());
 
-            if (cartItem.getQuantity() > productEntity.getQuantity()) {
+            if (cartItem.getQuantity() > productEntity.getQuantity())
                 throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
-            } else if (productEntity.getQuantity() == 0) {
+            else if (productEntity.getQuantity() == 0)
                 throw new BadRequestException("Sản phẩm này đã hết hàng");
-            }
+
 
             int quantityOrderDetail = orderDetail.getQuantity();
             int quantityProduct = productEntity.getQuantity();
@@ -261,7 +261,7 @@ public class OrderServiceImpl implements OrderService {
     // danh sách hóa đơn theo status
     @Override
     public List<OrderEntity> listStatus(OrderStatusEnum status) {
-        return orderRepository.findAllByStatusEqualsOrderByIdDesc(status);
+        return orderRepository.findAllByStatusEqualsAndOrderStatusOrderByIdDesc(status,OrderStatus.DONGIAO);
     }
 
     // danh sách hóa đơn theo status và người dùng
@@ -286,6 +286,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetailEntity> findByIdOrder = orderDetailRepository.findAllByOrderIdAndUserId(orderId, userUtils.getId());
 
         for (OrderDetailEntity order : findByIdOrder) {
+//          cartRepository.deleteById(order.getProductId());
             CartEntity cart = new CartEntity();
             BeanUtils.copyProperties(order, cart);
 
@@ -355,7 +356,7 @@ public class OrderServiceImpl implements OrderService {
         String year = String.valueOf(date.getYear());
         String month = String.valueOf(date.getMonth().getValue());
         String dayOfYear = String.valueOf(date.getDayOfMonth());
-        String dateT = year + month+ dayOfYear;
+        String dateT = year + month + dayOfYear;
 
 
         LocalTime time = LocalTime.now();
@@ -365,7 +366,7 @@ public class OrderServiceImpl implements OrderService {
         String timeD = hours + minute + second;
 
 
-        order.setMahd("HD" +  dateT + timeD );
+        order.setMahd("HD" + dateT + timeD);
 
 
         order.setNameStaff(detailService.getFullname());
@@ -613,22 +614,20 @@ public class OrderServiceImpl implements OrderService {
 
     // lọc theo loại đơn
     @Override
-    public List<OrderEntity> filterStatusOrder(OrderStatus status){
+    public List<OrderEntity> filterStatusOrder(OrderStatus status) {
         return orderRepository.findAllByOrderStatusEquals(status);
     }
 
     @Override
-    public OrderEntity findByMahd(String mahd){
+    public OrderEntity findByMahd(String mahd) {
 
         Optional<OrderEntity> findByMahd = orderRepository.findByMahd(mahd);
 
-        if(!findByMahd.isPresent())
+        if (!findByMahd.isPresent())
             throw new BadRequestException("Mã Hóa Đơn Không tìm thấy");
 
         return findByMahd.get();
     }
-
-
 
 
 //    public OrderEntity returnsTheGoods(Long idOrder, Reimburse reimburse){

@@ -20,7 +20,7 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
     ImageProductDto listImagesId(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.discount,product.quantity," +
+            "product.id,product.code,product.name,product.price,product.priceNew,product.discount,product.quantity," +
             "product.createDate," +
             "product.updateDate," +
             "product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +
@@ -32,7 +32,7 @@ public interface ImagesRepository extends JpaRepository<ImageEntity,Long> {
     public List<ProductImageDto> listProductAndImages(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductImageDto(" +
-            "product.id,product.code,product.name,product.price,product.discount,product.quantity," +
+            "product.id,product.code,product.name,product.price,product.priceNew,product.discount,product.quantity," +
             "product.createDate," +
             "product.updateDate," +
             "product.description,product.status,image.link,image.name,product.categoryId,category.name,product.brandId, brand.brandName) " +

@@ -31,7 +31,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     List<OrderEntity> findByPhone(String phone);
 
-    List<OrderEntity> findAllByStatusEqualsOrderByIdDesc(OrderStatusEnum status);
+    List<OrderEntity> findAllByStatusEqualsAndOrderStatusOrderByIdDesc(OrderStatusEnum status, OrderStatus oStatus);
 
     List<OrderEntity> findAllByPaymentStatusEquals(PaymentStatus status);
 

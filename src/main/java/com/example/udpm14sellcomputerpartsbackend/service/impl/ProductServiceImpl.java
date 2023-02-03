@@ -52,42 +52,42 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductImageDto> findAll(Integer page, Integer pageNumber) {
 //        return productImageDao.productImage(PageRequest.of(page,pageNumber));
-        return productRepository.listProduct(PageRequest.of(page,pageNumber));
+        return productRepository.listProduct(PageRequest.of(page, pageNumber));
     }
 
     @Override
-    public ProductEntity getOne(Long productId){
+    public ProductEntity getOne(Long productId) {
         ProductEntity findById = productRepository.findById(productId)
-                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
         return productRepository.findById(findById.getId()).get();
     }
 
     @Override
-    public Page<ProductImageDto> findAllByIDProduct(Long productId,Integer page, Integer pageNumber){
+    public Page<ProductImageDto> findAllByIDProduct(Long productId, Integer page, Integer pageNumber) {
         ProductEntity findById = productRepository.findById(productId)
-                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
-        return productRepository.listProductId(productId,PageRequest.of(page,pageNumber));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
+        return productRepository.listProductId(productId, PageRequest.of(page, pageNumber));
     }
 
     @Override
-    public ProductEntity updateQuantity(Long productId, int quantity){
+    public ProductEntity updateQuantity(Long productId, int quantity) {
         Optional<ProductEntity> findByIdProduct = productRepository.findById(productId);
-        if(findByIdProduct.isPresent()){
+        if (findByIdProduct.isPresent()) {
             ProductEntity product = findByIdProduct.get();
             product.setQuantity(quantity);
             return productRepository.save(product);
         }
         return findByIdProduct
-                .orElseThrow(()->new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found: " + productId));
     }
 
     @Override
     public Page<ProductImageDto> search(String name, Integer pageSize, Integer pageNumber) {
 
         Page<ProductImageDto> page = null;
-        if(!StringUtils.hasText(name)){
-            page = productRepository.listProductAndPage(PageRequest.of(pageSize,pageNumber));
-        }else{
+        if (!StringUtils.hasText(name)) {
+            page = productRepository.listProductAndPage(PageRequest.of(pageSize, pageNumber));
+        } else {
             page = productRepository.searchByName(name, PageRequest.of(pageSize, pageNumber));
         }
         return page;
@@ -96,15 +96,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductImageDto> findByCategory(Long id, Integer pageSize, Integer pageNumber) {
         CategoryEntity categoryEntity = categoryRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found:"+id));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found:" + id));
         return productRepository.findByCategory(id, PageRequest.of(pageSize, pageNumber));
     }
 
 
     @Override
-    public Page<ProductImageDto> findByIdProduct(Long id, Integer pageSize, Integer pageNumber){
+    public Page<ProductImageDto> findByIdProduct(Long id, Integer pageSize, Integer pageNumber) {
         ProductEntity productEntity = productRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found:"+id));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Product id not found:" + id));
         return productRepository.findByIdProduct(id, PageRequest.of(pageSize, pageNumber));
     }
 
@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductImageDto> findByBrand(Long id, Integer pageSize, Integer pageNumber) {
         BrandEntity brandEntity = brandRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Brand id not found:" + id));
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Brand id not found:" + id));
         return productRepository.findByBrand(id, PageRequest.of(pageSize, pageNumber));
     }
 
@@ -129,16 +129,23 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "Category id not found: " + productDto.getCategoryId()));
 
         ProductEntity find = productRepository.findAllByCode(productDto.getCode());
-        if (find==null){
+        if (find == null) {
             ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
 
-        productEntity.setCategoryId(categoryEntity.getId());
-        productEntity.setStatus(StatusEnum.ACTIVE);
+            productEntity.setCategoryId(categoryEntity.getId());
+            productEntity.setStatus(StatusEnum.ACTIVE);
             productEntity.setCategoryId(categoryEntity.getId());
             productEntity.setStatus(StatusEnum.ACTIVE);
 
+            if(productDto.getDiscount() < 1 || productDto.getDiscount() > 100){
+                throw new BadRequestException("Mức giảm giá từ 1% - 100%");
+            }
+
+            long priceNew = productDto.getPrice() * (100 - productDto.getDiscount()) / 100;
+            productEntity.setPriceNew(priceNew);
+
             return modelMapper.map(productRepository.save(productEntity), ProductDto.class);
-        }else {
+        } else {
             throw new BadRequestException("Mã sản phẩm đã tồn tại");
         }
     }
@@ -155,6 +162,13 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setId(find.getId());
         productEntity.setCategoryId(findCate.getId());
         productEntity.setStatus(StatusEnum.ACTIVE);
+
+        if(productDto.getDiscount() < 1 || productDto.getDiscount() > 100){
+            throw new BadRequestException("Mức giảm giá từ 1% - 100%");
+        }
+
+        long priceNew = productDto.getPrice() * (100 - productDto.getDiscount()) / 100;
+        productEntity.setPriceNew(priceNew);
 
         return modelMapper.map(productRepository.save(productEntity), ProductDto.class);
     }

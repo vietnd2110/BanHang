@@ -17,7 +17,7 @@ public interface RamRepository extends JpaRepository<RamEntity, Long> {
     List<RamEntity> findByProductId(Long id);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductRamDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.priceNew,pro.discount,pro.description," +
             "img.link,ram.id,ram.ddr,ram.bus,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +
@@ -27,7 +27,7 @@ public interface RamRepository extends JpaRepository<RamEntity, Long> {
 
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.ProductRamDto(" +
-            "pro.id,pro.name,pro.quantity,pro.price,pro.discount,pro.description," +
+            "pro.id,pro.name,pro.quantity,pro.price,pro.priceNew,pro.discount,pro.description," +
             "img.link,ram.id,ram.ddr,ram.bus,pro.categoryId) " +
             "FROM ImageEntity img " +
             "INNER JOIN ProductEntity pro ON img.product_id = pro.id " +

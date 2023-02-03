@@ -29,6 +29,9 @@ public class ProductEntity {
     @Column(name = "price")
     private long price;
 
+    @Column(name = "price_new")
+    private long priceNew;
+
     @Column(name = "quantity")
     private Integer quantity;
 
@@ -40,7 +43,7 @@ public class ProductEntity {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    private long discount;
+    private int discount;
 
     @Column(name = "description")
     private String description;
