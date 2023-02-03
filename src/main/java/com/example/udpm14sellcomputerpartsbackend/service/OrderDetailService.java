@@ -34,4 +34,6 @@ public interface OrderDetailService {
     void deleteAllByOrderId(Long orderId);
 
     TotalPriceResponse total(Long orderId);
+
+    //void delete(Long id);
 }

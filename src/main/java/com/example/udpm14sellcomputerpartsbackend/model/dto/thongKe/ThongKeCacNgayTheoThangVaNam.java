@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ThongKeDto {
+public class ThongKeCacNgayTheoThangVaNam {
+    private Integer day;
+    private Integer month;
+    private Integer year;
     private Long totalOrder;
     private Long totalMoney;
 }

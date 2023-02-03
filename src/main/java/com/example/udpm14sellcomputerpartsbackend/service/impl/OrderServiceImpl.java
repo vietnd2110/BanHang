@@ -13,6 +13,7 @@ import com.example.udpm14sellcomputerpartsbackend.payload.response.OrderDetailRe
 import com.example.udpm14sellcomputerpartsbackend.repository.CartRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderDetailRepository;
 import com.example.udpm14sellcomputerpartsbackend.repository.OrderRepository;
+import com.example.udpm14sellcomputerpartsbackend.repository.ProductRepository;
 import com.example.udpm14sellcomputerpartsbackend.security.CustomerDetailService;
 import com.example.udpm14sellcomputerpartsbackend.service.*;
 import com.example.udpm14sellcomputerpartsbackend.ultil.CurrentUserUtils;
@@ -36,8 +37,9 @@ public class OrderServiceImpl implements OrderService {
     private final MailService mailService;
     private final PromotionService promotionService;
     private final OrderDetailService orderDetailService;
+    private final ProductRepository productRepository;
 
-    public OrderServiceImpl(CartServiceImpl cartService, CartRepository cartRepository, OrderRepository orderRepository, ProductService productService, OrderDetailRepository orderDetailRepository, MailService mailService, PromotionService promotionService, OrderDetailService orderDetailService) {
+    public OrderServiceImpl(CartServiceImpl cartService, CartRepository cartRepository, OrderRepository orderRepository, ProductService productService, OrderDetailRepository orderDetailRepository, MailService mailService, PromotionService promotionService, OrderDetailService orderDetailService, ProductRepository productRepository) {
         this.cartService = cartService;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
@@ -46,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
         this.mailService = mailService;
         this.promotionService = promotionService;
         this.orderDetailService = orderDetailService;
+        this.productRepository = productRepository;
     }
 
 
@@ -290,6 +293,11 @@ public class OrderServiceImpl implements OrderService {
             CartEntity cart = new CartEntity();
             BeanUtils.copyProperties(order, cart);
 
+            ProductEntity productEntity = productRepository.findById(cart.getProductId())
+                    .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "product id not found: " + cart.getProductId()));
+            if (productEntity.getQuantity()<=0){
+                throw new BadRequestException("Sản phẩm này đã hết hàng, vui lòng chờ cửa hàng nhập thêm");
+            }
             cartRepository.save(cart);
         }
     }
