@@ -184,6 +184,22 @@ public class OrderServiceImpl implements OrderService {
 //                order.setDiscount((double) promotionPrice);
 //            }
 
+            LocalDate date = LocalDate.now();
+            String year = String.valueOf(date.getYear());
+            String month = String.valueOf(date.getMonth().getValue());
+            String dayOfYear = String.valueOf(date.getDayOfMonth());
+            String dateT = year + month + dayOfYear;
+
+
+            LocalTime time = LocalTime.now();
+            String second = String.valueOf(time.getSecond());
+            String hours = String.valueOf(time.getHour());
+            String minute = String.valueOf(time.getMinute() + 1);
+            String timeD = hours + minute + second;
+
+
+            order.setMahd("HD" + dateT + timeD);
+
 
             order.setFullname(req.getFullname());
             order.setPhone(req.getPhone());
