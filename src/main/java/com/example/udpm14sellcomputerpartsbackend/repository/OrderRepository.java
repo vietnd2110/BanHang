@@ -47,12 +47,12 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     List<StatisticalDto> listHoaDonCacNam();
 
     @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto(o.id, YEAR(o.createDate), MONTH(o.createDate), count (o.id), sum(o.grandTotal) )" +
-            "FROM OrderEntity o " +
+            "FROM OrderEntity o where o.status=3 " +
             "GROUP BY year (o.createDate), Month (o.createDate)")
     List<ThongKeThangVaNamDto> listHoaDonThangVaNam();
 
     @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto(count (o.id), sum(o.grandTotal) )" +
-            "FROM OrderEntity o")
+            "FROM OrderEntity o where o.status=3")
     ThongKeDto thongKeTuTruocToiNay();
 
     @Query("select count(o.id) from OrderEntity o where o.status=?1")
@@ -60,18 +60,18 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
     @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeDto(count (o.id), sum(o.grandTotal) )" +
             "FROM OrderEntity o " +
-            "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 and day(o.createDate)=?3")
+            "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 and day(o.createDate)=?3 and o.status=3")
     List<ThongKeDto> listHoaDonTheoNgayHienTai(Integer year, Integer mont, Integer day);
 
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeCacNgayTheoThangVaNam(day(o.createDate),month(o.createDate),year(o.createDate), count(o.id), sum(o.grandTotal) )" +
             "FROM OrderEntity o " +
-            "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 " +
+            "WHERE year(o.createDate)=?1 and month(o.createDate)=?2 and o.status=3 " +
             "GROUP BY day(o.createDate),month(o.createDate),year(o.createDate)")
     List<ThongKeCacNgayTheoThangVaNam> listHoaDonTungNgayTheoThangVaNam(Integer year, Integer month);
 
     @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.ThongKeThangVaNamDto(o.id, YEAR(o.createDate), MONTH(o.createDate), count (o.id), sum(o.grandTotal))" +
             "FROM OrderEntity o " +
-            "WHERE year(o.createDate)=?1 " +
+            "WHERE year(o.createDate)=?1 and o.status=3 " +
             "GROUP BY YEAR(o.createDate), MONTH(o.createDate)")
     List<ThongKeThangVaNamDto> listHoaDonTungThangTheoNam(Integer year);
 
