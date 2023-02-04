@@ -53,14 +53,11 @@ public class CartServiceImpl implements CartService {
             System.out.println(entry.getKey() + "key của product");
             if(productEntity.isPresent()){
                 ProductEntity productOld = productEntity.get();
-                cart.setPrice(productOld.getDiscount());
+                cart.setPrice(productOld.getPriceNew());
                 cart.setName(productOld.getName());
-                System.out.println(productOld.getPrice() + "price của products");
-
             }
 
         }
-        System.out.println(map.values() + "ajcbx");
         return map.values();
     }
 
@@ -74,7 +71,7 @@ public class CartServiceImpl implements CartService {
         for (Map.Entry<Long, CartEntity> entry : map.entrySet()) {
             CartEntity cart = entry.getValue();
             Optional<ProductEntity> productEntity = productRepository.findById(entry.getValue().getProductId());
-            cart.setPrice(productEntity.get().getDiscount());
+            cart.setPrice(productEntity.get().getPriceNew());
             cart.setName(productEntity.get().getName());
         }
         return map.values();
@@ -114,8 +111,8 @@ public class CartServiceImpl implements CartService {
                 cart.setName(productEntity.getName());
                 cart.setProductId(productEntity.getId());
                 cart.setImage(imageEntity.get(0).getLink());
-                cart.setPrice(productEntity.getDiscount());
-                cart.setTotal((long) (productEntity.getDiscount() * 1));
+                cart.setPrice(productEntity.getPriceNew());
+                cart.setTotal((long) (productEntity.getPriceNew() * 1));
                 cart.setQuantity(1);
             } else {//Neu san pham da co trong database tang so luong them 1
                 cart.setQuantity(cart.getQuantity() + 1);
