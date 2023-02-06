@@ -16,13 +16,16 @@ public class LoginResponse {
     private String username;
     private Long id;
     private String name = "Bearer";
+
+    private String phone;
     private Collection<? extends GrantedAuthority> role;
 
-    public LoginResponse(String token, String fullName, Collection<? extends GrantedAuthority> authorities,String username,Long id) {
+    public LoginResponse(String token, String fullName, Collection<? extends GrantedAuthority> authorities,String username,Long id, String phone) {
         this.token = token;
         this.name  = fullName;
         this.role  = authorities;
         this.username = username;
         this.id = id;
+        this.phone = phone;
     }
 }

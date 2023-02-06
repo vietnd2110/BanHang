@@ -96,7 +96,7 @@ public class AuthController {
                         .builder()
                         .success(true)
                         .message("Login success")
-                        .data(new LoginResponse(token,customerDetailService.getFullname(),customerDetailService.getAuthorities(), customerDetailService.getUsername(), customerDetailService.getId()))
+                        .data(new LoginResponse(token,customerDetailService.getFullname(),customerDetailService.getAuthorities(), customerDetailService.getUsername(), customerDetailService.getId(), customerDetailService.getPhone()))
                         .build());
 
 //        return ResponseEntity.ok(
