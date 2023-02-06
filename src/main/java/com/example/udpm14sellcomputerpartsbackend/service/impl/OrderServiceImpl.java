@@ -123,20 +123,17 @@ public class OrderServiceImpl implements OrderService {
                 order.setReason(reason);
                 order.setPaymentStatus(PaymentStatus.HUY);
 
-                Collection<OrderDetailEntity> listOrderDetail = orderDetailRepository.findAllByUserId(uDetailService.getId());
+                Collection<OrderDetailEntity> listOrderDetail = orderDetailRepository.findAllByUserIdAndOrderId(uDetailService.getId(),orderId);
                 System.out.println(listOrderDetail + "abc");
                 for (OrderDetailEntity listOrder : listOrderDetail) {
 
                     ProductEntity productEntity = productService.getOne(listOrder.getProductId());
 
                     int quantityOrder = listOrder.getQuantity();
-                    System.out.println(quantityOrder + "quanti");
                     int quantityProduct = productEntity.getQuantity();
 
                     int updateQuantity = quantityProduct + quantityOrder;
                     productService.updateQuantity(productEntity.getId(), updateQuantity);
-                    System.out.println(updateQuantity + "updat");
-                    System.out.println("vao day khong");
                 }
                 return orderRepository.save(order);
             }
@@ -280,7 +277,7 @@ public class OrderServiceImpl implements OrderService {
     // danh sách hóa đơn theo status
     @Override
     public List<OrderEntity> listStatus(OrderStatusEnum status) {
-        return orderRepository.findAllByStatusEqualsAndOrderStatusOrderByIdDesc(status,OrderStatus.DONGIAO);
+        return orderRepository.findAllByStatusEqualsAndOrderStatusOrderByIdDesc(status, OrderStatus.DONGIAO);
     }
 
     // danh sách hóa đơn theo status và người dùng
@@ -311,7 +308,7 @@ public class OrderServiceImpl implements OrderService {
 
             ProductEntity productEntity = productRepository.findById(cart.getProductId())
                     .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.value(), "product id not found: " + cart.getProductId()));
-            if (productEntity.getQuantity()<=0){
+            if (productEntity.getQuantity() <= 0) {
                 throw new BadRequestException("Sản phẩm này đã hết hàng, vui lòng chờ cửa hàng nhập thêm");
             }
             cartRepository.save(cart);

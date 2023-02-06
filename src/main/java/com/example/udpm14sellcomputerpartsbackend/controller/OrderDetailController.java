@@ -28,7 +28,6 @@ public class OrderDetailController {
     private final OrderService orderService;
 
 
-
     @Operation(summary = "lấy tất cả danh sách", description = "")
     @GetMapping("/list")
     public ResponseEntity<?> getAllOrderDetail() {
@@ -173,6 +172,21 @@ public class OrderDetailController {
 
     @PutMapping("updateQuantity/{productId}/order/{orderId}")
     public ResponseEntity updateQuantity(
+            @PathVariable("productId") Long productId,
+            @PathVariable("orderId") Long orderId,
+            @RequestParam("quantity") Integer quantity
+    ) {
+        SampleResponse response = SampleResponse.builder()
+                .success(true)
+                .message("update")
+                .data(orderDetailService.updateQuantity(productId, orderId, quantity))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/updateQuantitys/{productId}/order/{orderId}")
+    public ResponseEntity updateQuantityGet(
             @PathVariable("productId") Long productId,
             @PathVariable("orderId") Long orderId,
             @RequestParam("quantity") Integer quantity

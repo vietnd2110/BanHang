@@ -19,6 +19,8 @@ import java.time.LocalDate;
                         @ColumnResult(name = "slyt", type = Integer.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "price", type = long.class),
+                        @ColumnResult(name = "price_new", type = long.class),
+                        @ColumnResult(name = "discount", type = int.class),
                         @ColumnResult(name = "quantity", type = Integer.class),
                         @ColumnResult(name = "status", type = Integer.class),
                         @ColumnResult(name = "description", type = String.class),
@@ -36,6 +38,8 @@ public class ProductFavoriteDto {
     private Integer slyt;
     private String name;
     private long price;
+    private long price_new;
+    private int discount;
     private Integer quantity;
     private Integer status;
     private String description;

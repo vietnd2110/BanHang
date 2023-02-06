@@ -79,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/v1/psu/**",
             "/api/v1/ram/**",
             "/api/v1/vga/**",
+            "/api/v1/orderDetail/**",
     };
 
     @Override

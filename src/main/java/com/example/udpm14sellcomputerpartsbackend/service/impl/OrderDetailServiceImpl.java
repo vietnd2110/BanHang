@@ -102,7 +102,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         for (Map.Entry<Long, OrderDetailEntity> entry : map.entrySet()) {
             OrderDetailEntity orderDetail = entry.getValue();
             Optional<ProductEntity> productEntity = productRepository.findById(orderDetail.getProductId());
-            orderDetail.setPrice(productEntity.get().getDiscount());
+            orderDetail.setPrice(productEntity.get().getPriceNew());
             orderDetail.setName(productEntity.get().getName());
         }
         return map.values();
@@ -144,10 +144,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             throw new BadRequestException("Sản phẩm này đã hết hàng");
 
 
-
         if (orderDetail == null) {
             orderDetail = new OrderDetailEntity();
-            orderDetail.setPrice(productEntity.getDiscount());
+            orderDetail.setPrice(productEntity.getPriceNew());
             orderDetail.setName(productEntity.getName());
             orderDetail.setQuantity(1);
             orderDetail.setTotal(orderDetail.getPrice() * 1);
@@ -184,6 +183,21 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
         orderDetailEntity.setQuantity(quantity);
         orderDetailEntity.setTotal(orderDetailEntity.getPrice() * orderDetailEntity.getQuantity());
+
+
+        Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
+        if (findByOrderId.isPresent()) {
+            OrderEntity orderEntity = findByOrderId.get();
+            orderEntity.setGrandTotal(orderDetailEntity.getTotal());
+        }
+
+        ProductEntity productEntity = productService.getOne(productId);
+
+        int quantityOrder = orderDetailEntity.getQuantity();
+        int quantityProduct = productEntity.getQuantity();
+
+        int updateQuantity = quantityProduct + quantityOrder;
+        productService.updateQuantity(productEntity.getId(), updateQuantity);
 
         return orderDetailRepository.save(orderDetailEntity);
     }

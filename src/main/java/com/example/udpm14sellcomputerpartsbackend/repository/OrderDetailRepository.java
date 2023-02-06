@@ -70,7 +70,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
 
     List<OrderDetailEntity> findAllByOrderIdAndUserId(Long id,Long userId);
 
-    List<OrderDetailEntity> findAllByUserId(Long id);
+    List<OrderDetailEntity> findAllByUserIdAndOrderId(Long userId, Long orderId);
+
+    List<OrderDetailEntity> findAllByUserId(Long userId);
+
+
     @Query("SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.OrderDetailDto(" +
             "o.id," +
             "o.price," +
@@ -92,7 +96,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
 
     List<OrderDetailEntity> findAllByOrderId(Long id);
 
-    OrderDetailEntity findAllByUserIdAndOrderId(Long userId,Long orderId);
+//    OrderDetailEntity findAllByUserIdAndOrderId(Long userId,Long orderId);
     OrderDetailEntity findAllByOrderIdAndProductId(Long userId,Long productId);
 
     @Query(value = "SELECT SUM(order_details.total) as 'Tông tiền' FROM `order_details` WHERE order_details.order_id = ?1",nativeQuery = true)
