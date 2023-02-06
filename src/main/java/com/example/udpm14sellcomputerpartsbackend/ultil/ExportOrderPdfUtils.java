@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ExportOrderPdfUtils {
-    public ByteArrayInputStream exportPdf(List<ExportPdfOrderDto> exportPdfDTOS, Long total, String userName, String dis, String description) {
+    public ByteArrayInputStream exportPdf(List<ExportPdfOrderDto> exportPdfDTOS, Long total, String userName, String dis, String description, String maHD) {
         // tạo một document
         Document document = new Document();
         ByteArrayOutputStream ot = new ByteArrayOutputStream();
@@ -70,6 +70,12 @@ public class ExportOrderPdfUtils {
             paragraph5.setAlignment(Element.ALIGN_LEFT);
             paragraph5.setIndentationLeft(55);
             paragraph5.setIndentationRight(55);
+
+            Paragraph paragraph = new Paragraph("Mã hóa đơn: "+maHD, new Font(font));
+            paragraph.setSpacingBefore(15);
+            paragraph.setAlignment(Element.ALIGN_LEFT);
+            paragraph.setIndentationLeft(55);
+            paragraph.setIndentationRight(55);
 
             // table
             PdfPTable t = new PdfPTable(5);
@@ -171,6 +177,7 @@ public class ExportOrderPdfUtils {
             document.add(paragraph3);
             document.add(paragraph4);
             document.add(paragraph5);
+            document.add(paragraph);
             document.add(t);
             document.add(paragraphTong);
             document.add(paragraph6);

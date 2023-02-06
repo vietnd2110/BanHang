@@ -57,6 +57,6 @@ public class ExportServiceImpl implements ExportService {
             exportPdfOrderDtoList.add(exportPdfOrderDto);
         });
         ExportOrderPdfUtils exportOrderPdfUtils = new ExportOrderPdfUtils();
-        return exportOrderPdfUtils.exportPdf(exportPdfOrderDtoList, total, orderEntity.getFullname(), orderEntity.getAddress(), orderEntity.getDescription());
+        return exportOrderPdfUtils.exportPdf(exportPdfOrderDtoList, total, orderEntity.getFullname(), orderEntity.getAddress(), orderEntity.getDescription(), orderEntity.getMahd());
     }
 }

@@ -42,6 +42,12 @@ public class InfoMangementServiceImpl implements InfoMangementService {
         userEntity.setId(findById.getId());
         userEntity.setUsername(findById.getUsername());
         userEntity.setRole(findById.getRole());
+//        userEntity.setDistrict(userDto.getDistrict());
+//        userEntity.setProvince(userDto.getProvince());
+//        userEntity.setWard(userDto.getWard());
+//        userEntity.setFullname(userDto.getFullname());
+//        userEntity.setEmail(userDto.getEmail());
+//        userEntity.setAddress(userDto.getAddress());
 
         String images = "";
         if (file != null) {
