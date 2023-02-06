@@ -42,7 +42,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     long countOrderStatus(int status,Long userId);
 
     @Query(" SELECT new com.example.udpm14sellcomputerpartsbackend.model.dto.thongKe.StatisticalDto(o.id, YEAR(o.createDate), count (o.id), sum(o.grandTotal) )" +
-            "FROM OrderEntity o " +
+            "FROM OrderEntity o where o.status=3 " +
             "GROUP BY year (o.createDate)")
     List<StatisticalDto> listHoaDonCacNam();
 
