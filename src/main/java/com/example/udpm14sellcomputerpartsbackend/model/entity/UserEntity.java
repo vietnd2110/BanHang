@@ -49,5 +49,14 @@ public class UserEntity {
 
     private String verificationCode;
 
+    @Column(name = "province")
+    private String province;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "ward")
+    private String ward;
+
 
 }

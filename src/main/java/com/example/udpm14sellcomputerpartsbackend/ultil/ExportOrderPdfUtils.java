@@ -11,13 +11,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class ExportOrderPdfUtils {
-    public ByteArrayInputStream exportPdf(List<ExportPdfOrderDto> exportPdfDTOS, Long total, String userName, String dis, String description) {
+    public ByteArrayInputStream exportPdf(List<ExportPdfOrderDto> exportPdfDTOS, Long total, String userName, String dis, String description, String maHD) {
         // tạo một document
         Document document = new Document();
         ByteArrayOutputStream ot = new ByteArrayOutputStream();
@@ -69,6 +70,12 @@ public class ExportOrderPdfUtils {
             paragraph5.setAlignment(Element.ALIGN_LEFT);
             paragraph5.setIndentationLeft(55);
             paragraph5.setIndentationRight(55);
+
+            Paragraph paragraph = new Paragraph("Mã hóa đơn: "+maHD, new Font(font));
+            paragraph.setSpacingBefore(15);
+            paragraph.setAlignment(Element.ALIGN_LEFT);
+            paragraph.setIndentationLeft(55);
+            paragraph.setIndentationRight(55);
 
             // table
             PdfPTable t = new PdfPTable(5);
@@ -145,7 +152,7 @@ public class ExportOrderPdfUtils {
             Date date = new Date();// the date instance
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            Paragraph paragraph11 = new Paragraph("CĐ FPT, ngày:" + new Date().getDate() + " tháng:" + calendar.get(Calendar.MONTH) + " năm: " + calendar.get(Calendar.YEAR), new Font(font));
+            Paragraph paragraph11 = new Paragraph("CĐ FPT, Ngày:" + LocalDateTime.now().getDayOfMonth() + " Tháng:" + LocalDateTime.now().getMonthValue() + " Năm: " + LocalDateTime.now().getYear());
             paragraph11.setSpacingBefore(5);
             paragraph11.setAlignment(Element.ALIGN_RIGHT);
             paragraph11.setIndentationLeft(55);
@@ -170,6 +177,7 @@ public class ExportOrderPdfUtils {
             document.add(paragraph3);
             document.add(paragraph4);
             document.add(paragraph5);
+            document.add(paragraph);
             document.add(t);
             document.add(paragraphTong);
             document.add(paragraph6);
