@@ -11,6 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -145,7 +146,7 @@ public class ExportOrderPdfUtils {
             Date date = new Date();// the date instance
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            Paragraph paragraph11 = new Paragraph("CĐ FPT, ngày:" + new Date().getDate() + " tháng:" + calendar.get(Calendar.MONTH) + " năm: " + calendar.get(Calendar.YEAR), new Font(font));
+            Paragraph paragraph11 = new Paragraph("CĐ FPT, Ngày:" + LocalDateTime.now().getDayOfMonth() + " Tháng:" + LocalDateTime.now().getMonthValue() + " Năm: " + LocalDateTime.now().getYear());
             paragraph11.setSpacingBefore(5);
             paragraph11.setAlignment(Element.ALIGN_RIGHT);
             paragraph11.setIndentationLeft(55);
