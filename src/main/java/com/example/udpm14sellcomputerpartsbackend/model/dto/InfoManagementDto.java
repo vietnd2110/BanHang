@@ -33,4 +33,10 @@ public class InfoManagementDto {
     @Size(min = 1,max = 50,message = "Address length from 1 to 50")
     private String address;
 
+    private String province;
+
+    private String district;
+
+    private String ward;
+
 }
