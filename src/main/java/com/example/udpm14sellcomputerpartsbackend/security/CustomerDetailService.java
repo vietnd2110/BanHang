@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class CustomerDetailService implements UserDetails {
     private String phone;
     private String image;
     private String address;
+    private String province;
+    private String district;
+    private String ward;
     private Collection<? extends GrantedAuthority> authorities;
 
     public static CustomerDetailService build(UserEntity userEntity){
@@ -37,6 +41,9 @@ public class CustomerDetailService implements UserDetails {
                 .phone(userEntity.getPhone())
                 .image(userEntity.getImage())
                 .address(userEntity.getAddress())
+                .province(userEntity.getProvince())
+                .district(userEntity.getDistrict())
+                .ward(userEntity.getWard())
                 .authorities(authorities)
                 .build();
     }
