@@ -209,20 +209,19 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
 
         ProductEntity findQuantity = productRepository.findById(productId).get();
-//        if (orderDetailEntity.getQuantity() > findQuantity.getQuantity())
-//            throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
-//        else
-            if (findQuantity.getQuantity() == 0)
+
+        if (findQuantity.getQuantity() == 0)
             throw new BadRequestException("Sản phẩm này đã hết hàng");
 
         Integer soLuongCanTru;
-        if(quantity > orderDetailEntity.getQuantity()){
+        if (quantity > orderDetailEntity.getQuantity()) {
 
             soLuongCanTru = quantity - orderDetailEntity.getQuantity();
             int productQuantity = findQuantity.getQuantity();
 
-            if(soLuongCanTru > findQuantity.getQuantity())
+            if (soLuongCanTru > findQuantity.getQuantity())
                 throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
+
 
             System.out.println("jahah1." + quantity);
             System.out.println("jahah5." + orderDetailEntity.getQuantity());
@@ -230,11 +229,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             int updateQuantity = productQuantity - soLuongCanTru;
             productService.updateQuantity(findQuantity.getId(), updateQuantity);
 
-        }else if(quantity < orderDetailEntity.getQuantity()){
+        } else if (quantity < orderDetailEntity.getQuantity()) {
             soLuongCanTru = orderDetailEntity.getQuantity() - quantity;
             int productQuantity = findQuantity.getQuantity();
 
-            if(soLuongCanTru > findQuantity.getQuantity())
+            if (soLuongCanTru > findQuantity.getQuantity())
                 throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
 
             System.out.println("jahah15." + quantity);
