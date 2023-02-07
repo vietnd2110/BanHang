@@ -179,11 +179,15 @@ public class OrderDetailController {
         SampleResponse response = SampleResponse.builder()
                 .success(true)
                 .message("update")
-                .data(orderDetailService.updateQuantity(productId, orderId, quantity))
+                .data(orderDetailService.updateQuantitys(productId, orderId, quantity))
                 .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+
+
+
 
     @GetMapping("/updateQuantitys/{productId}/order/{orderId}")
     public ResponseEntity updateQuantityGet(

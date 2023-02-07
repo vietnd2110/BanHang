@@ -99,6 +99,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
 //    OrderDetailEntity findAllByUserIdAndOrderId(Long userId,Long orderId);
     OrderDetailEntity findAllByOrderIdAndProductId(Long userId,Long productId);
 
+
     @Query(value = "SELECT SUM(order_details.total) as 'Tông tiền' FROM `order_details` WHERE order_details.order_id = ?1",nativeQuery = true)
     Long sumPrice(Long idOrder);
 

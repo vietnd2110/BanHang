@@ -178,26 +178,83 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
 
         ProductEntity findQuantity = productRepository.findById(productId).get();
-        if (findQuantity.getQuantity() < quantity) {
-            throw new BadRequestException("Bạn chỉ có thể mua tối đa :" + findQuantity.getQuantity() + " của sản phẩm này");
-        }
+        if (orderDetailEntity.getQuantity() > findQuantity.getQuantity())
+            throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
+        else if (findQuantity.getQuantity() == 0)
+            throw new BadRequestException("Sản phẩm này đã hết hàng");
+
         orderDetailEntity.setQuantity(quantity);
         orderDetailEntity.setTotal(orderDetailEntity.getPrice() * orderDetailEntity.getQuantity());
 
+//        List<OrderDetailEntity> findAllBy = orderDetailRepository.findAllByOrderId(orderId);
+//
+//        for (OrderDetailEntity orderDetail : findAllBy){
+//            orderDetailEntity.setTotal(orderDetail.getPrice() * orderDetail.getQuantity());
+//        }
 
         Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
         if (findByOrderId.isPresent()) {
             OrderEntity orderEntity = findByOrderId.get();
             orderEntity.setGrandTotal(orderDetailEntity.getTotal());
+            orderRepository.save(orderEntity);
+        }
+        return orderDetailRepository.save(orderDetailEntity);
+    }
+
+    @Override
+    public OrderDetailEntity updateQuantitys(Long productId, Long orderId, Integer quantity) {
+        OrderDetailEntity orderDetailEntity = orderDetailRepository.findAllByOrderIdAndProductId(orderId, productId);
+        if (orderDetailEntity == null) {
+            throw new NotFoundException(HttpStatus.NOT_FOUND.value(), "người dùng chưa có sản phẩm id: " + productId + " trong order");
         }
 
-        ProductEntity productEntity = productService.getOne(productId);
+        ProductEntity findQuantity = productRepository.findById(productId).get();
+//        if (orderDetailEntity.getQuantity() > findQuantity.getQuantity())
+//            throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
+//        else
+            if (findQuantity.getQuantity() == 0)
+            throw new BadRequestException("Sản phẩm này đã hết hàng");
 
-        int quantityOrder = orderDetailEntity.getQuantity();
-        int quantityProduct = productEntity.getQuantity();
+        Integer soLuongCanTru;
+        if(quantity > orderDetailEntity.getQuantity()){
 
-        int updateQuantity = quantityProduct + quantityOrder;
-        productService.updateQuantity(productEntity.getId(), updateQuantity);
+            soLuongCanTru = quantity - orderDetailEntity.getQuantity();
+            int productQuantity = findQuantity.getQuantity();
+
+            if(soLuongCanTru > findQuantity.getQuantity())
+                throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
+
+            System.out.println("jahah1." + quantity);
+            System.out.println("jahah5." + orderDetailEntity.getQuantity());
+
+            int updateQuantity = productQuantity - soLuongCanTru;
+            productService.updateQuantity(findQuantity.getId(), updateQuantity);
+
+        }else if(quantity < orderDetailEntity.getQuantity()){
+            soLuongCanTru = orderDetailEntity.getQuantity() - quantity;
+            int productQuantity = findQuantity.getQuantity();
+
+            if(soLuongCanTru > findQuantity.getQuantity())
+                throw new BadRequestException("Số lượng đặt hàng vươt quá số lượng trong kho");
+
+            System.out.println("jahah15." + quantity);
+            System.out.println("jahahg65." + orderDetailEntity.getQuantity());
+
+            int updateQuantity = productQuantity - soLuongCanTru;
+            productService.updateQuantity(findQuantity.getId(), updateQuantity);
+        }
+
+        System.out.println("hihihihui" + quantity);
+        orderDetailEntity.setQuantity(quantity);
+
+        orderDetailEntity.setTotal(orderDetailEntity.getPrice() * orderDetailEntity.getQuantity());
+
+        Optional<OrderEntity> findByOrderId = orderRepository.findById(orderId);
+        if (findByOrderId.isPresent()) {
+            OrderEntity orderEntity = findByOrderId.get();
+            orderEntity.setGrandTotal(orderDetailEntity.getTotal());
+            orderRepository.save(orderEntity);
+        }
 
         return orderDetailRepository.save(orderDetailEntity);
     }
